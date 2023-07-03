@@ -1,7 +1,7 @@
 import express from "express";
-import dbConnection from "./service/Database.js";
 import { PORT } from "./config/index.js";
-import { PassengerRoute } from "./routes/PassengerRoute.js";
+import dbConnection from "./database/Database.js";
+import { PassengerRoute } from "./routes/index.js";
 
 const app = express();
 app.use(express.json());

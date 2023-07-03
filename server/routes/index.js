@@ -1,1 +1,1 @@
-export * from "./PassengerRoute";
+export * from "./PassengerRoute.js";
