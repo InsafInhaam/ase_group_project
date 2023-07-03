@@ -21,5 +21,5 @@ const AdminSchema = new Schema(
   }
 );
 
-const Admin = mongoose.model("Passenger", AdminSchema);
+const Admin = mongoose.model("Admin", AdminSchema);
 export default Admin;
