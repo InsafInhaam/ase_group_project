@@ -4,7 +4,7 @@ import Train from "../models/Train.js";
 const router = express.Router();
 
 router.post("/trains", async (req, res) => {
-  const { name, source, destination, departureTime, arrivalTime, seats } =
+  const { name, source, destination, departureTime, arrivalTime, seats, price } =
     req.body;
 
   try {
@@ -14,6 +14,7 @@ router.post("/trains", async (req, res) => {
       destination,
       departureTime,
       arrivalTime,
+      price,
       seats,
     });
 

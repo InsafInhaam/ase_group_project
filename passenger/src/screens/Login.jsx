@@ -1,6 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const history = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = () => {
+    if (!email) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    if (!password) {
+      toast.error("Please enter a password");
+      return;
+    }
+
+    fetch(process.env.REACT_APP_API_URL + "/passenger/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          toast.error(data.error);
+        } else {
+          localStorage.setItem("jwt", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          dispatch({ type: "LOGIN", payload: data.user });
+          toast.success(data.message);
+          history("/");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <form>
@@ -11,6 +57,8 @@ const Login = () => {
             type="email"
             className="form-control"
             placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="mb-3">
@@ -19,27 +67,21 @@ const Login = () => {
             type="password"
             className="form-control"
             placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div className="mb-3">
-          <div className="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              id="customCheck1"
-            />
-            <label className="custom-control-label" htmlFor="customCheck1">
-              Remember me
-            </label>
-          </div>
-        </div>
         <div className="d-grid">
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => handleSubmit()}
+          >
             Submit
           </button>
         </div>
         <p className="forgot-password text-right">
-          Forgot <a href="#">password?</a>
+          Don't have an account <a href="/register">Register?</a>
         </p>
       </form>
     </>

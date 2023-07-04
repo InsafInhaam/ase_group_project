@@ -1,61 +1,73 @@
 import "./App.css";
 import Login from "./screens/Login";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import Register from "./screens/Register";
 import BookingTicket from "./screens/BookingTicket";
+import Popup from "./components/Popup";
+import Home from "./screens/Home";
+import Navbar from "./components/Navbar";
+
+// Define the initial state
+const initialState = {
+  user: JSON.parse(localStorage.getItem("user")),
+};
+
+export const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "LOGIN":
+      return { ...state, user: action.payload };
+    case "LOGOUT":
+      return { ...state, user: null };
+    default:
+      return state;
+  }
+};
+
+const Routing = () => {
+  const user = useSelector((state) => state.user);
+
+  return (
+    <Routes>
+      <Route
+        exact
+        path="/"
+        element={user ? <Home /> : <Navigate to="/login" />}
+      />
+      <Route
+        exact
+        path="/ticketbooking"
+        element={user ? <BookingTicket /> : <Navigate to="/login" />}
+      />
+      <Route exact path="/login" element={<Login />} />
+      <Route exact path="/register" element={<Register />} />
+    </Routes>
+  );
+};
 
 function App() {
   return (
     <>
       <Router>
         <div className="App">
-          <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-            <div className="container">
-              <Link className="navbar-brand" to={"/sign-in"}>
-                positronX
-              </Link>
-              <div
-                className="collapse navbar-collapse"
-                id="navbarTogglerDemo02"
-              >
-                <ul className="navbar-nav ml-auto">
-                  <li className="nav-item">
-                    <Link className="nav-link" to={"/login"}>
-                      Login
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to={"/register"}>
-                      Sign up
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to={"/home"}>
-                      Home
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to={"/ticketbooking"}>
-                      Book Ticket
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
+          <Popup />
+          <Navbar/>
           <div className="auth-wrapper">
             <div className="auth-inner">
-              <Routes>
-                <Route exact path="/" element={<Login />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/ticketbooking" element={<BookingTicket />} />
-              </Routes>
+              {/* <Router> */}
+              <Routing />
+              {/* </Router> */}
             </div>
           </div>
         </div>
-      </Router>{" "}
+      </Router>
     </>
   );
 }

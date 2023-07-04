@@ -49,14 +49,17 @@ export const PassengerLogin = async (req, res) => {
       passenger.password,
       passenger.salt
     );
+
+    const { id, name } = passenger;
+
     if (validation) {
       const token = await generateToken({
         _id: passenger.id,
         email: passenger.email,
       });
       return res.status(200).json({
-        id: passenger.id,
-        email: passenger.email,
+        message: "Successfully logged in",
+        user: { email: passenger.email, id, name },
         token,
       });
     }
@@ -91,7 +94,9 @@ export const UpdatePassengerProfile = async (req, res) => {
     const passengerDetails = await Passenger.findOne({ email });
     passengerDetails.name = name;
     const updatedPassenger = await passengerDetails.save();
-    return res.status(200).json(updatedPassenger);
+    return res
+      .status(200)
+      .json({ message: "Successfully registerd", updatedPassenger });
   } catch (e) {
     console.log("Error: ", e);
     return res.status(400).json({ error: "Passenger Details Update Failed" });
