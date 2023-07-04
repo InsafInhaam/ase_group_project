@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 // const bookingSchema = new mongoose.Schema({
 //   name: {
@@ -30,13 +30,16 @@ import mongoose from 'mongoose';
 const bookingSchema = new mongoose.Schema({
   trainId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Train',
+    ref: "Train",
   },
   seatNumber: String,
+  bookingDate: String,
+  bookingTime: String,
   passengerName: String,
   contactNumber: String,
+  orderId: String
 });
 
-const Booking = mongoose.model('Booking', bookingSchema);
+const Booking = mongoose.model("Booking", bookingSchema);
 
 export default Booking;

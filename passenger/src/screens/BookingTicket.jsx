@@ -1,23 +1,57 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import PaymentModal from "./../PaymentModal/PaymentModal";
+import md5 from "crypto-js/md5";
 
 const BookingTicket = () => {
   const [trains, setTrains] = useState([]);
+  const [selectedTrain, setSelectedTrain] = useState("");
+  const [availableSeats, setAvailableSeats] = useState([]);
+  const [selectedTrainPrice, setSelectedTrainPrice] = useState("");
+  const [selectedSeat, setSelectedSeat] = useState("");
+
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const [productname, setProductname] = useState("");
+  const [amount, setAmount] = useState("");
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/train/alltrain", {
-      // headers: {
-      //   Authorization: "Bearer " + localStorage.getItem("jwt"),
-      // },
-    })
+    fetch(process.env.REACT_APP_API_URL + "/train/alltrain")
       .then((res) => res.json())
       .then((result) => {
         setTrains(result);
-        // console.log(result)
       });
-  }, [trains]);
+  }, []);
 
-  console.log(trains);
+  const handleTrainChange = (e) => {
+    const selectedTrainId = e.target.value;
+    setSelectedTrain(selectedTrainId);
+    const selectedTrain = trains.find((train) => train._id === selectedTrainId);
+    setAmount(selectedTrain.price);
+    setAvailableSeats(selectedTrain.seats);
+    setProductname(selectedTrain.name);
+  };
+
+  // console.log(amount);
+
+  const merchantSecret =
+    "NDIyMjA5MjQ3ODM3MDU5MzU3NDIyMzM5MTY5OTk2MTU4NTY4NDU1Ng==";
+  const orderId =
+    Date.now().toString() + Math.random().toString(36).substr(2, 9);
+  const currency = "LKR";
+  const merchantId = "1222723";
+  const hashedSecret = md5(merchantSecret).toString().toUpperCase();
+  console.log(amount);
+  let amountFormated = parseFloat(amount)
+    .toLocaleString("en-us", { minimumFractionDigits: 2 })
+    .replaceAll(",", "");
+  const hash = md5(
+    merchantId + orderId + amountFormated + currency + hashedSecret
+  )
+    .toString()
+    .toUpperCase();
 
   return (
     <div>
@@ -26,34 +60,78 @@ const BookingTicket = () => {
       <form>
         <div className="mb-3">
           <label>Choose Train</label>
-          <select name="train" id="train" className="form-control">
-          {trains?.map((train) => {
-            return(
-              <option value={train._id} key={train._id}>{train.name} From: {train.source} - To: {train.destination} -- Price</option>
-            )
-          })}
+          <select
+            name="train"
+            id="train"
+            className="form-control"
+            value={selectedTrain}
+            onChange={handleTrainChange}
+          >
+            <option value="" selected disabled hidden>
+              Choose Train
+            </option>
+
+            {trains.map((train) => (
+              <option value={train._id} key={train._id}>
+                {train.name} From: {train.source} - To: {train.destination}{" "}
+                price: {train.price}
+              </option>
+            ))}
           </select>
         </div>
         <div className="mb-3">
           <label>Available Seats</label>
-          <select name="seats" id="seats" className="form-control">
-          {trains?.map((train) => {
-            return(
-              <option value={train._id} key={train._id}>{train.name}</option>
-            )
-          })}           
+          <select
+            name="seats"
+            id="seats"
+            className="form-control"
+            value={selectedSeat}
+            onChange={(e) => setSelectedSeat(e.target.value)}
+          >
+            {availableSeats.map((seat) => (
+              <option
+                value={seat._id}
+                key={seat._id}
+                disabled={seat.isBooked === true}
+              >
+                {seat.number}{" "}
+                {seat.isBooked == true ? "Seat Booked" : "Seat Available"}
+              </option>
+            ))}
           </select>
         </div>
 
         <div className="mb-3">
-          <label>Email address</label>
+          <label>Booking Date</label>
+          <input
+            type="date"
+            className="form-control"
+            placeholder="Enter date for booking"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <label>Booking Time</label>
+          <input
+            type="time"
+            className="form-control"
+            placeholder="Enter time for booking"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label>Email Address</label>
           <input
             type="email"
             className="form-control"
             placeholder="Enter email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-
 
         <div className="mb-3">
           <label>Contact Number</label>
@@ -61,12 +139,28 @@ const BookingTicket = () => {
             type="contact"
             className="form-control"
             placeholder="Enter phone number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
         </div>
         <div className="d-grid">
-          <button type="submit" className="btn btn-primary">
+          {/* <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => handleSubmit()}
+          >
             Submit
-          </button>
+          </button> */}
+          <PaymentModal
+            // Use a unique value for the orderId
+            orderId={orderId}
+            name={productname}
+            amount={amount}
+            currency={currency}
+            hash={hash}
+            email={email}
+            phone={phone}
+          />
         </div>
       </form>
     </div>

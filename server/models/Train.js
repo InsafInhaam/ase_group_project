@@ -28,6 +28,7 @@ const trainSchema = new mongoose.Schema({
       isBooked: Boolean,
     },
   ],
+  price: String,
 });
 
 const Train = mongoose.model('Train', trainSchema);
