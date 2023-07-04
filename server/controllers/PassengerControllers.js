@@ -1,4 +1,5 @@
 import Passenger from "../models/Passenger.js";
+import cloudinary from "../utils/Cloudinary.js";
 import {
   passengerSchema,
   passengerLoginSchema,
@@ -16,7 +17,7 @@ export const PassengerRegister = async (req, res) => {
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
-    const { name, email, password } = value;
+    const { name, email, password, address, phone, profile } = value;
     const existingUser = await Passenger.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "A Passenger has already exist" });
@@ -28,6 +29,9 @@ export const PassengerRegister = async (req, res) => {
       email,
       password: hashedPassword,
       salt,
+      address: "",
+      phone: "",
+      profile: "",
     });
     await passenger.save();
     const token = await generateToken({
@@ -105,13 +109,23 @@ export const UpdatePassengerProfile = async (req, res) => {
     if (!passenger) {
       return res.status(400).json({ message: "Invalid Passenger" });
     }
-    const { name } = req.body;
+    const { name, address, phone } = req.body;
     const passengerDetails = await Passenger.findOne({ email });
+
+    const result = await cloudinary.v2.uploader.upload(req.file.path, {
+      folder: "elmpier",
+      allowed_formats: ["jpg", "jpeg", "png"],
+    });
+    const profilePath = result.secure_url;
+
     passengerDetails.name = name;
+    passengerDetails.address = address;
+    passengerDetails.phone = phone;
+    passengerDetails.profile = profilePath;
     const updatedPassenger = await passengerDetails.save();
     return res
       .status(200)
-      .json({ message: "Successfully registerd", updatedPassenger });
+      .json({ message: "Successfully Updated", updatedPassenger });
   } catch (e) {
     console.log("Error: ", e);
     return res.status(400).json({ error: "Passenger Details Update Failed" });

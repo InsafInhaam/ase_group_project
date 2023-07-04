@@ -1,4 +1,6 @@
 import express from "express";
+// import { passengerProfileUpload } from "../middleware/Multer.js";
+import { passengerProfileUpload } from "../middleware/Upload.js";
 import {
   PassengerLogin,
   PassengerRegister,
@@ -14,6 +16,6 @@ router.post("/login", PassengerLogin);
 
 router.use(Authenticate);
 router.get("/", GetPassengerProfile);
-router.patch("/", UpdatePassengerProfile);
+router.patch("/", passengerProfileUpload, UpdatePassengerProfile);
 
 export { router as PassengerRoute };

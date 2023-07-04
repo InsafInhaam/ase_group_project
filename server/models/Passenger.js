@@ -8,6 +8,9 @@ const PassengerSchema = new Schema(
     email: String,
     password: String,
     salt: String,
+    address: String,
+    phone: String,
+    profile: String,
   },
   {
     toJSON: {
