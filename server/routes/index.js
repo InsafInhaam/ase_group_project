@@ -1,1 +1,3 @@
-export * from "./PassengerRoute.js";
+export * from "./PassengerRoute";
+export * from "./TrainRoute";
+export * from "./BookingRoute";

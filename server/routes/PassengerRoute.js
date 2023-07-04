@@ -5,8 +5,8 @@ import {
   GetPassengerProfile,
   UpdatePassengerProfile,
 } from "../controllers/index.js";
-import { Authenticate } from "../middleware/Auth.js";
 
+import { Authenticate } from "../middleware/Auth.js";
 const router = express.Router();
 
 router.post("/register", PassengerRegister);
