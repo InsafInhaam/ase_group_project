@@ -7,6 +7,7 @@ import { PORT } from "./config/index.js";
 import { PassengerRoute } from "./routes/PassengerRoute.js";
 import { TrainRoute } from "./routes/TrainRoute.js";
 import { BookingRoute } from "./routes/BookingRoute.js";
+import { AdminRoute } from "./routes/AdminRoute.js";
 
 const app = express();
 app.use(express.json());
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/passenger", PassengerRoute);
+app.use("/admin", AdminRoute);
 app.use("/train", TrainRoute);
 app.use("/booking", BookingRoute);
 

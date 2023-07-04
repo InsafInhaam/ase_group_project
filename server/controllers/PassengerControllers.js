@@ -67,7 +67,7 @@ export const PassengerLogin = async (req, res) => {
 
 export const GetPassengerProfile = async (req, res) => {
   try {
-    const passenger = req.passenger;
+    const passenger = req.user;
     const email = passenger.email;
     if (!passenger) {
       return res.status(400).json({ message: "Invalid Passenger" });
@@ -82,7 +82,7 @@ export const GetPassengerProfile = async (req, res) => {
 
 export const UpdatePassengerProfile = async (req, res) => {
   try {
-    const passenger = req.passenger;
+    const passenger = req.user;
     const email = passenger.email;
     if (!passenger) {
       return res.status(400).json({ message: "Invalid Passenger" });

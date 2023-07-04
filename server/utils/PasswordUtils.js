@@ -26,7 +26,7 @@ export const validateToken = async (req) => {
   const token = req.get("Authorization");
   if (token) {
     const payload = await jwt.verify(token.split(" ")[1], APP_SECRET);
-    req.passenger = payload;
+    req.user = payload;
     return true;
   }
   return false;

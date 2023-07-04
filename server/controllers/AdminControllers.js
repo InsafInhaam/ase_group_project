@@ -1,16 +1,23 @@
 import Admin from "../models/Admin.js";
+import Passenger from "../models/Passenger.js";
+import {
+  generatePassword,
+  generateSalt,
+  generateToken,
+  validatePassword,
+} from "../utils/PasswordUtils.js";
 
 export const AdminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     const admin = await Admin.findOne({ email });
-    if (!passenger) {
-      return res.status(400).json({ message: "Passenger not found!" });
+    if (!admin) {
+      return res.status(400).json({ message: "Admin not found!" });
     }
     const validation = await validatePassword(
       password,
-      passenger.password,
-      passenger.salt
+      admin.password,
+      admin.salt
     );
     if (validation) {
       const token = await generateToken({
@@ -37,7 +44,7 @@ export const AdminRegister = async (req, res) => {
     }
     const salt = await generateSalt();
     const hashedPassword = await generatePassword(password, salt);
-    let admin = new Passenger({
+    let admin = new Admin({
       name,
       email,
       password: hashedPassword,
@@ -53,7 +60,55 @@ export const AdminRegister = async (req, res) => {
       email: admin.email,
       token,
     });
-  } catch {
+  } catch (e) {
+    console.log("Error: ", e);
     return res.status(400).json({ error: "Admin Register Failed" });
   }
 };
+
+export const GetAllPassengersAccount = async (req, res) => {
+  try {
+    const admin = req.user;
+    if (!admin) {
+      return res.status(400).json({ message: "Invalid Admin" });
+    }
+    const allPassengers = await Passenger.find({}, "name email");
+    return res.status(200).json(allPassengers);
+  } catch (e) {
+    console.log("Error: ", e);
+    return res.status(400).json({ error: "Falied to get all passengers" });
+  }
+};
+
+export const GetPassengerById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const admin = req.user;
+    if (!admin) {
+      return res.status(400).json({ message: "Invalid Admin" });
+    }
+    const passenger = await Passenger.findById(id);
+    return res.status(200).json(passenger);
+  } catch (e) {
+    console.log("Error: ", e);
+    return res.status(400).json({ error: "Falied to get the passenger" });
+  }
+};
+export const UpdatePassenger = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { name } = req.body;
+    const admin = req.user;
+    if (!admin) {
+      return res.status(400).json({ message: "Invalid Admin" });
+    }
+    const passenger = await Passenger.findById(id);
+    passenger.name = name;
+    const updatedPassenger = await passenger.save();
+    return res.status(200).json(updatedPassenger);
+  } catch (e) {
+    console.log("Error: ", e);
+    return res.status(400).json({ error: "Falied to update the passenger" });
+  }
+};
+export const DeletePassenger = async () => {};
