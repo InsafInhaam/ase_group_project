@@ -18,6 +18,6 @@ router.use(Authenticate);
 router.get("/passengers", GetAllPassengersAccount);
 router.get("/passenger/:id", GetPassengerById);
 router.patch("/passenger/:id", UpdatePassenger);
-router.delete("/passengers/:id", DeletePassenger);
+router.delete("/passenger/:id", DeletePassenger);
 
 export { router as AdminRoute };

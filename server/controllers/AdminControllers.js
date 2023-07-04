@@ -111,4 +111,21 @@ export const UpdatePassenger = async (req, res) => {
     return res.status(400).json({ error: "Falied to update the passenger" });
   }
 };
-export const DeletePassenger = async () => {};
+export const DeletePassenger = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const admin = req.user;
+    if (!admin) {
+      return res.status(400).json({ message: "Invalid Admin" });
+    }
+    const passenger = await Passenger.findById(id);
+    if (!passenger) {
+      return res.status(400).json({ message: "Passenger not found" });
+    }
+    await Passenger.deleteOne({ _id: id });
+    return res.status(200).json({ message: "Passenger deleted successfully" });
+  } catch (e) {
+    console.log("Error: ", e);
+    return res.status(400).json({ error: "Falied to delete the passenger" });
+  }
+};

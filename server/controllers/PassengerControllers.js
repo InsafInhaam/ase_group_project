@@ -1,5 +1,9 @@
 import Passenger from "../models/Passenger.js";
 import {
+  passengerSchema,
+  passengerLoginSchema,
+} from "../utils/InputValidation.js";
+import {
   generatePassword,
   generateSalt,
   generateToken,
@@ -8,7 +12,11 @@ import {
 
 export const PassengerRegister = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { error, value } = passengerSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+    const { name, email, password } = value;
     const existingUser = await Passenger.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "A Passenger has already exist" });
@@ -38,7 +46,13 @@ export const PassengerRegister = async (req, res) => {
 
 export const PassengerLogin = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { error, value } = passengerLoginSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    const { email, password } = value;
+
     const passenger = await Passenger.findOne({ email });
     if (!passenger) {
       return res.status(400).json({ message: "Passenger not found!" });
@@ -63,7 +77,8 @@ export const PassengerLogin = async (req, res) => {
         token,
       });
     }
-  } catch (e) {
+  } catch (error) {
+    console.error("Error with passenger login:", error);
     return res.status(400).json({ error: "Passenger Login Failed" });
   }
 };
