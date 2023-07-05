@@ -1,5 +1,7 @@
 import Passenger from "../models/Passenger.js";
 import cloudinary from "../utils/Cloudinary.js";
+import { uploadToCloudinary } from "../utils/UploadToCloudinary.js";
+import fs from "fs";
 import {
   passengerSchema,
   passengerLoginSchema,
@@ -112,10 +114,7 @@ export const UpdatePassengerProfile = async (req, res) => {
     const { name, address, phone } = req.body;
     const passengerDetails = await Passenger.findOne({ email });
 
-    const result = await cloudinary.v2.uploader.upload(req.file.path, {
-      folder: "elmpier",
-      allowed_formats: ["jpg", "jpeg", "png"],
-    });
+    const result = await uploadToCloudinary(req.file.buffer);
     const profilePath = result.secure_url;
 
     passengerDetails.name = name;
