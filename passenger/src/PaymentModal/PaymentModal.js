@@ -1,7 +1,4 @@
 import React from "react";
-import { useRef } from "react";
-// import './payment_modal.css'
-import emailjs from "@emailjs/browser";
 
 const PaymentModal = ({
   trainId,
@@ -49,53 +46,7 @@ const PaymentModal = ({
   window.payhere.onCompleted = function onCompleted(orderId) {
     console.log("Payment completed. OrderID:" + orderId);
     //Note: validate the payment and show success or failure page to the customer
-    console.log({
-      trainId,
-      seatNumber,
-      bookingDate,
-      bookingTime,
-      passengerName,
-      email,
-      phone,
-      orderId,
-      passengerId,
-      name,
-      amount,
-      currency,
-      hash,
-    });
-
-    // const sendEmail = (e) => {
-    //   e.preventDefault();
-
-    //   const templateParams = {
-    //     seatNumber,
-    //     bookingDate,
-    //     bookingTime,
-    //     passengerName,
-    //     passengerEmail: email,
-    //     contactNumber: phone,
-    //     orderId,
-    //   };
-
-    //   emailjs
-    //     .sendForm(
-    //       "service_03skn5b",
-    //       "template_61p7eaa",
-    //       templateParams,
-    //       "44AI9x5PgvFG63aSp"
-    //     )
-    //     .then(
-    //       (result) => {
-    //         console.log(result.text);
-    //       },
-    //       (error) => {
-    //         console.log(error.text);
-    //       }
-    //     );
-    // };
-
-    //save the payment details in the server
+    
     fetch(process.env.REACT_APP_API_URL + "/booking/bookings", {
       method: "POST",
       headers: {
@@ -111,31 +62,18 @@ const PaymentModal = ({
         contactNumber: phone,
         orderId,
         passengerId,
+        price: amount
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        emailjs.send("service_03skn5b", "template_61p7eaa", {
-          trainName: name,
-          passengerName,
-          passengerEmail: email,
-          contactNumber: phone,
-          seatNumber,
-          bookingDate,
-          bookingTime,
-          orderId,
-          // passengerId,
-        });
-        // if (data.error) {
-        //   console.log(data.error);
-        // } else {
-        //   console.log(data.message);
-
-
-        //   // Call the sendEmail function here
-        //   // sendEmail();
-        // }
+          
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          console.log(data.message);
+        }
       })
       .catch((err) => {
         console.log(err);

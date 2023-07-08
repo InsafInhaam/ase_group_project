@@ -26,7 +26,7 @@ const Home = () => {
                 Manage <b>Bookings</b>
               </h2>
             </div>
-            <div className="col-sm-6">
+            {/* <div className="col-sm-6">
               <div className="btn-group" data-toggle="buttons">
                 <label className="btn btn-info active">
                   <input
@@ -50,7 +50,7 @@ const Home = () => {
                   Expired
                 </label>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <table className="table table-striped table-hover">

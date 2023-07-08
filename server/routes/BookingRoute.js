@@ -42,6 +42,7 @@ import { Authenticate } from "../middleware/Auth.js";
 //   }
 // });
 
+
 // router.use(Authenticate);
 router.post("/bookings", async (req, res) => {
   try {
@@ -55,13 +56,8 @@ router.post("/bookings", async (req, res) => {
       contactNumber,
       orderId,
       passengerId,
+      price
     } = req.body;
-
-    // Check if the train exists
-    // const train = await Train.findById(trainId);
-    // if (!train) {
-    //   return res.status(400).send('Invalid train ID. Train not found.');
-    // }
 
     const isValidTrainId = mongoose.Types.ObjectId.isValid(trainId);
     if (!isValidTrainId) {
@@ -91,6 +87,7 @@ router.post("/bookings", async (req, res) => {
       contactNumber,
       orderId,
       passengerId,
+      price
     });
 
     await newBooking.save();
@@ -125,25 +122,8 @@ router.get("/bookingsById/:id", async (req, res) => {
     passengerId: req.params.id,
   });
 
-  // const bookings = await Booking.findAll({
-  //   where: { passengerId: req.params.id },
-  // });
-
-  const bookingIds = bookings.map((booking) => booking.trainId);
-
-  const trains = await Train.find({
-      _id: bookingIds 
-  });
-
-  const bookingsWithTrainDetails = bookings.map((booking) => {
-    const train = trains.find((train) => train._id === booking.trainId);
-    return {
-      ...booking.toJSON(),
-      train,
-    };
-  });
   try {
-    res.status(201).json(bookingsWithTrainDetails);
+    res.status(201).json(bookings);
   } catch (error) {
     res.status(422).json({
       error: error,
