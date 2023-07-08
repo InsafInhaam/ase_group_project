@@ -36,8 +36,13 @@ const bookingSchema = new mongoose.Schema({
   bookingDate: String,
   bookingTime: String,
   passengerName: String,
+  passengerEmail: String,
   contactNumber: String,
-  orderId: String
+  orderId: String,
+  passengerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Passenger",
+  }
 });
 
 const Booking = mongoose.model("Booking", bookingSchema);
