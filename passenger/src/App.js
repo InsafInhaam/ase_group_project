@@ -14,6 +14,7 @@ import BookingTicket from "./screens/BookingTicket";
 import Popup from "./components/Popup";
 import Home from "./screens/Home";
 import Navbar from "./components/Navbar";
+import EditProfile from "./screens/EditProfile";
 
 // Define the initial state
 const initialState = {
@@ -46,6 +47,11 @@ const Routing = () => {
         path="/ticketbooking"
         element={user ? <BookingTicket /> : <Navigate to="/login" />}
       />
+      <Route
+        exact
+        path="/editprofile"
+        element={user ? <EditProfile /> : <Navigate to="/login" />}
+      />
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
     </Routes>
@@ -58,11 +64,11 @@ function App() {
       <Router>
         <div className="App">
           <Popup />
-          <Navbar/>
+          <Navbar />
           <div className="auth-wrapper">
-              {/* <Router> */}
-              <Routing />
-              {/* </Router> */}
+            {/* <Router> */}
+            <Routing />
+            {/* </Router> */}
           </div>
         </div>
       </Router>
