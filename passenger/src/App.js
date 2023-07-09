@@ -60,11 +60,9 @@ function App() {
           <Popup />
           <Navbar/>
           <div className="auth-wrapper">
-            <div className="auth-inner">
               {/* <Router> */}
               <Routing />
               {/* </Router> */}
-            </div>
           </div>
         </div>
       </Router>

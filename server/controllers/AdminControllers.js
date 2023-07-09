@@ -19,14 +19,17 @@ export const AdminLogin = async (req, res) => {
       admin.password,
       admin.salt
     );
+
+    const { id, name } = admin;
+
     if (validation) {
       const token = await generateToken({
         _id: admin.id,
         email: admin.email,
       });
       return res.status(200).json({
-        id: admin.id,
-        email: admin.email,
+        message: "Successfully logged in",
+        user: { email: admin.email, id, name },
         token,
       });
     }
