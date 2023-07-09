@@ -61,6 +61,17 @@ const Navbar = () => {
               >
                 Logout
               </button>
+              {/* edit by mir  */}
+              <div className="dropdown">
+        <a className="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false"  onClick={() => {
+                  history("/editprofile");
+                }}>
+                  {/* avatar images uploading  */}
+          <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" className="rounded-circle" height={25} alt="Black and White Portrait of a Man" loading="lazy" />
+        </a>
+        
+      </div>
+              {/* end edit  */}
             </div>
           )}
         </div>
