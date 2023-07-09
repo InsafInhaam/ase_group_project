@@ -3,6 +3,7 @@ const router = express.Router();
 import Booking from "../models/Booking.js";
 import Train from "../models/Train.js";
 import mongoose from "mongoose";
+import { generateMailTransporter } from "../utils/Mail.js";
 import { Authenticate } from "../middleware/Auth.js";
 
 // router.get("/trains", async (req, res) => {
@@ -95,6 +96,16 @@ router.post("/bookings", async (req, res) => {
 
     await newBooking.save();
 
+    let transport = generateMailTransporter();
+
+    transport.sendMail({
+      from: "response@rw.com",
+      to: passengerEmail,
+      subject: "Email Verification",
+      html: `
+        <p>Your Details</p>`,
+    });
+
     // Mark the seat as booked in the train schema
     await Train.updateOne(
       { _id: trainId, "seats.number": seatNumber },
@@ -132,7 +143,7 @@ router.get("/bookingsById/:id", async (req, res) => {
   const bookingIds = bookings.map((booking) => booking.trainId);
 
   const trains = await Train.find({
-      _id: bookingIds 
+    _id: bookingIds,
   });
 
   const bookingsWithTrainDetails = bookings.map((booking) => {
@@ -149,6 +160,11 @@ router.get("/bookingsById/:id", async (req, res) => {
       error: error,
     });
   }
+});
+
+router.post("/send-mail/", async (req, res) => {
+  try {
+  } catch (error) {}
 });
 
 export { router as BookingRoute };

@@ -38,11 +38,12 @@ const bookingSchema = new mongoose.Schema({
   passengerName: String,
   passengerEmail: String,
   contactNumber: String,
+  price: String,
   orderId: String,
   passengerId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Passenger",
-  }
+  },
 });
 
 const Booking = mongoose.model("Booking", bookingSchema);
