@@ -43,7 +43,6 @@ import { Authenticate } from "../middleware/Auth.js";
 //   }
 // });
 
-
 // router.use(Authenticate);
 router.post("/bookings", async (req, res) => {
   try {
@@ -57,8 +56,13 @@ router.post("/bookings", async (req, res) => {
       contactNumber,
       orderId,
       passengerId,
-      price
     } = req.body;
+
+    // Check if the train exists
+    // const train = await Train.findById(trainId);
+    // if (!train) {
+    //   return res.status(400).send('Invalid train ID. Train not found.');
+    // }
 
     const isValidTrainId = mongoose.Types.ObjectId.isValid(trainId);
     if (!isValidTrainId) {
@@ -88,26 +92,25 @@ router.post("/bookings", async (req, res) => {
       contactNumber,
       orderId,
       passengerId,
-      price
     });
 
     await newBooking.save();
-
-    let transport = generateMailTransporter();
-
-    transport.sendMail({
-      from: "response@rw.com",
-      to: passengerEmail,
-      subject: "Email Verification",
-      html: `
-        <p>Your Details</p>`,
-    });
 
     // Mark the seat as booked in the train schema
     await Train.updateOne(
       { _id: trainId, "seats.number": seatNumber },
       { $set: { "seats.$.isBooked": true } }
     );
+
+    let transport = generateMailTransporter();
+
+    transport.sendMail({
+      from: "response@rw.com",
+      to: newBooking.passengerEmail,
+      subject: "Email Verification",
+      html: `
+        <p>Your Details</p>`,
+    });
 
     res.status(201).send("Booking created successfully.");
   } catch (error) {
@@ -133,18 +136,30 @@ router.get("/bookingsById/:id", async (req, res) => {
     passengerId: req.params.id,
   });
 
+  // const bookings = await Booking.findAll({
+  //   where: { passengerId: req.params.id },
+  // });
+
+  const bookingIds = bookings.map((booking) => booking.trainId);
+
+  const trains = await Train.find({
+    _id: bookingIds,
+  });
+
+  const bookingsWithTrainDetails = bookings.map((booking) => {
+    const train = trains.find((train) => train._id === booking.trainId);
+    return {
+      ...booking.toJSON(),
+      train,
+    };
+  });
   try {
-    res.status(201).json(bookings);
+    res.status(201).json(bookingsWithTrainDetails);
   } catch (error) {
     res.status(422).json({
       error: error,
     });
   }
-});
-
-router.post("/send-mail/", async (req, res) => {
-  try {
-  } catch (error) {}
 });
 
 export { router as BookingRoute };

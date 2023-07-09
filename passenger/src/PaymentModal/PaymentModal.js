@@ -42,6 +42,8 @@ const PaymentModal = ({
     custom_2: "", // optional field
   };
 
+  console.log(email);
+
   // Called when user completed the payment. It can be a successful payment or failure
   window.payhere.onCompleted = function onCompleted(orderId) {
     console.log("Payment completed. OrderID:" + orderId);

@@ -5,17 +5,17 @@ import { useSelector } from "react-redux";
 
 const BookingTicket = () => {
   const user = useSelector((state) => state.user);
-  // console.log(user.id)
+  console.log(user.email);
 
   const [trains, setTrains] = useState([]);
   const [selectedTrain, setSelectedTrain] = useState("");
   const [availableSeats, setAvailableSeats] = useState([]);
-  const [selectedTrainPrice, setSelectedTrainPrice] = useState("");
+  // const [selectedTrainPrice, setSelectedTrainPrice] = useState("");
   const [selectedSeat, setSelectedSeat] = useState("");
 
   const [bookingDate, setBookingDate] = useState("");
   const [bookingTime, setBookingTime] = useState("");
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
   const [productname, setProductname] = useState("");
@@ -128,7 +128,7 @@ const BookingTicket = () => {
             />
           </div>
 
-          <div className="mb-3">
+          {/* <div className="mb-3">
             <label>Email Address</label>
             <input
               type="email"
@@ -137,7 +137,7 @@ const BookingTicket = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-          </div>
+          </div> */}
 
           <div className="mb-3">
             <label>Contact Number</label>
@@ -164,7 +164,7 @@ const BookingTicket = () => {
               bookingDate={bookingDate}
               bookingTime={bookingTime}
               passengerName={user.name}
-              email={email}
+              email={user.email}
               phone={phone}
               orderId={orderId}
               passengerId={user.id}

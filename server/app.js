@@ -8,6 +8,8 @@ import { PassengerRoute } from "./routes/PassengerRoute.js";
 import { TrainRoute } from "./routes/TrainRoute.js";
 import { BookingRoute } from "./routes/BookingRoute.js";
 import { AdminRoute } from "./routes/AdminRoute.js";
+import { RevenueRoute } from "./routes/RevenueRoute.js";
+import { ExpensesRoute } from "./routes/ExpensesRoute.js";
 
 const app = express();
 app.use(express.json());
@@ -19,6 +21,8 @@ app.use("/passenger", PassengerRoute);
 app.use("/admin", AdminRoute);
 app.use("/train", TrainRoute);
 app.use("/booking", BookingRoute);
+app.use("/revenue", RevenueRoute);
+app.use("/expenses", ExpensesRoute);
 
 app.listen(PORT, () => {
   dbConnection();
