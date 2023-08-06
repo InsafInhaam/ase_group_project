@@ -70,7 +70,7 @@ export const PassengerLogin = async (req, res) => {
       passenger.salt
     );
 
-    const { id, name } = passenger;
+    const { id, name, profile, address, phone, birthday } = passenger;
 
     if (validation) {
       const token = await generateToken({
@@ -79,7 +79,15 @@ export const PassengerLogin = async (req, res) => {
       });
       return res.status(200).json({
         message: "Successfully logged in",
-        user: { email: passenger.email, id, name },
+        user: {
+          email: passenger.email,
+          id,
+          name,
+          profile,
+          address,
+          phone,
+          birthday,
+        },
         token,
       });
     }
@@ -104,23 +112,63 @@ export const GetPassengerProfile = async (req, res) => {
   }
 };
 
+// export const UpdatePassengerProfile = async (req, res) => {
+//   try {
+//     const passenger = req.user;
+//     const email = passenger.email;
+//     console.log(email)
+//     if (!passenger) {
+//       return res.status(400).json({ message: "Invalid Passenger" });
+//     }
+//     const { name, address, phone, birthday } = req.body;
+//     const passengerDetails = await Passenger.findOne({ email });
+
+//     const result = await uploadToCloudinary(req.file.buffer);
+//     const profilePath = result.secure_url;
+
+//     passengerDetails.name = name;
+//     passengerDetails.address = address;
+//     passengerDetails.phone = phone;
+//     passengerDetails.birthday = birthday;
+//     passengerDetails.profile = profilePath;
+//     const updatedPassenger = await passengerDetails.save();
+//     return res
+//       .status(200)
+//       .json({ message: "Successfully Updated", updatedPassenger });
+//   } catch (e) {
+//     console.log("Error: ", e);
+//     return res.status(400).json({ error: "Passenger Details Update Failed" });
+//   }
+// };
+
 export const UpdatePassengerProfile = async (req, res) => {
   try {
     const passenger = req.user;
     const email = passenger.email;
+    console.log(email);
     if (!passenger) {
       return res.status(400).json({ message: "Invalid Passenger" });
     }
-    const { name, address, phone } = req.body;
+    const { name, address, phone, birthday, password, profilePic } = req.body;
     const passengerDetails = await Passenger.findOne({ email });
-
-    const result = await uploadToCloudinary(req.file.buffer);
-    const profilePath = result.secure_url;
 
     passengerDetails.name = name;
     passengerDetails.address = address;
     passengerDetails.phone = phone;
-    passengerDetails.profile = profilePath;
+    passengerDetails.birthday = birthday;
+
+    if (password) {
+      const salt = await generateSalt();
+      const hashedPassword = await generatePassword(password, salt);
+      passengerDetails.password = hashedPassword;
+    }
+
+    if (profilePic) {
+      passengerDetails.profile = profilePic;
+    }
+
+    console.log(profilePic)
+
     const updatedPassenger = await passengerDetails.save();
     return res
       .status(200)

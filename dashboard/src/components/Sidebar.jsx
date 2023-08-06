@@ -22,9 +22,9 @@ const Sidebar = () => {
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/viewtrains">
               <i className="bx bxs-doughnut-chart" />
-              <span className="text">Analytics</span>
+              <span className="text">Trains</span>
             </a>
           </li>
           <li>

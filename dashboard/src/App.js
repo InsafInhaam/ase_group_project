@@ -12,6 +12,8 @@ import { useSelector } from "react-redux";
 import Popup from "./components/Popup";
 import Home from "./screens/Home";
 import Bookings from "./screens/Bookings";
+import Train from "./screens/Train";
+import ViewTrains from "./screens/ViewTrains";
 
 // Define the initial state
 const initialState = {
@@ -37,13 +39,17 @@ const Routing = () => {
       <Route
         exact
         path="/"
-        element={user ? <Home /> : <Navigate to="/login" />}
+        element={!user ? <Home /> : <Navigate to="/login" />}
       />
       <Route
         exact
         path="/bookings"
-        element={user ? <Bookings /> : <Navigate to="/login" />}
+        element={!user ? <Bookings /> : <Navigate to="/login" />}
       />
+      <Route exact path="/trains" element={<Train />} />
+
+      <Route exact path="/viewtrains" element={<ViewTrains />} />
+
       <Route exact path="/login" element={<Login />} />
     </Routes>
   );

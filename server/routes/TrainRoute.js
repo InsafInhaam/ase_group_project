@@ -4,22 +4,31 @@ import Train from "../models/Train.js";
 const router = express.Router();
 
 router.post("/trains", async (req, res) => {
-  const { name, source, destination, departureTime, arrivalTime, seats, price } =
-    req.body;
+  const {
+    name,
+    source,
+    destination,
+    availableDate,
+    availableTime,
+    seats,
+    price,
+    trainType,
+  } = req.body;
 
   try {
     const newTrain = new Train({
       name,
       source,
       destination,
-      departureTime,
-      arrivalTime,
+      availableDate,
+      availableTime,
       price,
       seats,
+      trainType,
     });
 
     await newTrain.save();
-    res.status(201).send(newTrain);
+    res.status(201).send({ newTrain, message: "Train saved successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occurred while creating a train.");
@@ -50,6 +59,38 @@ router.get("/trains/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occurred while retrieving the train.");
+  }
+});
+
+router.get("/trainlisting", async (req, res) => {
+  const { source, destination, availableDate } = req.query;
+
+  try {
+    let query = {};
+
+    if (source) {
+      query.source = source;
+    }
+
+    if (destination) {
+      query.destination = destination;
+    }
+
+    if (availableDate) {
+      query.availableDate = availableDate;
+    }
+
+    // Use the correct variable name 'trains' instead of 'train'
+    const trains = await Train.find(query);
+
+    if (trains.length === 0) {
+      return res.status(404).send("No trains found for the selected criteria.");
+    }
+
+    res.status(200).send(trains);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occurred while retrieving the trains.");
   }
 });
 
@@ -95,17 +136,16 @@ router.delete("/trains/:id", async (req, res) => {
     const deletedTrain = await Train.findByIdAndDelete(req.params.id);
 
     if (!deletedTrain) {
-      return res.status(404).send("Train not found");
+      return res.status(404).send({ error: "Train not found" });
     }
 
-    res.status(200).send(deletedTrain);
+    res
+      .status(200)
+      .send({ deletedTrain, message: "Train deleted successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occurred while deleting the train.");
   }
 });
-
-
-
 
 export { router as TrainRoute };

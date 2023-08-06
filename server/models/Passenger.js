@@ -11,6 +11,7 @@ const PassengerSchema = new Schema(
     address: String,
     phone: String,
     profile: String,
+    birthday: String,
   },
   {
     toJSON: {

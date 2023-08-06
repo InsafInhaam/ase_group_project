@@ -94,6 +94,9 @@ const BookingTicket = () => {
               value={selectedSeat}
               onChange={(e) => setSelectedSeat(e.target.value)}
             >
+              <option value="" selected disabled hidden>
+                Choose Seat
+              </option>
               {availableSeats.map((seat) => (
                 <option
                   value={seat.number}

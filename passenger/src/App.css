@@ -33,11 +33,11 @@ html,
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
 }
 .auth-wrapper {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   flex-direction: column;
   text-align: left;
-  margin-top: 40px;
+  margin-top: 100px;
 }
 .auth-inner {
   width: 450px;
@@ -135,4 +135,63 @@ table.table td .btn.manage {
 }
 table.table td .btn.manage:hover {
   background: #2e9c81;
+}
+
+/* edit profile */
+.edit-profile-img {
+  border-radius: 50%;
+  height: 400px !important;
+  width: 400px;
+  object-fit: cover;
+}
+
+/* map */
+.leaflet-container {
+  height: 600px;
+  width: 100%;
+}
+.chip {
+  display: inline-block;
+  padding: 0 25px;
+  height: 50px;
+  font-size: 16px;
+  line-height: 50px;
+  border-radius: 25px;
+  background-color: #f1f1f1;
+}
+
+.chip img {
+  float: left;
+  margin: 0 10px 0 -25px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+.static-map {
+  width: 250px;
+  height: 250px;
+}
+
+/* seats */
+.seats-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.seat-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 60px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  flex-direction: column;
+}
+
+input[type="checkbox"] {
+  margin-left: 8px;
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-hot-toast";
 
 const PaymentModal = ({
   trainId,
@@ -41,8 +42,6 @@ const PaymentModal = ({
     custom_1: "", // optional field
     custom_2: "", // optional field
   };
-
-  console.log(email);
 
   // Called when user completed the payment. It can be a successful payment or failure
   window.payhere.onCompleted = function onCompleted(orderId) {
@@ -95,6 +94,10 @@ const PaymentModal = ({
   };
 
   function pay() {
+    if (!seatNumber) {
+      toast.error("Please select the seat number");
+      return;
+    }
     window.payhere.startPayment(payment);
   }
 
