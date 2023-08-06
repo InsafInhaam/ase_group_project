@@ -3,7 +3,7 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import { stations } from "../utils/stations";
 import { toast } from "react-hot-toast";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Train = () => {
   const history = useNavigate();
@@ -62,6 +62,13 @@ const Train = () => {
     }));
   };
 
+  const handleRemoveSeat = (index) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      seats: prevData.seats.filter((_, i) => i !== index),
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -79,7 +86,7 @@ const Train = () => {
         // Train added successfully, you can redirect or show a success message here
         // console.log(response)
         toast.success("Train created successfully");
-        history('/viewtrains')
+        history("/viewtrains");
       } else {
         // Handle error, show error message or take appropriate action
         toast.error("Error creating train: " + response);
@@ -246,8 +253,15 @@ const Train = () => {
               <h3>Seats:</h3>
               <div className="seats-container">
                 {formData.seats.map((seat, index) => (
-                  <label key={index} className="seat-box">
+                  <div key={index} className="seat-box">
                     <span>Seat No {seat.number}</span>
+                    <button
+                      type="button"
+                      className="remove-seat"
+                      onClick={() => handleRemoveSeat(index)}
+                    >
+                      &times;
+                    </button>
                     <input
                       type="checkbox"
                       checked={seat.isBooked}
@@ -256,7 +270,7 @@ const Train = () => {
                       }
                       className="form-control"
                     />
-                  </label>
+                  </div>
                 ))}
               </div>
               <br />

@@ -19,6 +19,7 @@ import Map from "./screens/Map";
 import SearchTrain from "./screens/SearchTrain";
 import TrainListing from "./screens/TrainListing";
 import BookingTrain from "./screens/BookingTrain ";
+import SummaryPage from "./screens/SummaryPage";
 
 // Define the initial state
 const initialState = {
@@ -78,6 +79,18 @@ const Routing = () => {
         path="/bookingtrain/:id"
         element={user ? <BookingTrain /> : <Navigate to="/login" />}
       />
+      <Route
+        exact
+        path="/bookingtrain/:id"
+        element={user ? <BookingTrain /> : <Navigate to="/login" />}
+      />
+
+      <Route
+        exact
+        path="/summary"
+        element={user ? <SummaryPage /> : <Navigate to="/login" />}
+      />
+
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
     </Routes>

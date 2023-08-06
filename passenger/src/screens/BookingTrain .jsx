@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useHistory } from "react-router-dom";
 
 const BookingTrain = () => {
+  const history = useNavigate();
   const user = useSelector((state) => state.user);
 
   const location = useLocation();
   const trainId = location.pathname.split("/")[2];
 
-  const queryParams = new URLSearchParams(location.search);
   // const trainId = queryParams.get("trainId");
   console.log(trainId);
 
   const [formData, setFormData] = useState({
     seats: [], // Fill this with the seats data from the fetched train details
   });
+
+  const [trainDetails, setTrainDetails] = useState([]);
+
+  const [selectedSeats, setSelectedSeats] = useState([]);
 
   // Function to fetch train details
   useEffect(() => {
@@ -27,6 +31,7 @@ const BookingTrain = () => {
           ...formData,
           seats: result.seats,
         });
+        setTrainDetails(result);
       })
       .catch((error) => {
         console.log("Error fetching train details:", error);
@@ -38,21 +43,64 @@ const BookingTrain = () => {
     const updatedSeats = [...formData.seats];
     updatedSeats[index].isBooked = isChecked;
     setFormData({ ...formData, seats: updatedSeats });
+
+    // Update selected seats state
+    if (isChecked) {
+      setSelectedSeats([...selectedSeats, updatedSeats[index].number]);
+    } else {
+      setSelectedSeats(
+        selectedSeats.filter((seat) => seat !== updatedSeats[index].number)
+      );
+    }
   };
 
-  // Function to handle form submission (You can implement the submission logic here)
+  // console.log(selectedSeats)
+  // Function to handle form submission
+  const handleFormSubmission = () => {
+    // Create an object containing all the data you want to send to the backend
+    const bookingData = {
+      trainId: trainDetails._id,
+      trainName: trainDetails.name,
+      source: trainDetails.source,
+      destination: trainDetails.destination,
+      availableDate: trainDetails.availableDate,
+      availableTime: trainDetails.availableTime,
+      seats: selectedSeats,
+      price: trainDetails.price,
+      // Add any other user details you want to include in the booking
+      // For example: userName: user.name, userEmail: user.email, etc.
+    };
+
+    // Send the data to the backend using fetch or any other method
+    history("/summary", { state: { bookingData: bookingData } });
+  };
 
   return (
     <div className="container mt-5 bg-white p-5 border-rounded">
       <h2 className="text-center">Booking Train</h2>
+      <br /> <br />
       <div className="mb-4">
         <h3>Train Details</h3>
         {/* Display the train details (source, departure, train date, and time) here */}
         {/* Use the trainId to fetch the specific train details and display them */}
-        {/* For example: */}
-        <p>Source: Colombo Fort</p>
-        <p>Departure: Matara</p>
-        <p>Date and Time: 2023-08-07 10:00 AM</p>
+        <>
+          <p>
+            <strong>Name:</strong> {trainDetails.name}
+          </p>
+          <p>
+            <strong>Source:</strong> {trainDetails.source}
+          </p>
+          <p>
+            <strong>Destination:</strong> {trainDetails.destination}
+          </p>
+          <p>
+            <strong>Date and Time:</strong> {trainDetails.availableDate}
+            {trainDetails.availableTime}
+          </p>
+          <p>
+            <strong>Per Train Seat Price:</strong> {trainDetails.price}
+          </p>
+        </>
       </div>
       <div className="mb-4">
         <h3>User Details</h3>
@@ -65,13 +113,16 @@ const BookingTrain = () => {
         <h3>Choose Seats</h3>
         <div className="d-flex align-items-center flex-wrap">
           {formData.seats.map((seat, index) => (
-            <label key={index} className="seat-box m-1">
+            <label
+              key={index}
+              className={`seat-box m-1 ${seat.isBooked ? "disabled" : ""}`}
+            >
               <span>Seat No {seat.number}</span>
               <input
                 type="checkbox"
-                checked={seat.isBooked}
+                checked={seat.isBooked || selectedSeats.includes(seat.number)}
                 onChange={(e) => handleSeatChange(index, e.target.checked)}
-                // className="form-control"
+                disabled={seat.isBooked}
               />
             </label>
           ))}
@@ -79,7 +130,7 @@ const BookingTrain = () => {
       </div>
       <button
         className="btn btn-primary"
-        // onClick={handleFormSubmission} // Implement the form submission function
+        onClick={handleFormSubmission} // Implement the form submission function
       >
         Submit Booking
       </button>
