@@ -1,6 +1,7 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
+import { useSelector } from 'react-redux';
 
 const Home = () => {
   return (

@@ -15,7 +15,7 @@ router.post("/register", PassengerRegister);
 router.post("/login", PassengerLogin);
 
 router.use(Authenticate);
-router.get("/", GetPassengerProfile);
-router.patch("/", passengerProfileUpload, UpdatePassengerProfile);
+router.get("/getprofile", GetPassengerProfile);
+router.patch("/updateprofile", UpdatePassengerProfile);
 
 export { router as PassengerRoute };

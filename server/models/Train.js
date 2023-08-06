@@ -20,8 +20,8 @@ const trainSchema = new mongoose.Schema({
   name: String,
   source: String,
   destination: String,
-  departureTime: String,
-  arrivalTime: String,
+  availableDate: String,
+  availableTime: String,
   seats: [
     {
       number: String,
@@ -29,6 +29,7 @@ const trainSchema = new mongoose.Schema({
     },
   ],
   price: String,
+  trainType: String,
 });
 
 const Train = mongoose.model('Train', trainSchema);
