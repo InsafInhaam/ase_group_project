@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const TrainListing = () => {
   const location = useLocation();
@@ -9,18 +9,43 @@ const TrainListing = () => {
   const toLocation = queryParams.get("to");
   const date = queryParams.get("date");
 
+  console.log(fromLocation);
+
   const [trains, setTrains] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const sourceEncoded = encodeURIComponent(fromLocation);
     const destinationEncoded = encodeURIComponent(toLocation);
 
+    console.log(sourceEncoded);
+
     fetch(
       `${process.env.REACT_APP_API_URL}/train/trainlisting?source=${sourceEncoded}&destination=${destinationEncoded}&availableDate=${date}`
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          // Throw the status for handling in the catch block
+          throw new Error(res.status);
+        }
+        return res.json();
+      })
       .then((result) => {
-        setTrains(result);
+        if (result.length === 0) {
+          setError("No Trains Available");
+        } else {
+          setTrains(result);
+        }
+      })
+      .catch((error) => {
+        // Handle HTTP 404 error with custom message
+        if (error.message === "404") {
+          setError("No Trains Available");
+        } else {
+          // For other errors, set a generic message
+          setError("An unexpected error has occurred. Please try again.");
+        }
+        console.error("Failed to fetch trains:", error);
       });
   }, [fromLocation, toLocation, date]);
 
@@ -33,7 +58,9 @@ const TrainListing = () => {
   return (
     <div>
       <h2 className="text-center">Available Trains</h2>
-      {trains.length > 0 ? (
+      {error ? (
+        <p>Error: {error}</p>
+      ) : trains.length > 0 ? (
         <ul className="list-group d-flex align-items-center justify-content-center">
           {trains.map((train) => (
             <li key={train._id} className="list-group-item mb-3 w-75">
@@ -51,7 +78,6 @@ const TrainListing = () => {
                 className="btn btn-warning"
                 onClick={() => handleSelectTrain(train._id)}
                 style={{
-                  //   width: "100%",
                   boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
                 }}
               >

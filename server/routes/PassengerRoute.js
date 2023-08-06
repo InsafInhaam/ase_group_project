@@ -8,13 +8,13 @@ import {
   UpdatePassengerProfile,
 } from "../controllers/index.js";
 
-import { Authenticate } from "../middleware/Auth.js";
+import { UserAuthenticate } from "../middleware/Auth.js";
 const router = express.Router();
 
 router.post("/register", PassengerRegister);
 router.post("/login", PassengerLogin);
 
-router.use(Authenticate);
+router.use(UserAuthenticate);
 router.get("/getprofile", GetPassengerProfile);
 router.patch("/updateprofile", UpdatePassengerProfile);
 

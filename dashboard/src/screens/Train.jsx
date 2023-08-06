@@ -3,9 +3,13 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import { stations } from "../utils/stations";
 import { toast } from "react-hot-toast";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Train = () => {
+  const jwttoken = localStorage.getItem("jwt");
+
+  // console.log("Bearer " + jwttoken);
+
   const history = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -71,6 +75,7 @@ const Train = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("jwt"),
           },
           body: JSON.stringify(formData),
         }
@@ -79,7 +84,7 @@ const Train = () => {
         // Train added successfully, you can redirect or show a success message here
         // console.log(response)
         toast.success("Train created successfully");
-        history('/viewtrains')
+        history("/viewtrains");
       } else {
         // Handle error, show error message or take appropriate action
         toast.error("Error creating train: " + response);

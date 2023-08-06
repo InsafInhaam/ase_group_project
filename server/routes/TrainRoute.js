@@ -84,7 +84,7 @@ router.get("/trainlisting", async (req, res) => {
     const trains = await Train.find(query);
 
     if (trains.length === 0) {
-      return res.status(404).send("No trains found for the selected criteria.");
+      return res.status(404);
     }
 
     res.status(200).send(trains);

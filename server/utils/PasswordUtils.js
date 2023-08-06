@@ -31,3 +31,23 @@ export const validateToken = async (req) => {
   }
   return false;
 };
+
+export const validateUserToken = async (req) => {
+  const token = req.get("Authorization");
+  if (token) {
+    const payload = await jwt.verify(token.split(" ")[1], APP_SECRET);
+    req.user = payload;
+    return true;
+  }
+  return false;
+};
+
+export const validateAdminToken = async (req) => {
+  const token = req.get("Authorization");
+  if (token) {
+    const payload = await jwt.verify(token.split(" ")[1], APP_SECRET);
+    req.admin = payload;
+    return true;
+  }
+  return false;
+};
