@@ -1,6 +1,6 @@
 export const MONGO_URI =
   "mongodb+srv://insafinhaam732:gLpeRK1S9rNwJDBG@cluster0.q2c4rhk.mongodb.net/";
-export const PORT = process.env.PORT || 5000;
+export const PORT = process.env.PORT || 8000;
 export const APP_SECRET = "Railway App";
 // export const CLOUDINARY_CLOUD_NAME = "devxmy";
 // export const CLOUDINARY_API_KEY = "166351853751398";
