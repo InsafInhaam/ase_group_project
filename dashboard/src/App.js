@@ -39,12 +39,12 @@ const Routing = () => {
       <Route
         exact
         path="/"
-        element={!user ? <Home /> : <Navigate to="/login" />}
+        element={user ? <Home /> : <Navigate to="/login" />}
       />
       <Route
         exact
         path="/bookings"
-        element={!user ? <Bookings /> : <Navigate to="/login" />}
+        element={user ? <Bookings /> : <Navigate to="/login" />}
       />
       <Route exact path="/trains" element={<Train />} />
 
