@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Navbar from "../components/Navbar";
+import SearchTrainBlock from "../components/SearchTrainBlock";
 
 const Home = () => {
   const user = useSelector((state) => state.user);
@@ -25,101 +27,7 @@ const Home = () => {
         </div> */}
         {/* end loader */}
         {/* header */}
-        <header>
-          {/* header inner */}
-
-          <div className="header">
-            <nav className="navbar navbar-expand-lg bg-body-tertiary px-4">
-              <div className="container-fluid">
-                <a className="navbar-brand" href="#">
-                  COLOMBO EXPRESS
-                </a>
-                <button
-                  className="navbar-toggler"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation">
-                  <span className="navbar-toggler-icon" />
-                </button>
-                <div
-                  className="collapse navbar-collapse"
-                  id="navbarSupportedContent">
-                  <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li className="nav-item">
-                      <a
-                        className="nav-link active"
-                        aria-current="page"
-                        href="#">
-                        Home
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">
-                        About
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">
-                        Login
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">
-                        Signup
-                      </a>
-                    </li>
-                  </ul>
-                  {/* ----------------------  */}
-
-                  {/* Example split danger button */}
-                  <div className="btn-group mr-4">
-                    <button type="button" className="btn btn-primary">
-                      Name
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false">
-                      <span className="visually-hidden">Toggle Dropdown</span>
-                    </button>
-                    <ul className="dropdown-menu">
-                      <li>
-                        <a className="dropdown-item" href="#">
-                          Profile
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="#">
-                          Another action
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="#">
-                          Something else here
-                        </a>
-                      </li>
-                      <li>
-                        <hr className="dropdown-divider" />
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="#">
-                          Logout
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* ------------------------  */}
-                </div>
-              </div>
-            </nav>
-          </div>
-          {/* end header inner */}
-        </header>
+        <Navbar/>
         {/* end header */}
         <section>
           <div className="banner-main">
@@ -137,47 +45,9 @@ const Home = () => {
                     Read More
                   </a>
                 </div>
-                <div className="container">
-                  <form className="main-form shadow">
-                    <h3 className="shadow">Find Your Tour</h3>
-                    <div className="row">
-                      {/* 1st section  */}
-                      <div className="col-sm-3">
-                        <label>From Station</label>
-                        <select className="form-control" name="Any">
-                          <option>Any</option>
-                          <option>Option 1</option>
-                          <option>Option 2</option>
-                          <option>Option 3</option>
-                        </select>
-                      </div>
-                      {/* 2nd section  */}
-                      <div className="col-sm-3">
-                        <label>From Station</label>
-                        <select className="form-control" name="Any">
-                          <option>Any</option>
-                          <option>Option 1</option>
-                          <option>Option 2</option>
-                          <option>Option 3</option>
-                        </select>
-                      </div>
-                      {/* 3rd section  */}
-                      <div className="col-sm-3">
-                        <label>Date</label>
-                        <input
-                          className="form-control"
-                          placeholder="Any"
-                          type="date"
-                          name="Any"
-                        />
-                      </div>
-                      {/* 4th section  */}
-                      <div className="col-sm-3 d-flex align-items-center justify-content-center mt-3 ">
-                        <a href="#">search</a>
-                      </div>
-                    </div>
-                  </form>
-                </div>
+                {/* train form */}
+                <SearchTrainBlock/>
+                {/* end train from */}
               </div>
             </div>
           </div>

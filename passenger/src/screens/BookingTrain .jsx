@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, useHistory } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const BookingTrain = () => {
   const history = useNavigate();
@@ -76,65 +77,68 @@ const BookingTrain = () => {
   };
 
   return (
-    <div className="container mt-5 bg-white p-5 border-rounded">
-      <h2 className="text-center">Booking Train</h2>
-      <br /> <br />
-      <div className="mb-4">
-        <h3>Train Details</h3>
-        {/* Display the train details (source, departure, train date, and time) here */}
-        {/* Use the trainId to fetch the specific train details and display them */}
-        <>
-          <p>
-            <strong>Name:</strong> {trainDetails.name}
-          </p>
-          <p>
-            <strong>Source:</strong> {trainDetails.source}
-          </p>
-          <p>
-            <strong>Destination:</strong> {trainDetails.destination}
-          </p>
-          <p>
-            <strong>Date and Time:</strong> {trainDetails.availableDate}
-            {trainDetails.availableTime}
-          </p>
-          <p>
-            <strong>Per Train Seat Price:</strong> {trainDetails.price}
-          </p>
-        </>
-      </div>
-      <div className="mb-4">
-        <h3>User Details</h3>
-        <p>Name: {user.name}</p>
-        <p>Email: {user.email}</p>
-        <p>Address: {user.address}</p>
-        <p>Phone: {user.phone}</p>
-      </div>
-      <div className="mb-4">
-        <h3>Choose Seats</h3>
-        <div className="d-flex align-items-center flex-wrap">
-          {formData.seats.map((seat, index) => (
-            <label
-              key={index}
-              className={`seat-box m-1 ${seat.isBooked ? "disabled" : ""}`}
-            >
-              <span>Seat No {seat.number}</span>
-              <input
-                type="checkbox"
-                checked={seat.isBooked || selectedSeats.includes(seat.number)}
-                onChange={(e) => handleSeatChange(index, e.target.checked)}
-                disabled={seat.isBooked}
-              />
-            </label>
-          ))}
+    <>
+      <Navbar />
+      <div className="container mt-5 bg-white p-5 border-rounded">
+        <h2 className="text-center">Booking Train</h2>
+        <br /> <br />
+        <div className="mb-4">
+          <h3>Train Details</h3>
+          {/* Display the train details (source, departure, train date, and time) here */}
+          {/* Use the trainId to fetch the specific train details and display them */}
+          <>
+            <p>
+              <strong>Name:</strong> {trainDetails.name}
+            </p>
+            <p>
+              <strong>Source:</strong> {trainDetails.source}
+            </p>
+            <p>
+              <strong>Destination:</strong> {trainDetails.destination}
+            </p>
+            <p>
+              <strong>Date and Time:</strong> {trainDetails.availableDate}
+              {trainDetails.availableTime}
+            </p>
+            <p>
+              <strong>Per Train Seat Price:</strong> {trainDetails.price}
+            </p>
+          </>
         </div>
+        <div className="mb-4">
+          <h3>User Details</h3>
+          <p>Name: {user.name}</p>
+          <p>Email: {user.email}</p>
+          <p>Address: {user.address}</p>
+          <p>Phone: {user.phone}</p>
+        </div>
+        <div className="mb-4">
+          <h3>Choose Seats</h3>
+          <div className="d-flex align-items-center flex-wrap">
+            {formData.seats.map((seat, index) => (
+              <label
+                key={index}
+                className={`seat-box m-1 ${seat.isBooked ? "disabled" : ""}`}
+              >
+                <span>Seat No {seat.number}</span>
+                <input
+                  type="checkbox"
+                  checked={seat.isBooked || selectedSeats.includes(seat.number)}
+                  onChange={(e) => handleSeatChange(index, e.target.checked)}
+                  disabled={seat.isBooked}
+                />
+              </label>
+            ))}
+          </div>
+        </div>
+        <button
+          className="btn btn-primary"
+          onClick={handleFormSubmission} // Implement the form submission function
+        >
+          Submit Booking
+        </button>
       </div>
-      <button
-        className="btn btn-primary"
-        onClick={handleFormSubmission} // Implement the form submission function
-      >
-        Submit Booking
-      </button>
-    </div>
+    </>
   );
 };
 

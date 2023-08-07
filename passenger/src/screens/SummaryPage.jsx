@@ -1,10 +1,15 @@
 import React from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import PaymentModal from "../PaymentModal/PaymentModal";
 
 const SummaryPage = () => {
   const location = useLocation();
   const user = useSelector((state) => state.user);
+  const [promoCode, setPromoCode] = useState("");
+  const [promoMessage, setPromoMessage] = useState("");
+  const [discountPercentage, setDiscountPercentage] = useState(0);
 
   const bookingData = location.state?.bookingData || null;
 
@@ -29,10 +34,40 @@ const SummaryPage = () => {
   const totalPrice = seats.length * price;
 
   // Handle form submission for applying discount/promo (you can implement the logic accordingly)
-  const handleApplyPromo = (event) => {
-    event.preventDefault();
-    // Implement the logic to apply the promo/discount
+  const handleApplyPromo = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/promo/validate-promo`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("jwt"),
+          },
+          body: JSON.stringify({ promoCode }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        const { promo } = data;
+        setDiscountPercentage(parseFloat(promo.discountPercentage));
+        setPromoMessage("Success, promo code applied!");
+      } else {
+        setDiscountPercentage(0);
+        setPromoMessage(data.message);
+      }
+    } catch (error) {
+      console.error("Error applying promo code:", error);
+      setDiscountPercentage(0);
+      setPromoMessage("An error occurred while applying the promo code.");
+    }
   };
+
+  const discountedPrice = totalPrice * (1 - discountPercentage / 100);
 
   // Handle form submission for payment (you can implement the payment logic accordingly)
   const handlePayment = (event) => {
@@ -41,6 +76,23 @@ const SummaryPage = () => {
   };
 
   console.log(bookingData);
+
+  const merchantSecret =
+    "NDIyMjA5MjQ3ODM3MDU5MzU3NDIyMzM5MTY5OTk2MTU4NTY4NDU1Ng==";
+  const orderId =
+    Date.now().toString() + Math.random().toString(36).substr(2, 9);
+  const currency = "LKR";
+  const merchantId = " ";
+  const hashedSecret = md5(merchantSecret).toString().toUpperCase();
+  console.log(amount);
+  let amountFormated = parseFloat(amount)
+    .toLocaleString("en-us", { minimumFractionDigits: 2 })
+    .replaceAll(",", "");
+  const hash = md5(
+    merchantId + orderId + amountFormated + currency + hashedSecret
+  )
+    .toString()
+    .toUpperCase();
 
   return (
     <div className="container mt-5 bg-white p-5 border-rounded">
@@ -89,26 +141,53 @@ const SummaryPage = () => {
         </ul>
       </div>
       <div className="mb-4">
+        <h3>Promo Code</h3>
         <form onSubmit={handleApplyPromo}>
           <div className="form-group">
             <label htmlFor="promoCode">Enter Promo Code:</label>
-            <input type="text" id="promoCode" className="form-control" />
+            <input
+              type="text"
+              id="promoCode"
+              className="form-control"
+              value={promoCode}
+              onChange={(e) => setPromoCode(e.target.value)}
+            />
           </div>
           <button type="submit" className="btn btn-primary">
             Apply Promo Code
           </button>
         </form>
+        {promoMessage && <p>{promoMessage}</p>}
       </div>
       <div className="mb-4">
-        <h3>Total Price: {totalPrice} USD</h3>
+        <h3>Total Price</h3>
+        <p>Original Price: LKR{totalPrice.toFixed(2)}</p>
+        {discountPercentage > 0 && <p>Discount: {discountPercentage}%</p>}
+        <p>Discounted Price: LKR{discountedPrice.toFixed(2)}</p>
       </div>
       <div className="mb-4">
         <form onSubmit={handlePayment}>
           {/* Implement the payment form fields (e.g., credit card details, etc.) */}
           {/* ... */}
-          <button type="submit" className="btn btn-primary">
+          {/* <button type="submit" className="btn btn-primary">
             Proceed to Payment
-          </button>
+          </button> */}
+          <PaymentModal
+            // Use a unique value for the orderId
+            trainId={selectedTrain}
+            seatNumber={selectedSeat}
+            bookingDate={bookingDate}
+            bookingTime={bookingTime}
+            passengerName={user.name}
+            email={user.email}
+            phone={phone}
+            orderId={orderId}
+            passengerId={user.id}
+            name={trainName}
+            amount={amount}
+            currency={currency}
+            hash={hash}
+          />
         </form>
       </div>
     </div>

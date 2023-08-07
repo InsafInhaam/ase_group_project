@@ -31,3 +31,46 @@
   margin: 0 auto;
   margin-top: 30px;
 }
+
+.navbar-profile-img-btn-dropdown{
+  background: none !important;
+  border: none !important;
+  padding: 0px !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.navbar-profile-img-btn-dropdown:after{
+  display: none !important;
+}
+
+.navbar-profile-img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+/* seats */
+.seats-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.seat-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 60px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  flex-direction: column;
+}
+
+input[type="checkbox"] {
+  margin-left: 8px;
+}

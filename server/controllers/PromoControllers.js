@@ -46,7 +46,7 @@ export const ValidatePromo = async (req, res) => {
       return res.status(403).json({ message: "Promo code is not active" });
     }
 
-    return res.status(200).json({ message: "Success, promo code is valid." });
+    return res.status(200).json({ promo, message: "Success, promo code is valid." });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

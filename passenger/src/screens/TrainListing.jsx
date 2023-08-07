@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const TrainListing = () => {
   const location = useLocation();
@@ -57,6 +58,7 @@ const TrainListing = () => {
 
   return (
     <div>
+      <Navbar/>
       <h2 className="text-center">Available Trains</h2>
       {error ? (
         <p>Error: {error}</p>
