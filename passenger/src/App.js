@@ -88,15 +88,15 @@ function App() {
   return (
     <>
       <Router>
-        <div className="App">
-          <Popup />
-          <Navbar />
-          <div className="auth-wrapper">
-            {/* <Router> */}
-            <Routing />
-            {/* </Router> */}
-          </div>
-        </div>
+        {/* <div className="App"> */}
+        <Popup />
+        {/* <Navbar /> */}
+        {/* <div className="auth-wrapper"> */}
+        {/* <Router> */}
+        <Routing />
+        {/* </Router> */}
+        {/* </div>
+        </div> */}
       </Router>
     </>
   );

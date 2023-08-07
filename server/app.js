@@ -1,6 +1,6 @@
 import express from "express";
 import dbConnection from "./database/Database.js";
-import cors from 'cors'
+import cors from "cors";
 
 import { PORT } from "./config/index.js";
 
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
- 
+
 app.use("/passenger", PassengerRoute);
 app.use("/admin", AdminRoute);
 app.use("/train", TrainRoute);

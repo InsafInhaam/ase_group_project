@@ -49,43 +49,57 @@ const Login = () => {
 
   return (
     <>
-      <div className="auth-inner">
-        <form>
-          <h3>Sign In</h3>
-          <div className="mb-3">
-            <label>Email address</label>
-            <input
-              type="email"
-              className="form-control"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+      <section className="loginBackground">
+        <div className="container ">
+          <div className="row LoginHeight justify-content-center align-items-center">
+            <div className="col-md-6 ">
+              <div className="auth-inner shadow">
+                <form>
+                  <div className="card shadow">
+                    <div className="card-header">
+                      <h3>Sign In</h3>
+                    </div>
+                    <div className="card-body">
+                      <div className="mb-3">
+                        <label>Email address</label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          placeholder="Enter email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label>Password</label>
+                        <input
+                          type="password"
+                          className="form-control"
+                          placeholder="Enter password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                      </div>
+                      <div className="d-grid">
+                        <button
+                          type="button"
+                          className="btn btn-primary shadow"
+                          onClick={() => handleSubmit()}>
+                          Submit
+                        </button>
+                      </div>
+                      
+                      <p className="forgot-password text-right mt-3">
+                        Don't have an account <a href="/register">Register?</a>
+                      </p>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-          <div className="mb-3">
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="d-grid">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => handleSubmit()}
-            >
-              Submit
-            </button>
-          </div>
-          <p className="forgot-password text-right">
-            Don't have an account <a href="/register">Register?</a>
-          </p>
-        </form>
-      </div>
+        </div>
+      </section>
     </>
   );
 };
