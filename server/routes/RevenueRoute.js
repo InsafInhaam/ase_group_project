@@ -4,7 +4,7 @@ import { NetIncome, TotalRevenue } from "../controllers/RevenueControllers.js";
 
 const route = express.Router();
 
-// router.use(Authenticate);
+route.use(Authenticate);
 route.get("/total", TotalRevenue);
 route.get("/expenses");
 route.get("/net-income", NetIncome);

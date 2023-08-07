@@ -71,7 +71,7 @@ export const AdminRegister = async (req, res) => {
 
 export const GetAllPassengersAccount = async (req, res) => {
   try {
-    const admin = req.user;
+    const admin = req.admin;
     if (!admin) {
       return res.status(400).json({ message: "Invalid Admin" });
     }
@@ -86,7 +86,7 @@ export const GetAllPassengersAccount = async (req, res) => {
 export const GetPassengerById = async (req, res) => {
   try {
     const id = req.params.id;
-    const admin = req.user;
+    const admin = req.admin;
     if (!admin) {
       return res.status(400).json({ message: "Invalid Admin" });
     }
@@ -101,7 +101,7 @@ export const UpdatePassenger = async (req, res) => {
   try {
     const id = req.params.id;
     const { name } = req.body;
-    const admin = req.user;
+    const admin = req.admin;
     if (!admin) {
       return res.status(400).json({ message: "Invalid Admin" });
     }
@@ -117,7 +117,7 @@ export const UpdatePassenger = async (req, res) => {
 export const DeletePassenger = async (req, res) => {
   try {
     const id = req.params.id;
-    const admin = req.user;
+    const admin = req.admin;
     if (!admin) {
       return res.status(400).json({ message: "Invalid Admin" });
     }

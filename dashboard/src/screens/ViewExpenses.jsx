@@ -3,7 +3,7 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import { toast } from "react-hot-toast";
 
-const ViewTrains = () => {
+const ViewExpenses = () => {
   const [trains, setTrains] = useState([]);
 
   useEffect(() => {
@@ -138,4 +138,5 @@ const ViewTrains = () => {
     </div>
   );
 };
-export default ViewTrains;
+
+export default ViewExpenses;
