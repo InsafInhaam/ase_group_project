@@ -83,12 +83,12 @@ const Login = () => {
                       <div className="d-grid">
                         <button
                           type="button"
-                          className="btn btn-primary shadow"
+                          className="btnDesign shadow"
                           onClick={() => handleSubmit()}>
                           Submit
                         </button>
                       </div>
-                      
+
                       <p className="forgot-password text-right mt-3">
                         Don't have an account <a href="/register">Register?</a>
                       </p>

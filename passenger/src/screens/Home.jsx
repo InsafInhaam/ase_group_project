@@ -27,7 +27,6 @@ const Home = () => {
         {/* header */}
         <header>
           {/* header inner */}
-
           <div className="header">
             <nav className="navbar navbar-expand-lg bg-body-tertiary px-4">
               <div className="container-fluid">
@@ -269,30 +268,30 @@ const Home = () => {
                       {/*Grid column*/}
                       <div className="col-md-6">
                         <div className="md-form mb-0">
+                          <label htmlFor="name" className>
+                            Your name
+                          </label>
                           <input
                             type="text"
                             id="name"
                             name="name"
                             className="form-control"
                           />
-                          <label htmlFor="name" className>
-                            Your name
-                          </label>
                         </div>
                       </div>
                       {/*Grid column*/}
                       {/*Grid column*/}
                       <div className="col-md-6">
                         <div className="md-form mb-0">
+                          <label htmlFor="email" className>
+                            Your email
+                          </label>
                           <input
                             type="text"
                             id="email"
                             name="email"
                             className="form-control"
                           />
-                          <label htmlFor="email" className>
-                            Your email
-                          </label>
                         </div>
                       </div>
                       {/*Grid column*/}
@@ -302,15 +301,15 @@ const Home = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <div className="md-form mb-0">
+                          <label htmlFor="subject" className>
+                            Subject
+                          </label>
                           <input
                             type="text"
                             id="subject"
                             name="subject"
                             className="form-control"
                           />
-                          <label htmlFor="subject" className>
-                            Subject
-                          </label>
                         </div>
                       </div>
                     </div>
@@ -320,6 +319,7 @@ const Home = () => {
                       {/*Grid column*/}
                       <div className="col-md-12">
                         <div className="md-form">
+                          <label htmlFor="message">Your message</label>
                           <textarea
                             type="text"
                             id="message"
@@ -328,14 +328,13 @@ const Home = () => {
                             className="form-control md-textarea"
                             defaultValue={""}
                           />
-                          <label htmlFor="message">Your message</label>
                         </div>
                       </div>
                     </div>
                     {/*Grid row*/}
                   </form>
-                  <div className="text-center text-md-left">
-                    <a className="btn btn-primary">Send</a>
+                  <div className="text-center text-md-left mt-4">
+                    <a className="btnDesign">Feel free to contact</a>
                   </div>
                   <div className="status" />
                 </div>
@@ -382,14 +381,14 @@ const Home = () => {
                 </div>
                 <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12">
                   <div className="Follow">
-                    <h3>CONTACT US</h3>
+                    <h3 className="text-warning">COLOMBO EXPRESS</h3>
                     <span>
                       123 Second Street Fifth <br />
                       Avenue,
                       <br />
                       Colombo 10
                       <br />
-                      +94 765432100
+                      +94 777123456
                     </span>
                   </div>
                 </div>
@@ -422,22 +421,8 @@ const Home = () => {
                 </div>
                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                   <div className="Follow">
-                    <h3> Contact</h3>
+                    <h3> Subscribe</h3>
                     <div className="row">
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <input
-                          className="Newsletter"
-                          placeholder="Name"
-                          type="text"
-                        />
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <input
-                          className="Newsletter"
-                          placeholder="Email"
-                          type="text"
-                        />
-                      </div>
                       <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                         <textarea
                           className="textarea"
@@ -447,7 +432,6 @@ const Home = () => {
                         />
                       </div>
                     </div>
-                    <button className="Subscribe">Submit</button>
                   </div>
                 </div>
               </div>
