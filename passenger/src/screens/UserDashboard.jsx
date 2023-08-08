@@ -1,43 +1,142 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import Navbar from "../components/Navbar";
+import { amanProfile, profileImg, trainImg } from "../assets/images";
 
 function UserDashboard() {
+  const user = useSelector((state) => state.user);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
+  const [image, setImage] = useState("");
+  const [profilePic, setProfilePic] = useState("");
+  const [phone, setPhone] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [address, setAddress] = useState("");
+  const [userProfile, setUserProfile] = useState("");
+
+  const user_id = user.id;
+
+  useEffect(() => {
+    if (user_id) {
+      fetch(process.env.REACT_APP_API_URL + "/passenger/getprofile", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          setName(result.name);
+          setEmail(result.email);
+          setPhone(result.phone);
+          setBirthday(result.birthday);
+          setAddress(result.address);
+          setUserProfile(result.profile);
+        });
+    }
+  }, []);
+
+  console.log(userProfile);
+
+  const handleSubmit = () => {
+    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    if (password) {
+      if (password.length < 8) {
+        return toast.error("Password must be at least 8 characters");
+      } else if (!specialChars.test(password)) {
+        return toast.error("Password must have special characters");
+      } else if (password != rePassword) {
+        return toast.error("Password and Confirm Password doesn't match");
+      }
+    }
+    if (image) {
+      const data = new FormData();
+      data.append("file", image);
+      data.append("upload_preset", "surge-intern-test");
+      data.append("cloud_name", "dp6yyczpu");
+      fetch(process.env.REACT_APP_CLOUDINARY_URL, {
+        method: "POST",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setProfilePic(data.secure_url);
+          console.log(data.secure_url);
+        })
+        .catch((error) => console.log(error));
+    }
+
+    let body = {
+      name,
+      phone,
+      birthday,
+      address,
+    };
+
+    if (password) {
+      body.password = password;
+    }
+
+    if (profilePic) {
+      body.profilePic = profilePic;
+    }
+
+    body = JSON.stringify(body);
+    console.log(body);
+
+    fetch(process.env.REACT_APP_API_URL + "/passenger/updateprofile/", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: body,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          toast.error(data.error);
+        } else {
+          toast.success(data.message);
+          console.log(data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
-      <div className="container-fluid">
+      <Navbar />
+      <div className="container-fluid mt-4">
         <div className="row">
           {/* Side Navigation Bar */}
-          <nav className="col-md-3 mt-5 col-lg-2 d-md-block  sidebar nav-sidebar">
+          <nav className="col-md-3 mt-3 col-lg-2 d-md-block sidebar nav-sidebar ">
             <div className="position-sticky">
               <ul className="nav flex-column">
                 <li className="nav-item">
                   <a
-                    className="nav-link active"
+                    className="btnDesign mt-2"
                     id="tab1-tab"
                     data-bs-toggle="tab"
                     href="#tab1">
-                    <button className="btn btn-primary w-100">User</button>
+                    <span>User</span>
                   </a>
                 </li>
                 <li className="nav-item">
                   <a
-                    className="nav-link"
+                    className="btnDesign mt-2"
                     id="tab3-tab"
                     data-bs-toggle="tab"
                     href="#tab2">
-                    <button className="btn btn-primary w-100">
-                      Booking Details
-                    </button>
+                    <span>Booking Details</span>
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    id="tab3-tab"
-                    data-bs-toggle="tab"
-                    href="#tab2">
-                    <button className="btn btn-warning w-100">HOME</button>
-                  </a>
-                </li>
+
                 {/* Add more tabs as needed */}
               </ul>
             </div>
@@ -55,9 +154,8 @@ function UserDashboard() {
                     <div className="card shadow">
                       <div className="card-body d-flex justify-content-center m-3">
                         <img
-                          src="man.png"
-                          className="img-fluid shadow"
-                          width="80%"
+                          src={userProfile ? userProfile : amanProfile}
+                          className="circleStyle"
                         />
                       </div>
                       <div className="container">
@@ -71,25 +169,25 @@ function UserDashboard() {
                             <h6>Name</h6>
                           </div>
                           <div className="col-md-8">
-                            <p>Mirshath</p>
+                            <p>{user?.name}</p>
                           </div>
                           {/* email  */}
                           <div className="col-md-4">
                             <h6>Email</h6>
                           </div>
                           <div className="col-md-8">
-                            <p>mirshath@gmail.com</p>
+                            <p>{user?.email}</p>
                           </div>
                           {/* number  */}
                           <div className="col-md-4">
                             <h6>Contact No</h6>
                           </div>
                           <div className="col-md-8">
-                            <p>+94 777123456</p>
+                            <p>{user?.phone}</p>
                           </div>
                           <div className="col-md-12 mb-3  ">
                             <div className="d-flex justify-content-center">
-                              <button className="btn btn-primary w-100  ">
+                              <button className="btnDesign w-100  ">
                                 Success
                               </button>
                             </div>
@@ -102,7 +200,7 @@ function UserDashboard() {
                   <div className="col-md-8 ">
                     <div className="row">
                       {/* above column  */}
-                      <div className="col-md-8 mb-3">
+                      <div className="col-md-12 mb-3">
                         <div className="container">
                           <div className="card shadow">
                             <div className="card-header">
@@ -121,7 +219,10 @@ function UserDashboard() {
                                         type="text"
                                         className="form-control"
                                         placeholder="Enter name"
-                                        defaultValue="Mirshath"
+                                        value={name}
+                                        onChange={(e) =>
+                                          setName(e.target.value)
+                                        }
                                       />
                                     </div>
                                   </div>
@@ -135,7 +236,8 @@ function UserDashboard() {
                                         type="email"
                                         className="form-control"
                                         placeholder="Enter email"
-                                        defaultValue="Email"
+                                        value={email}
+                                        readOnly
                                       />
                                     </div>
                                   </div>
@@ -147,11 +249,28 @@ function UserDashboard() {
                                         type="Password"
                                         className="form-control"
                                         placeholder="password"
-                                        defaultValue
+                                        value={password}
+                                        onChange={(e) =>
+                                          setPassword(e.target.value)
+                                        }
                                       />
                                     </div>
                                   </div>
-                                  {/* 2nd 2nd row  */}
+                                  <div className="col-md-6">
+                                    <div className="form-group mt-2 mb-2">
+                                      <label>Confirm Password</label>
+                                      <input
+                                        type="Password"
+                                        className="form-control"
+                                        placeholder="Confirm password"
+                                        value={rePassword}
+                                        onChange={(e) =>
+                                          setRePassword(e.target.value)
+                                        }
+                                      />
+                                    </div>
+                                  </div>
+
                                   <div className="col-md-6">
                                     <div className="form-group mt-2 mb-2">
                                       <label>Address </label>
@@ -159,11 +278,14 @@ function UserDashboard() {
                                         type="text"
                                         className="form-control"
                                         placeholder="address"
-                                        defaultValue="Address"
+                                        value={address}
+                                        onChange={(e) =>
+                                          setAddress(e.target.value)
+                                        }
                                       />
                                     </div>
                                   </div>
-                                  {/* 3rd row 1 clm  */}
+
                                   <div className="col-md-6">
                                     <div className="form-group mt-2 mb-2">
                                       <label>Phone no </label>
@@ -171,11 +293,14 @@ function UserDashboard() {
                                         type="text"
                                         className="form-control"
                                         placeholder="phone"
-                                        defaultValue="+94 777123456"
+                                        value={phone}
+                                        onChange={(e) =>
+                                          setPhone(e.target.value)
+                                        }
                                       />
                                     </div>
                                   </div>
-                                  {/* 3rd row row 2nd clm  */}
+
                                   <div className="col-md-6">
                                     <div className="form-group mt-2 mb-2">
                                       <label>DOB </label>
@@ -183,26 +308,29 @@ function UserDashboard() {
                                         type="date"
                                         className="form-control"
                                         placeholder="phone"
-                                        defaultValue
+                                        value={birthday}
+                                        onChange={(e) =>
+                                          setBirthday(e.target.value)
+                                        }
                                       />
                                     </div>
                                   </div>
-                                  {/* 4th row  */}
-                                  <div className="col-md-12">
+
+                                  <div className="col-md-6">
                                     <div className="form-group mt-2 mb-2">
                                       <label>Profile </label>
                                       <input
                                         type="file"
                                         className="form-control"
                                         placeholder="phone"
-                                        defaultValue
                                       />
                                     </div>
                                   </div>
                                 </div>
                                 <button
-                                  type="submit"
-                                  className="btn btn-primary">
+                                  type="button"
+                                  className="btnDesign"
+                                  onClick={() => handleSubmit()}>
                                   Update
                                 </button>
                               </form>
@@ -210,23 +338,23 @@ function UserDashboard() {
                           </div>
                         </div>
                       </div>
-                      <div className="col-md-8">
+                      <div className="col-md-12">
                         <div className="container">
                           <div className="card shadow">
                             <div className="card-header">
                               <h4>Active Links</h4>
                             </div>
                             <div className="card-body">
-                              <a href>
+                              <a href="#">
                                 <h6>Booking the Train ticket</h6>
                               </a>
-                              <a href>
+                              <a href="#">
                                 <h6>Home</h6>
                               </a>
-                              <a href>
+                              <a href="#">
                                 <h6>About</h6>
                               </a>
-                              <a href>
+                              <a href="#">
                                 <h6>Logout</h6>
                               </a>
                             </div>
@@ -254,12 +382,10 @@ function UserDashboard() {
                     <div className="container">
                       <div className="card shadow">
                         <div className="card-body">
-                          <div className="imge d-flex justify-content-center">
+                          <div className="card-body d-flex justify-content-center m-3">
                             <img
-                              src="man.png"
-                              width="50%"
-                              className="img-fluid"
-                              alt="img"
+                              src={userProfile ? userProfile : amanProfile}
+                              className="circleStyle"
                             />
                           </div>
                           <hr />
@@ -411,7 +537,6 @@ function UserDashboard() {
                 </div>
               </div>
             </div>
-            {/* Add more tab content sections as needed */}
           </main>
         </div>
       </div>

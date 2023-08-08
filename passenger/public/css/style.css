@@ -432,18 +432,18 @@ a.readmore_bt {
 /*--------------------------------------------------------------------- header area ---------------------------------------------------------------------*/
 
 .navbar {
-  background: url(../images/header-bg.jpg);
-  background-color: rgba(0, 0, 0, 0);
+  /* background: url(../images/header-bg.jpg); */
+  /* background-color: rgba(0, 0, 0, 0);
   background-repeat: repeat;
   background-size: auto;
   background-color: #00000052;
-  box-shadow: #060606 0px 0px 3px 0px;
+  box-shadow: #060606 0px 0px 3px 0px; */
   z-index: 999;
   width: 100%;
   left: 0;
   top: 0;
   background-color: #00000052;
-  padding: 0;
+  padding: 0 !important;
   padding-top: 0px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -455,8 +455,8 @@ a.readmore_bt {
 .logo {
   float: left;
   position: relative;
-  top: -22px;
-  width: 110px;
+  /* top: -5px; */
+  width: 130px;
 }
 
 nav.main-menu {
@@ -1153,7 +1153,7 @@ ul.top_icon li a {
   display: inline-block;
   vertical-align: middle;
 }
-.main-menu ul > li:nth-child (6) {
+.main-menu ul > li:nth-child(6) {
   padding-right: 0px;
 }
 .nav > li {
@@ -1708,8 +1708,8 @@ input[type="radio"] .styled:checked + label::after {
 }
 
 .main-form a:hover {
-  background: #15cfe5;
-  border: solid #15cfe5 1px;
+  background: #ee590ff1;
+  border: solid #ee590ff1 1px;
 }
 .about {
   padding-top: 0px !important;

@@ -6,10 +6,6 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Train = () => {
-  const jwttoken = localStorage.getItem("jwt");
-
-  // console.log("Bearer " + jwttoken);
-
   const history = useNavigate();
 
   const [formData, setFormData] = useState({

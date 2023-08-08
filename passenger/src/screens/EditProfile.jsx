@@ -1,7 +1,7 @@
-import TrainImg from '../assets/images/Railwaylogo.png'
+import TrainImg from "../assets/images/Railwaylogo.png";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 function EditProfile() {
   const user = useSelector((state) => state.user);
@@ -60,11 +60,10 @@ function EditProfile() {
         .then((res) => res.json())
         .then((data) => {
           setProfilePic(data.secure_url);
-          console.log(data.secure_url)
+          console.log(data.secure_url);
         })
         .catch((error) => console.log(error));
     }
-
 
     let body = {
       name,
@@ -114,19 +113,23 @@ function EditProfile() {
           <div className="row">
             <div className="col-lg-5">
               <div className="imgs text-center justify-content-center mt-5">
-              <img src={user?.profile} className="img-fluid mt-5 edit-profile-img" alt="Rain Logo" />
-              <h2 className='pt-2 text-white'>{user?.name}</h2>
+                <img
+                  src={user?.profile}
+                  className="img-fluid mt-5 edit-profile-img"
+                  alt="Rain Logo"
+                />
+                <h2 className="pt-2 text-white">{user?.name}</h2>
               </div>
- 
             </div>
-            <div className="col-lg-7"> <br />
+            <div className="col-lg-7">
+              {" "}
+              <br />
               {/* user edit Profile */}
-            
-                <div className="card p-4">
-                  <div className="card-title">
-                    <h5>Edit User Account</h5> <hr />
-                  </div>
-                  <form>
+              <div className="card p-4">
+                <div className="card-title">
+                  <h5>Edit User Account</h5> <hr />
+                </div>
+                <div>
                   {/* Form Group (username)*/}
                   <div className="mb-3">
                     <label className="small mb-1" htmlFor="fullname">
@@ -142,7 +145,7 @@ function EditProfile() {
                       onChange={(e) => setName(e.target.value)}
                     />
                   </div>
-                 
+
                   {/* Form Group (email address)*/}
                   <div className="mb-3">
                     <label className="small mb-1" htmlFor="email">
@@ -252,19 +255,17 @@ function EditProfile() {
                   <button
                     className="btn btn-primary"
                     type="button"
-                    onClick={() => handleSubmit()}
-                  >
+                    onClick={() => handleSubmit()}>
                     Save changes
                   </button>
-                </form>
                 </div>
-            
+              </div>
             </div>
           </div>
         </div>
       </section>
     </>
-  )
+  );
 }
 
-export default EditProfile
+export default EditProfile;
