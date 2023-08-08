@@ -39,6 +39,12 @@ const Sidebar = () => {
               <span className="text">Team</span>
             </a>
           </li>
+          <li>
+            <a href="/add-admin">
+              <i className="bx bxs-user-plus" />
+              <span className="text">Admin</span>
+            </a>
+          </li>
         </ul>
         <ul className="side-menu">
           <li>
