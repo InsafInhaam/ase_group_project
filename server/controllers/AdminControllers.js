@@ -69,6 +69,16 @@ export const AdminRegister = async (req, res) => {
   }
 };
 
+export const ViewAdmin = async (req, res, next) => {
+  const allAdmins = await Admin.find();
+
+  allAdmins.forEach((admin) => {
+    console.log(admin.name);
+  });
+
+  return res.status(200).json(allAdmins);
+};
+
 export const GetAllPassengersAccount = async (req, res) => {
   try {
     const admin = req.admin;
