@@ -22,7 +22,7 @@ export const PassengerRegister = async (req, res) => {
     const { name, email, password, address, phone, profile } = value;
     const existingUser = await Passenger.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "A Passenger has already exist" });
+      return res.status(400).json({ error: "A Passenger has already exist" });
     }
     const salt = await generateSalt();
     const hashedPassword = await generatePassword(password, salt);
@@ -61,7 +61,7 @@ export const PassengerLogin = async (req, res) => {
 
     const passenger = await Passenger.findOne({ email });
     if (!passenger) {
-      return res.status(400).json({ message: "Passenger not found!" });
+      return res.status(400).json({ error: "Passenger not found!" });
     }
 
     const validation = await validatePassword(
@@ -69,6 +69,10 @@ export const PassengerLogin = async (req, res) => {
       passenger.password,
       passenger.salt
     );
+
+    if (!validation) {
+      return res.status(400).json({ error: "Incorrect password" });
+    }
 
     const { id, name, profile, address, phone, birthday } = passenger;
 
@@ -102,7 +106,7 @@ export const GetPassengerProfile = async (req, res) => {
     const passenger = req.user;
     const email = passenger.email;
     if (!passenger) {
-      return res.status(400).json({ message: "Invalid Passenger" });
+      return res.status(400).json({ error: "Invalid Passenger" });
     }
     const passengerDetails = await Passenger.findOne({ email });
     return res.status(200).json(passengerDetails);
@@ -167,7 +171,7 @@ export const UpdatePassengerProfile = async (req, res) => {
       passengerDetails.profile = profilePic;
     }
 
-    console.log(profilePic)
+    console.log(profilePic);
 
     const updatedPassenger = await passengerDetails.save();
     return res

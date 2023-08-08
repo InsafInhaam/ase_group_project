@@ -46,7 +46,7 @@ const BookingTicket = () => {
   const orderId =
     Date.now().toString() + Math.random().toString(36).substr(2, 9);
   const currency = "LKR";
-  const merchantId = "1222723";
+  const merchantId = " ";
   const hashedSecret = md5(merchantSecret).toString().toUpperCase();
   console.log(amount);
   let amountFormated = parseFloat(amount)

@@ -593,7 +593,6 @@ td.scrollable-cell {
   /* Add any other styling you want for the cell */
 }
 
-
 /* seats */
 .seats-container {
   display: flex;
@@ -612,8 +611,25 @@ td.scrollable-cell {
   font-size: 16px;
   font-weight: bold;
   flex-direction: column;
+  position: relative;
 }
 
 input[type="checkbox"] {
   margin-left: 8px;
+}
+
+button.remove-seat {
+  font-weight: bolder;
+  position: absolute;
+  top: -9px;
+  right: -10px;
+  background: red;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
 }
