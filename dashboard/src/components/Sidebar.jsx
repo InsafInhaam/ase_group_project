@@ -1,12 +1,12 @@
 import React from "react";
+import MainLogo from '../assets/logo1.png';
 
 const Sidebar = () => {
   return (
     <div>
       <section id="sidebar">
         <a href="#" className="brand">
-          <i className="bx bxs-smile" />
-          <span className="text">AdminHub</span>
+          <img src={MainLogo} alt="logo" className="mainlogo" />
         </a>
         <ul className="side-menu top">
           <li className="active">
