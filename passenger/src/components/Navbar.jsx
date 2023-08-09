@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
   const history = useNavigate();
 
+  const [getCurrentUser, setGetCurrentUser] = useState([]);
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_API_URL + "/passenger/getprofile/", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setGetCurrentUser(result);
+      });
+  }, [getCurrentUser]);
+
+  const user = getCurrentUser;
   return (
     <header>
       {/* header inner */}
@@ -79,8 +95,12 @@ const Navbar = () => {
                       aria-expanded="false"
                     >
                       {/* <span className="visually-hidden">Toggle Dropdown</span> */}
-                      <img src={user.profile} className="rounded-circle navbar-profile-img" alt="Black and White Portrait of a Man" loading="lazy" />
-
+                      <img
+                        src={user.profile}
+                        className="rounded-circle navbar-profile-img"
+                        alt="Black and White Portrait of a Man"
+                        loading="lazy"
+                      />
                     </button>
                     <ul className="dropdown-menu">
                       <li>
