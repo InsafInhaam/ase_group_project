@@ -90,7 +90,7 @@ const ViewTrains = () => {
                   {trains.map((train) => (
                     <tr key={train._id}>
                       <td>
-                        {train.name}
+                        <p>{train.name}</p>
                       </td>
                       <td>{train.source}</td>
                       <td>{train.destination}</td>
@@ -98,7 +98,7 @@ const ViewTrains = () => {
                       <td>{train.availableTime}</td>
                       <td className="scrollable-cell">
                       <div className="table-traindata">
-                      {train.seats.map((trainseats) => (
+                            {train.seats.map((trainseats) => (
                           <p>
                             {trainseats.number} :
                             {trainseats.isBooked ? "Booked" : "Not Booked"}

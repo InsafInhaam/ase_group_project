@@ -6,9 +6,9 @@ import Sidebar from "../components/Sidebar";
 
 const Home = () => {
 
-  //Revenue fetched
-  
-  
+//Fetching
+
+
   return (
     <div>
       {/* SIDEBAR */}
