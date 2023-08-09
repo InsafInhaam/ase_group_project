@@ -115,7 +115,7 @@ const Home = () => {
         {/* end about */}
 
         {/* gelary section  */}
-        <div id="Gallery" className="mt-4 mb-5 bg-light">
+        <div id="Gallery" className="mt-4 mb-5 py-5 bg-light">
           <div className="container ">
             <div className="row">
               <div className="col-md-12 ">
@@ -377,7 +377,7 @@ const Home = () => {
         {/* end Customer review secrion  */}
 
         {/* contact us  */}
-        <section id="Contact" className=" bg-light">
+        <section id="Contact" className="bg-light py-5">
           <div className="container">
             <div className="row ">
               <div className="col-md-12">

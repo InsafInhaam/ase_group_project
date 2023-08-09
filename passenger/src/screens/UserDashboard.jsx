@@ -18,6 +18,9 @@ function UserDashboard() {
   const [address, setAddress] = useState("");
   const [userProfile, setUserProfile] = useState("");
 
+  const [displayProfileTab, setDisplayProfileTab] = useState(true);
+  const [displayBookingTab, setDisplayBookingTab] = useState(false);
+
   const user_id = user.id;
 
   useEffect(() => {
@@ -109,6 +112,16 @@ function UserDashboard() {
       });
   };
 
+  const displayProfile = () => {
+    setDisplayProfileTab(true);
+    setDisplayBookingTab(false);
+  };
+
+  const displayBooking = () => {
+    setDisplayProfileTab(false);
+    setDisplayBookingTab(true);
+  };
+
   return (
     <>
       <Navbar />
@@ -123,7 +136,8 @@ function UserDashboard() {
                     className="btnDesign mt-2"
                     id="tab1-tab"
                     data-bs-toggle="tab"
-                    href="#tab1">
+                    href="#tab1"
+                    onClick={displayProfile}>
                     <span>User</span>
                   </a>
                 </li>
@@ -132,7 +146,8 @@ function UserDashboard() {
                     className="btnDesign mt-2"
                     id="tab3-tab"
                     data-bs-toggle="tab"
-                    href="#tab2">
+                    href="#tab2"
+                    onClick={displayBooking}>
                     <span>Booking Details</span>
                   </a>
                 </li>
@@ -147,7 +162,10 @@ function UserDashboard() {
               className="tab-pane fade show active"
               id="tab1"
               role="tabpanel"
-              aria-labelledby="tab1-tab">
+              aria-labelledby="tab1-tab"
+              style={{
+                display: displayProfileTab ? "block" : "none",
+              }}>
               <div className="container">
                 <div className="row">
                   <div className="col-md-4 mb-2">
@@ -373,7 +391,10 @@ function UserDashboard() {
               className="tab-pane fade"
               id="tab2"
               role="tabpanel"
-              aria-labelledby="tab3-tab">
+              aria-labelledby="tab3-tab"
+              style={{
+                display: displayBookingTab ? "block" : "none",
+              }}>
               <div className="container">
                 {/* <div class="card bg-light shadow" style="height: 90vh;"> */}
                 <div className="row">
