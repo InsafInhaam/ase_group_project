@@ -82,22 +82,22 @@ const SummaryPage = () => {
 
   // setAmount(discountedPrice ? )
 
-  const merchantSecret =
-    "NDIyMjA5MjQ3ODM3MDU5MzU3NDIyMzM5MTY5OTk2MTU4NTY4NDU1Ng==";
-  const orderId =
-    Date.now().toString() + Math.random().toString(36).substr(2, 9);
-  const currency = "LKR";
-  const merchantId = " ";
-  const hashedSecret = md5(merchantSecret).toString().toUpperCase();
-  console.log(amount);
-  let amountFormated = parseFloat(amount)
-    .toLocaleString("en-us", { minimumFractionDigits: 2 })
-    .replaceAll(",", "");
-  const hash = md5(
-    merchantId + orderId + amountFormated + currency + hashedSecret
-  )
-    .toString()
-    .toUpperCase();
+  // const merchantSecret =
+  //   "NDIyMjA5MjQ3ODM3MDU5MzU3NDIyMzM5MTY5OTk2MTU4NTY4NDU1Ng==";
+  // const orderId =
+  //   Date.now().toString() + Math.random().toString(36).substr(2, 9);
+  // const currency = "LKR";
+  // const merchantId = " ";
+  // const hashedSecret = md5(merchantSecret).toString().toUpperCase();
+  // console.log(amount);
+  // let amountFormated = parseFloat(amount)
+  //   .toLocaleString("en-us", { minimumFractionDigits: 2 })
+  //   .replaceAll(",", "");
+  // const hash = md5(
+  //   merchantId + orderId + amountFormated + currency + hashedSecret
+  // )
+  //   .toString()
+  //   .toUpperCase();
 
   return (
     <div className="container mt-5 bg-white p-5 border-rounded">
@@ -177,7 +177,7 @@ const SummaryPage = () => {
           {/* <button type="submit" className="btn btn-primary">
             Proceed to Payment
           </button> */}
-          {/* <PaymentModal
+          <PaymentModal
             // Use a unique value for the orderId
             trainId={trainId}
             seatNumber={seats}
@@ -192,7 +192,7 @@ const SummaryPage = () => {
             amount={amount}
             currency={currency}
             hash={hash}
-          /> */}
+          />
         </form>
       </div>
     </div>

@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
-import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
+import { toast } from "react-hot-toast";
 
-const ViewTrains = () => {
-  const [trains, setTrains] = useState([]);
+const AddAdmin = () => {
+  const [admins, setAdmins] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/train/alltrain")
+    fetch(process.env.REACT_APP_API_URL + "/admin/view")
       .then((res) => res.json())
       .then((result) => {
-        setTrains(result);
+        setAdmins(result);
       });
-  }, [trains]);
+  }, [admins]);
 
-  // console.log(trains);
+  console.log("Error is:" + admins.email);
 
-  const handleDelete = (id) => 
-  {
+  const handleDelete = (id) => {
     fetch(process.env.REACT_APP_API_URL + "/train/trains/" + id, {
       method: "DELETE",
       headers: {
@@ -44,7 +43,7 @@ const ViewTrains = () => {
         <main>
           <div className="head-title">
             <div className="left">
-              <h1>Trains</h1>
+              <h1>Add Admin</h1>
               <ul className="breadcrumb">
                 <li>
                   <a href="#">Dashboard</a>
@@ -54,70 +53,68 @@ const ViewTrains = () => {
                 </li>
                 <li>
                   <a className="active" href="#">
-                    Trains
+                    Add Admin
                   </a>
                 </li>
               </ul>
             </div>
             <a href="/trains" className="btn-download">
               <i className="bx plus" />
-              <span className="text">Add New Train</span>
+              <span className="text">Add New Admin</span>
             </a>
           </div>
 
           <div className="table-data">
             <div className="order">
               <div className="head">
-                <h3>Train</h3>
+                <h3>Admin</h3>
                 <i className="bx bx-search" />
                 <i className="bx bx-filter" />
               </div>
               <table>
                 <thead>
                   <tr>
-                    <th>Train Name</th>
-                    <th>Source</th>
-                    <th>Destination</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    {/* <th>Destination</th>
                     <th>Available Date</th>
                     <th>Available Time</th>
                     <th>Seats</th>
                     <th>Price</th>
                     <th>Train Type</th>
-                    <th>Actions</th>
+                    <th>Actions</th> */}
                   </tr>
                 </thead>
                 <tbody>
-                  {trains.map((train) => (
-                    <tr key={train._id}>
+                  {admins.map((admin) => (
+                    <tr key={admin._id}>
                       <td>
-                        <p>{train.name}</p>
+                        <p>{admin.name}</p>
                       </td>
-                      <td>{train.source}</td>
-                      <td>{train.destination}</td>
+                      <td>{admin.email}</td>
+                      <td>{admin.password}</td>
+                      {/* <td>{train.destination}</td>
                       <td>{train.availableDate}</td>
-                      <td>{train.availableTime}</td>
-                      <td className="scrollable-cell">
-                      <div className="table-traindata">
-                            {train.seats.map((trainseats) => (
+                      <td>{train.availableTime}</td> */}
+                      {/* <td className="scrollable-cell">
+                        {train.seats.map((trainseats) => (
                           <p>
                             {trainseats.number} :
                             {trainseats.isBooked ? "Booked" : "Not Booked"}
                           </p>
                         ))}
-                        
-                      </div>
-                    
-                      </td>
-                      <td>{train.price}</td>
-                      <td>{train.trainType}</td>
+                      </td> */}
+                      {/* <td>{train.price}</td>
+                      <td>{train.trainType}</td> */}
                       <td>
                         <button className="btn btn-warning">Edit</button>
                         &nbsp;&nbsp;
                         <button
                           className="btn btn-danger"
-                          onClick={() => handleDelete(train._id)}
+                          onClick={() => handleDelete(admin._id)}
                         >
-                          Trash
+                          Delete
                         </button>
                       </td>
                     </tr>
@@ -143,4 +140,4 @@ const ViewTrains = () => {
     </div>
   );
 };
-export default ViewTrains;
+export default AddAdmin;

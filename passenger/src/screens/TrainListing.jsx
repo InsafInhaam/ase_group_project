@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { galery1 } from "../assets/images";
 
 const TrainListing = () => {
   const location = useLocation();
@@ -58,8 +59,88 @@ const TrainListing = () => {
 
   return (
     <div>
-      <Navbar/>
-      <h2 className="text-center">Available Trains</h2>
+      <Navbar />
+      <h4 className="text-center mt-3 mb-3">Available Trains For Date</h4>
+      <div className="container"></div>
+      {/* ----------------- GPT ------  */}
+      <div className="row d-flex justify-content-center">
+        <div className="col-md-9">
+          {error ? (
+            <p>Error: {error}</p>
+          ) : trains.length > 0 ? (
+            <div className="card p-3">
+              {trains.map((train) => (
+                <div key={train._id} className="">
+                  <h2>
+                    {train.source} - {train.destination}
+                  </h2>
+                  {/* 1st train  */}
+                  <div className="card mb-3">
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-sm-3 d-flex align-items-center">
+                          {train.name}
+                        </div>
+                        <div className="col-sm-3 d-flex align-items-center">
+                          {/* {train.source} - {train.destination} */}
+                          {train.availableDate} &nbsp; &nbsp;{" "}
+                          {train.availableTime}
+                        </div>
+                        <div className="col-sm-3 d-flex align-items-center">
+                          Aavailable : {train.seats.length}
+                        </div>
+                        <div className="col-sm-3 d-flex align-items-center">
+                          <button
+                            className="btn btn-outline-success"
+                            onClick={() => handleSelectTrain(train._id)}
+                            style={{
+                              boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
+                            }}>
+                            Select Train
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* 2nd train  */}
+                  <div className="card mb-3">
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-sm-3 d-flex align-items-center">
+                          {train.name}
+                        </div>
+                        <div className="col-sm-3 d-flex align-items-center">
+                          {/* {train.source} - {train.destination} */}
+                          {train.availableDate} &nbsp; &nbsp;{" "}
+                          {train.availableTime}
+                        </div>
+                        <div className="col-sm-3 d-flex align-items-center">
+                          Aavailable : {train.seats.length}
+                        </div>
+                        <div className="col-sm-3 d-flex align-items-center">
+                          <button
+                            className="btn btn-outline-success"
+                            onClick={() => handleSelectTrain(train._id)}
+                            style={{
+                              boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
+                            }}>
+                            Select Train
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>No trains found for the selected criteria.</p>
+          )}
+        </div>
+      </div>
+
+      {/* ----------------- main logics */}
+
       {error ? (
         <p>Error: {error}</p>
       ) : trains.length > 0 ? (
@@ -81,8 +162,7 @@ const TrainListing = () => {
                 onClick={() => handleSelectTrain(train._id)}
                 style={{
                   boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
-                }}
-              >
+                }}>
                 Book Train
               </button>
             </li>

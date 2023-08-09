@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logo, profileImg } from "../assets/images";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -27,41 +28,43 @@ const Navbar = () => {
   return (
     <header>
       {/* header inner */}
-
       <div className="header">
         <nav className="navbar navbar-expand-lg bg-body-tertiary px-4">
           <div className="container-fluid">
-            <a className="navbar-brand" href="#">
-              COLOMBO EXPRESS
+            <a className="navbar-brand" href="/">
+              <img src={logo} alt="Logo" className="logo" />
             </a>
             <button
-              className="navbar-toggler"
+              className="navbar-toggler "
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent"
               aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
+              aria-label="Toggle navigation">
               <span className="navbar-toggler-icon" />
             </button>
             <div
               className="collapse navbar-collapse"
-              id="navbarSupportedContent"
-            >
+              id="navbarSupportedContent">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">
+                  <a className="nav-link active" aria-current="page" href="/">
                     Home
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href="#about">
                     About
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href="#Gallery">
+                    Gallery
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#Contact">
                     Contact Us
                   </a>
                 </li>
@@ -92,11 +95,10 @@ const Navbar = () => {
                       type="button"
                       className="btn btn-primary dropdown-toggle dropdown-toggle-split navbar-profile-img-btn-dropdown"
                       data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
+                      aria-expanded="false">
                       {/* <span className="visually-hidden">Toggle Dropdown</span> */}
                       <img
-                        src={user.profile}
+                        src={user.profile ? user.profile : profileImg}
                         className="rounded-circle navbar-profile-img"
                         alt="Black and White Portrait of a Man"
                         loading="lazy"
@@ -104,7 +106,7 @@ const Navbar = () => {
                     </button>
                     <ul className="dropdown-menu">
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <a className="dropdown-item" href="/userdashboard">
                           Profile
                         </a>
                       </li>
@@ -119,8 +121,7 @@ const Navbar = () => {
                             localStorage.clear();
                             dispatch({ type: "LOGOUT" });
                             history("/login");
-                          }}
-                        >
+                          }}>
                           Logout
                         </a>
                       </li>

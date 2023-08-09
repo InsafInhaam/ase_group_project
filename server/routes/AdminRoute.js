@@ -6,12 +6,14 @@ import {
   GetAllPassengersAccount,
   GetPassengerById,
   UpdatePassenger,
+  ViewAdmin,
 } from "../controllers/AdminControllers.js";
 import { AdminAuthenticate } from "../middleware/Auth.js";
 
 const router = express.Router();
 
 router.post("/login", AdminLogin);
+router.get("/view", ViewAdmin);
 
 router.use(AdminAuthenticate);
 router.post("/register", AdminRegister);
