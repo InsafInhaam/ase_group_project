@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
 import { toast } from "react-hot-toast";
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 
 const ViewTrains = () => {
   const [trains, setTrains] = useState([]);
@@ -16,7 +16,8 @@ const ViewTrains = () => {
 
   // console.log(trains);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id) => 
+  {
     fetch(process.env.REACT_APP_API_URL + "/train/trains/" + id, {
       method: "DELETE",
       headers: {
@@ -96,12 +97,16 @@ const ViewTrains = () => {
                       <td>{train.availableDate}</td>
                       <td>{train.availableTime}</td>
                       <td className="scrollable-cell">
-                        {train.seats.map((trainseats) => (
+                      <div className="table-traindata">
+                            {train.seats.map((trainseats) => (
                           <p>
                             {trainseats.number} :
                             {trainseats.isBooked ? "Booked" : "Not Booked"}
                           </p>
                         ))}
+                        
+                      </div>
+                    
                       </td>
                       <td>{train.price}</td>
                       <td>{train.trainType}</td>
