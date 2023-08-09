@@ -82,12 +82,13 @@ const BookingTrain = () => {
     <>
       <Navbar />
       <section className="BookTrainTicketSection">
+        <br />
         <div className="container mb-3">
-          <h4
+          <h3
             className=""
             style={{ color: "#fff", fontSize: "35px", fontWeight: 400 }}>
             Book Train Ticket
-          </h4>
+          </h3>
           <hr style={{ color: "#fff", width: "50" }} />
 
           <div className="mb-4">

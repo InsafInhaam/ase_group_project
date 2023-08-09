@@ -19,7 +19,7 @@ const Navbar = () => {
               <img src={logo} alt="Logo" className="logo" />
             </a>
             <button
-              className="navbar-toggler"
+              className="navbar-toggler "
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarSupportedContent"
@@ -38,12 +38,17 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/">
+                  <a className="nav-link" href="#about">
                     About
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href="#Gallery">
+                    Gallery
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#Contact">
                     Contact Us
                   </a>
                 </li>
