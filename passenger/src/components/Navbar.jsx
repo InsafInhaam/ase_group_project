@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import React from "react";
+=======
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+>>>>>>> 6c365065e30465635f76a11915e9443f156d7342
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logo, profileImg } from "../assets/images";
@@ -7,9 +12,25 @@ import { logo, profileImg } from "../assets/images";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
   const history = useNavigate();
 
+  const [getCurrentUser, setGetCurrentUser] = useState([]);
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_API_URL + "/passenger/getprofile/", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setGetCurrentUser(result);
+      });
+  }, [getCurrentUser]);
+
+  const user = getCurrentUser;
   return (
     <header>
       {/* header inner */}
@@ -20,7 +41,7 @@ const Navbar = () => {
               <img src={logo} alt="Logo" className="logo" />
             </a>
             <button
-              className="navbar-toggler"
+              className="navbar-toggler "
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarSupportedContent"
@@ -39,12 +60,17 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/">
+                  <a className="nav-link" href="#about">
                     About
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href="#Gallery">
+                    Gallery
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#Contact">
                     Contact Us
                   </a>
                 </li>

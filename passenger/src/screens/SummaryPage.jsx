@@ -3,13 +3,15 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import PaymentModal from "../PaymentModal/PaymentModal";
+import md5 from "crypto-js/md5";
 
 const SummaryPage = () => {
   const location = useLocation();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.fetchuser);
   const [promoCode, setPromoCode] = useState("");
   const [promoMessage, setPromoMessage] = useState("");
   const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [amount, setAmount] = useState("");
 
   const bookingData = location.state?.bookingData || null;
 
@@ -20,6 +22,7 @@ const SummaryPage = () => {
 
   // Access the bookingData and display the summary
   const {
+    trainId,
     trainName,
     source,
     destination,
@@ -76,6 +79,8 @@ const SummaryPage = () => {
   };
 
   console.log(bookingData);
+
+  // setAmount(discountedPrice ? )
 
   // const merchantSecret =
   //   "NDIyMjA5MjQ3ODM3MDU5MzU3NDIyMzM5MTY5OTk2MTU4NTY4NDU1Ng==";
@@ -172,22 +177,22 @@ const SummaryPage = () => {
           {/* <button type="submit" className="btn btn-primary">
             Proceed to Payment
           </button> */}
-          {/* <PaymentModal
+          <PaymentModal
             // Use a unique value for the orderId
-            trainId={selectedTrain}
-            seatNumber={selectedSeat}
-            bookingDate={bookingDate}
-            bookingTime={bookingTime}
+            trainId={trainId}
+            seatNumber={seats}
+            bookingDate={availableDate}
+            bookingTime={availableTime}
             passengerName={user.name}
             email={user.email}
-            phone={phone}
+            phone={user.phone}
             orderId={orderId}
             passengerId={user.id}
             name={trainName}
             amount={amount}
             currency={currency}
             hash={hash}
-          /> */}
+          />
         </form>
       </div>
     </div>
