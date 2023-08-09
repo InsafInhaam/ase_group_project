@@ -210,3 +210,21 @@ element.style {
 .size {
   font-size: 10px;
 }
+
+/* ....................  */
+/* list training  */
+
+.trainListBtn {
+  background: #ee580f;
+  padding: 8px 30px;
+  border-radius: 25px;
+  color: white;
+}
+
+.textColor_design {
+  color: #ee580f;
+}
+
+.trainListBtn:hover {
+  background: #e26526;
+}
