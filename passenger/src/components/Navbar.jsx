@@ -1,14 +1,36 @@
+<<<<<<< HEAD
 import React from "react";
+=======
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+>>>>>>> 6c365065e30465635f76a11915e9443f156d7342
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logo, profileImg } from "../assets/images";
+
+
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
   const history = useNavigate();
 
+  const [getCurrentUser, setGetCurrentUser] = useState([]);
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_API_URL + "/passenger/getprofile/", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setGetCurrentUser(result);
+      });
+  }, [getCurrentUser]);
+
+  const user = getCurrentUser;
   return (
     <header>
       {/* header inner */}

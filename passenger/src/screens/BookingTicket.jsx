@@ -4,8 +4,25 @@ import md5 from "crypto-js/md5";
 import { useSelector } from "react-redux";
 
 const BookingTicket = () => {
-  const user = useSelector((state) => state.user);
-  console.log(user.email);
+  // const user = useSelector((state) => state.user);
+  // console.log(user.email);
+
+  const [getCurrentUser, setGetCurrentUser] = useState([]);
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_API_URL + "/passenger/getprofile/", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setGetCurrentUser(result);
+      });
+  }, [getCurrentUser]);
+
+  const user = getCurrentUser;
 
   const [trains, setTrains] = useState([]);
   const [selectedTrain, setSelectedTrain] = useState("");

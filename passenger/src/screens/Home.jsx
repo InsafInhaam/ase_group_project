@@ -14,17 +14,17 @@ import {
 const Home = () => {
   const user = useSelector((state) => state.user);
 
-  const [bookings, setBookings] = useState([]);
+  // const [bookings, setBookings] = useState([]);
 
-  useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/booking/bookingsById/" + user.id)
-      .then((res) => res.json())
-      .then((result) => {
-        setBookings(result);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(process.env.REACT_APP_API_URL + "/booking/bookingsById/" + user.id)
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       setBookings(result);
+  //     });
+  // }, []);
 
-  console.log(bookings);
+  // console.log(bookings);
 
   return (
     <>

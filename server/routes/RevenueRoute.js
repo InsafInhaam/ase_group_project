@@ -12,5 +12,3 @@ route.get("/net-income", NetIncome);
 
 export { route as RevenueRoute };
 
-
-
