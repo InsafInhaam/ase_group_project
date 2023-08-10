@@ -87,7 +87,7 @@ const TrainListing = () => {
                   </p>
 
                   {/* 1st train  */}
-                  <div className="card mb-3 shadow">
+                  <div className="card mb-3 shadow cardHover">
                     <div className="card-body">
                       <div className="row">
                         <div className="col-sm-3 d-flex align-items-center mb-3">

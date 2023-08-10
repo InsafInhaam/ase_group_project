@@ -32,6 +32,14 @@
   background-position: center;
   width: 100%;
 }
+.BackImg {
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  background-image: url(../public/images/backImg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+}
 
 .custom-hr {
   width: 30%;
@@ -227,4 +235,9 @@ element.style {
 
 .trainListBtn:hover {
   background: #e26526;
+}
+.cardHover:hover {
+  font-weight: bolder;
+  cursor: pointer;
+  color: #ee580f;
 }

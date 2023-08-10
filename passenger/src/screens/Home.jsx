@@ -475,7 +475,9 @@ const Home = () => {
                     {/*Grid row*/}
                   </form>
                   <div className="text-center text-md-left mt-4">
-                    <a className="btnDesign">Feel free to contact</a>
+                    <button className="btnDesign" style={{ color: "white" }}>
+                      Feel free to contact
+                    </button>
                   </div>
                   <div className="status" />
                 </div>

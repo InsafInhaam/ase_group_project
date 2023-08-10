@@ -226,7 +226,7 @@ const BookingTrain = () => {
               </div>
             </div>
           </div>
-          <div className="mb-4 d-flex justify-content-center">
+          <div className="mb-4 d-flex justify-content-center py-5">
             {/* <button className="">Confirm Booking</button> */}
             <button
               onClick={handleFormSubmission} // Implement the form submission function

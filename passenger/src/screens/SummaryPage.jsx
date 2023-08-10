@@ -111,95 +111,200 @@ const SummaryPage = () => {
   return (
     <>
       <Navbar />
-      <div className="container mt-5 bg-white p-5 border-rounded">
-        <h2 className="text-center">Booking Summary</h2>
-        <br /> <br />
-        <div className="mb-4">
-          <h3>User Details</h3>
-          <p>
-            <strong>Name:</strong> {user.name}
-          </p>
-          <p>
-            <strong>Email:</strong> {user.email}
-          </p>
-          <p>
-            <strong>Address:</strong> {user.address}
-          </p>
-          <p>
-            <strong>Phone:</strong>
-            {user.phone}
-          </p>
-        </div>
-        <div className="mb-4">
-          <h3>Train Details</h3>
-          <p>
-            <strong>Train Name: </strong>
-            {trainName}
-          </p>
-          <p>
-            <strong>Source: </strong>
-            {source}
-          </p>
-          <p>
-            <strong>Destination: </strong>
-            {destination}
-          </p>
-          <p>
-            <strong>Date and Time:</strong> {availableDate} {availableTime}
-          </p>
-        </div>
-        <div className="mb-4">
-          <h3>Selected Seats</h3>
-          <ul>
-            {seats.map((seat) => (
-              <li key={seat._id}>Seat Number: {seat}</li>
-            ))}
-          </ul>
-        </div>
-        <div className="mb-4">
-          <h3>Promo Code</h3>
-          <form onSubmit={handleApplyPromo}>
-            <div className="form-group">
-              <label htmlFor="promoCode">Enter Promo Code:</label>
-              <input
-                type="text"
-                id="promoCode"
-                className="form-control"
-                value={promoCode}
-                onChange={(e) => setPromoCode(e.target.value)}
-              />
+      <section className="BackImg py-5">
+        <div className="container  mb-4 BackImg">
+          <div className="row">
+            {/* heading section  */}
+            {/* <div className="col md-12">
+            <div className="h4 mt-4 mb-3">Booking Summary</div>
+          </div> */}
+            <div className="card shadow ">
+              <div className="card-body">
+                <div className="row">
+                  {/* 1st clm  */}
+                  <div className="col-md-7">
+                    <h5>Summary of Booking</h5>
+                    {/* train Details  */}
+                    <div className="row">
+                      <div className="col-md-12 mt-4">
+                        <h2 className="">
+                          <i class="fa fa-train" aria-hidden="true"></i> &nbsp;
+                          {trainName} &nbsp;
+                          <i
+                            class="fa fa-chevron-right"
+                            aria-hidden="true"></i>{" "}
+                          &nbsp;{" "}
+                          <i class="fa fa-map-marker" aria-hidden="true"></i>{" "}
+                          &nbsp;
+                          {source} - {destination} &nbsp;
+                        </h2>
+                        <p>
+                          <i class="fa fa-calendar-o" aria-hidden="true"></i>{" "}
+                          &nbsp;{availableDate} &nbsp; &nbsp;{" "}
+                          <i class="fa fa-clock-o" aria-hidden="true"></i>{" "}
+                          &nbsp; {availableTime}
+                        </p>
+                      </div>
+                    </div>
+                    {/* passnger details  */}
+                    <table
+                      className="table table-striped mt-4"
+                      style={{ width: "90%" }}>
+                      <tr>
+                        <td className="p-2">
+                          <strong>Name :</strong>
+                        </td>
+                        <td> {user.name}</td>
+                      </tr>
+                      <tr>
+                        <td className="p-2">
+                          <strong>Email :</strong>
+                        </td>
+                        <td> {user.email}</td>
+                      </tr>
+                      <tr>
+                        <td className="p-2">
+                          <strong>Address :</strong>
+                        </td>
+                        <td> {user.address}</td>
+                      </tr>
+                      <tr>
+                        <td className="p-2">
+                          <strong>Contact No :</strong>
+                        </td>
+                        <td> {user.phone}</td>
+                      </tr>
+                      <tr>
+                        <td className="p-2">
+                          <strong>Seat selected</strong>
+                        </td>
+                        <td>
+                          {" "}
+                          {seats.map((seat) => (
+                            <li key={seat._id}>Seat Number: {seat}</li>
+                          ))}
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  {/* 2nd clm  */}
+                  <div className="col-md-5">
+                    <div className="row ">
+                      <div className="col-md-12">
+                        <div className="card bg-light shadow">
+                          <div className="card-body">
+                            <h5>Payment Details</h5>
+                            <div className="card ">
+                              <div className="card-body">
+                                <p>
+                                  If passanger have <strong> promo-code</strong>
+                                  ? use it
+                                </p>
+                                <div className="">
+                                  <strong>Promo Code</strong>
+                                  <form onSubmit={handleApplyPromo}>
+                                    <div className="form-group mt-2">
+                                      {/* <label htmlFor="promoCode">
+                                      Enter Promo Code:
+                                    </label> */}
+                                      <input
+                                        type="text"
+                                        placeholder="Use Valid Promo code here"
+                                        id="promoCode"
+                                        className="form-control"
+                                        value={promoCode}
+                                        onChange={(e) =>
+                                          setPromoCode(e.target.value)
+                                        }
+                                      />
+                                    </div>
+                                    <button
+                                      type="submit"
+                                      className="trainListBtn">
+                                      Apply
+                                    </button>
+                                  </form>
+                                  {promoMessage && (
+                                    <p className="text-success py-2">
+                                      {promoMessage}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                            {/* money details  */}
+                            <div className="py-4 px-4">
+                              <table style={{ width: "100%" }}>
+                                <tr>
+                                  <td className="">Sub Total</td>
+                                  <td className="text-right">
+                                    LKR {totalPrice.toFixed(2)}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td className=""></td>
+                                  <td className="text-right">
+                                    {discountPercentage > 0 && (
+                                      <p style={{ fontWeight: 700 }}>
+                                        {" "}
+                                        -&nbsp; {discountPercentage}% &nbsp;
+                                      </p>
+                                    )}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    {" "}
+                                    <hr />
+                                  </td>
+                                  <td>
+                                    <hr />
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td className=""> Total</td>
+
+                                  <td
+                                    className="text-right"
+                                    style={{
+                                      fontWeight: 700,
+                                      fontSize: "20px",
+                                    }}>
+                                    LKR {discountedPrice.toFixed(2)}
+                                  </td>
+                                </tr>
+                              </table>
+                            </div>
+                            <div className="mb-4">
+                              <PaymentModal
+                                // Use a unique value for the orderId
+                                trainId={trainId}
+                                seatNumber={seats}
+                                bookingDate={availableDate}
+                                bookingTime={availableTime}
+                                passengerName={user.name}
+                                email={user.email}
+                                phone={user.phone}
+                                orderId={orderId}
+                                passengerId={user.id}
+                                name={trainName}
+                                amount={discountedPrice}
+                                currency={currency}
+                                hash={hash}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <button type="submit" className="btn btn-primary">
-              Apply Promo Code
-            </button>
-          </form>
-          {promoMessage && <p>{promoMessage}</p>}
+          </div>
         </div>
-        <div className="mb-4">
-          <h3>Total Price</h3>
-          <p>Original Price: LKR{totalPrice.toFixed(2)}</p>
-          {discountPercentage > 0 && <p>Discount: {discountPercentage}%</p>}
-          <p>Discounted Price: LKR{discountedPrice.toFixed(2)}</p>
-        </div>
-        <div className="mb-4">
-          <PaymentModal
-            // Use a unique value for the orderId
-            trainId={trainId}
-            seatNumber={seats}
-            bookingDate={availableDate}
-            bookingTime={availableTime}
-            passengerName={user.name}
-            email={user.email}
-            phone={user.phone}
-            orderId={orderId}
-            passengerId={user.id}
-            name={trainName}
-            amount={discountedPrice}
-            currency={currency}
-            hash={hash}
-          />
-        </div>
-      </div>
+      </section>
     </>
   );
 };
