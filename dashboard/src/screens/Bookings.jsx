@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -57,7 +57,7 @@ const Bookings = () => {
                 <i className="bx bx-search" />
                 <i className="bx bx-filter" />
               </div>
-              <table>
+              <table className="table table-striped">
                 <thead>
                   <tr>
                     <th>Passenger Name</th>

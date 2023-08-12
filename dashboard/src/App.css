@@ -137,7 +137,7 @@ body {
     display: flex;
     align-items: center;
     border-radius: 48px;
-    font-size: 16px;
+    font-size: 14px;
     color: var(--dark);
     white-space: nowrap;
     overflow-x: hidden;
@@ -193,7 +193,6 @@ body {
     padding: 0 24px;
     display: flex;
     align-items: center;
-    grid-gap: 24px;
     font-family: var(--lato);
     position: sticky;
     top: 0;
@@ -214,64 +213,21 @@ body {
 
 #content nav a {
     color: var(--dark);
+    text-decoration: none;
+    /* Added to remove underline */
 }
 
-#content nav .bx.bx-menu {
-    cursor: pointer;
-    color: var(--dark);
-}
-
-#content nav .nav-link {
-    font-size: 16px;
-    transition: 0.3s ease;
-}
-
-#content nav .nav-link:hover {
-    color: var(--blue);
-}
-
-#content nav form {
-    max-width: 400px;
-    width: 100%;
-    margin-right: auto;
-}
-
-#content nav form .form-input {
+#content nav .navbar-icons {
+    margin-left: auto;
+    /* Align icons and text to the right */
     display: flex;
     align-items: center;
-    height: 36px;
-}
-
-#content nav form .form-input input {
-    flex-grow: 1;
-    padding: 0 16px;
-    height: 100%;
-    border: none;
-    background: var(--grey);
-    border-radius: 36px 0 0 36px;
-    outline: none;
-    width: 100%;
-    color: var(--dark);
-}
-
-#content nav form .form-input button {
-    width: 36px;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--blue);
-    color: var(--light);
-    font-size: 18px;
-    border: none;
-    outline: none;
-    border-radius: 0 36px 36px 0;
-    cursor: pointer;
 }
 
 #content nav .notification {
     font-size: 20px;
     position: relative;
+    margin-right: 20px;
 }
 
 #content nav .notification .num {
@@ -296,32 +252,6 @@ body {
     height: 36px;
     object-fit: cover;
     border-radius: 50%;
-}
-
-#content nav .switch-mode {
-    display: block;
-    min-width: 50px;
-    height: 25px;
-    border-radius: 25px;
-    background: var(--grey);
-    cursor: pointer;
-    position: relative;
-}
-
-#content nav .switch-mode::before {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    bottom: 2px;
-    width: calc(25px - 4px);
-    background: var(--blue);
-    border-radius: 50%;
-    transition: all 0.3s ease;
-}
-
-#content nav #switch-mode:checked+.switch-mode::before {
-    left: calc(100% - (25px - 4px) - 2px);
 }
 
 
