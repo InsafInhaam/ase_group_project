@@ -14,7 +14,9 @@ import Home from "./screens/Home";
 import Bookings from "./screens/Bookings";
 import Train from "./screens/Train";
 import ViewTrains from "./screens/ViewTrains";
-import AddAdmin from "./screens/AddAdmin";
+import { TestS } from "./screens/TestS";
+import Admin from "./screens/Admin";
+import Passenger from "./screens/Passenger";
 
 // Define the initial state
 const initialState = {
@@ -51,9 +53,11 @@ const Routing = () => {
 
       <Route exact path="/viewtrains" element={<ViewTrains />} />
 
-      <Route exact path="/add-admin" element={<AddAdmin />} />
+      <Route exact path="/add-admin" element={<Admin />} />
+      <Route exact path="/passenger" element={<Passenger />} />
 
       <Route exact path="/login" element={<Login />} />
+      <Route exact path="/tests" element={<TestS />} />
     </Routes>
   );
 };

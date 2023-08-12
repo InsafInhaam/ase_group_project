@@ -43,7 +43,7 @@ import { Authenticate } from "../middleware/Auth.js";
 //   }
 // });
 
-// router.use(Authenticate);
+router.use(Authenticate);
 router.post("/bookings", async (req, res) => {
   try {
     const {

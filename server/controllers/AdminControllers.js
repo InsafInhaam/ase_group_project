@@ -73,10 +73,77 @@ export const ViewAdmin = async (req, res, next) => {
   const allAdmins = await Admin.find();
 
   allAdmins.forEach((admin) => {
-    console.log(admin.name);
+    console.log(admin.id);
   });
 
   return res.status(200).json(allAdmins);
+};
+
+export const UpdateAdmin = async (req, res, next) => {
+  try {
+    const { name, email, password } = req.body;
+    const adminId = req.params.id;
+
+    if (!adminId) {
+      return res.status(400).json({ message: "Admin ID is required" });
+    }
+
+    const admin = await Admin.findById(adminId);
+    if (!admin) {
+      return res.status(400).json({ message: "Admin not found" });
+    }
+
+    if (name) {
+      admin.name = name;
+    }
+    if (email) {
+      const existingEmail = await Admin.findOne({ email });
+      if (existingEmail && String(existingEmail._id) !== String(admin._id)) {
+        return res.status(400).json({ message: "Email already exists" });
+      }
+      admin.email = email;
+    }
+    if (password) {
+      const salt = await generateSalt();
+      const hashedPassword = await generatePassword(password, salt);
+      admin.password = hashedPassword;
+      admin.salt = salt;
+    }
+
+    await admin.save();
+    console.log("Try to update");
+    return res
+      .status(200)
+      .send({ message: "Admin updated successfully", admin });
+  } catch (error) {
+    console.log("Error:", error);
+    return res.status(400).json({ error: "Failed to update admin" });
+  }
+};
+
+export const DeleteAdmin = async (req, res, next) => {
+  try {
+    const adminId = req.params.id;
+
+    if (!adminId) {
+      return res.status(400).json({ message: "Admin ID is required" });
+    }
+
+    const admin = await Admin.findById(adminId);
+
+    if (!admin) {
+      return res.status(400).json({ message: "Admin not found" });
+    }
+
+    await Admin.deleteOne({ _id: adminId });
+
+    console.log("Admin deleted");
+
+    return res.status(200).send({ message: "Admin deleted successfully" });
+  } catch (error) {
+    console.log("Error:", error);
+    return res.status(400).json({ error: "Failed to delete admin" });
+  }
 };
 
 export const GetAllPassengersAccount = async (req, res) => {

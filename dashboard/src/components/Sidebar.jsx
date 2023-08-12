@@ -10,7 +10,7 @@ const Sidebar = () => {
         </a>
         <ul className="side-menu top">
           <li className="active">
-            <a href="#">
+            <a href="/">
               <i className="bx bxs-dashboard" />
               <span className="text">Dashboard</span>
             </a>
@@ -43,6 +43,12 @@ const Sidebar = () => {
             <a href="/add-admin">
               <i className="bx bxs-user-plus" />
               <span className="text">Admin</span>
+            </a>
+          </li>
+          <li>
+            <a href="/passenger">
+              <i className="bx bxs-user-plus" />
+              <span className="text">Passenger</span>
             </a>
           </li>
         </ul>
