@@ -72,7 +72,7 @@ const ViewTrains = () => {
                 <i className="bx bx-search" />
                 <i className="bx bx-filter" />
               </div>
-              <table>
+              <table className="table table-striped">
                 <thead>
                   <tr>
                     <th>Train Name</th>

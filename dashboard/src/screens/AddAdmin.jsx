@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
 import { toast } from "react-hot-toast";
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 
 const AddAdmin = () => {
   const [admins, setAdmins] = useState([]);
@@ -12,7 +12,7 @@ const AddAdmin = () => {
       .then((result) => {
         setAdmins(result);
       });
-  }, [admins]);
+  }, []);
 
   console.log("Error is:" + admins.email);
 
@@ -71,7 +71,7 @@ const AddAdmin = () => {
                 <i className="bx bx-search" />
                 <i className="bx bx-filter" />
               </div>
-              <table>
+              <table className="table table-striped">
                 <thead>
                   <tr>
                     <th>Name</th>
