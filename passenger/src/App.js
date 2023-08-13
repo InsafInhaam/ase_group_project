@@ -98,7 +98,7 @@ const Routing = () => {
         exact
         path="/summary"
         element={user ? <SummaryPage /> : <Navigate to="/login" />}
-       />
+      />
 
       <Route
         exact

@@ -292,7 +292,7 @@ const SummaryPage = () => {
                                 email={user.email}
                                 phone={user.phone}
                                 orderId={orderId}
-                                passengerId={user.id}
+                                passengerId={user._id}
                                 name={trainName}
                                 amount={discountedPrice}
                                 currency={currency}
