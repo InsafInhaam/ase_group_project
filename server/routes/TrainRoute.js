@@ -13,6 +13,10 @@ router.post("/trains", async (req, res) => {
     seats,
     price,
     trainType,
+    sourceLat,
+    sourceLng,
+    destinationLat,
+    destinationLng,
   } = req.body;
 
   try {
@@ -25,6 +29,10 @@ router.post("/trains", async (req, res) => {
       price,
       seats,
       trainType,
+      sourceLat,
+      sourceLng,
+      destinationLat,
+      destinationLng,
     });
 
     await newTrain.save();

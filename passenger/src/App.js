@@ -21,6 +21,7 @@ import TrainListing from "./screens/TrainListing";
 import BookingTrain from "./screens/BookingTrain ";
 import SummaryPage from "./screens/SummaryPage";
 import UserDashboard from "./screens/UserDashboard";
+import MapTracking from "./screens/MapTracking";
 
 // Define the initial state
 const initialState = {
@@ -97,6 +98,12 @@ const Routing = () => {
         exact
         path="/summary"
         element={user ? <SummaryPage /> : <Navigate to="/login" />}
+      />
+
+      <Route
+        exact
+        path="/maptracking/:trainid"
+        element={user ? <MapTracking /> : <Navigate to="/login" />}
       />
 
       <Route exact path="/login" element={<Login />} />

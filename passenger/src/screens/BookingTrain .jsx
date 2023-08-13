@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { trainImg } from "../assets/images";
+import { toast } from "react-hot-toast";
 // import trainImg from "../assets/images/trainAnimation.png";
 
 const BookingTrain = () => {
@@ -60,6 +61,13 @@ const BookingTrain = () => {
   // console.log(selectedSeats)
   // Function to handle form submission
   const handleFormSubmission = () => {
+    if (selectedSeats.length == 0) {
+      toast.error("Please select the train seats needed");
+      return;
+    }
+
+    console.log(selectedSeats)
+
     // Create an object containing all the data you want to send to the backend
     const bookingData = {
       trainId: trainDetails._id,
@@ -86,7 +94,8 @@ const BookingTrain = () => {
         <div className="container mb-3">
           <h3
             className=""
-            style={{ color: "#fff", fontSize: "35px", fontWeight: 400 }}>
+            style={{ color: "#fff", fontSize: "35px", fontWeight: 400 }}
+          >
             Book Train Ticket
           </h3>
           <hr style={{ color: "#fff", width: "50" }} />
@@ -132,20 +141,20 @@ const BookingTrain = () => {
                           </div>
                           <div className="col-md-6">
                             <p>
-                              <strong>Destination:</strong>{" "}
+                              <strong>Destination:</strong>
                               {trainDetails.destination}
                             </p>
                           </div>
                           <div className="col-md-6">
                             <p>
-                              <strong>Date and Time:</strong>{" "}
+                              <strong>Date and Time:</strong>
                               {trainDetails.availableDate} |&nbsp;
                               {trainDetails.availableTime}
                             </p>
                           </div>
                           <div className="col-md-6">
                             <p>
-                              <strong>Per Train Seat Price: LKR </strong>{" "}
+                              <strong>Per Train Seat Price: LKR </strong>
                               {trainDetails.price}.00
                             </p>
                           </div>
@@ -164,25 +173,21 @@ const BookingTrain = () => {
                   <div className="card-body bg-light">
                     <div className="">
                       <p>
-                        {" "}
                         <strong>Name:</strong> {user.name}
                       </p>
                     </div>
                     <div className="">
                       <p>
-                        {" "}
                         <strong>Email:</strong> {user.email}
                       </p>
                     </div>
                     <div className="">
                       <p>
-                        {" "}
                         <strong>Address:</strong> {user.address}
                       </p>
                     </div>
                     <div className="">
                       <p>
-                        {" "}
                         <strong>Phone: </strong>
                         {user.phone}
                       </p>
@@ -204,7 +209,8 @@ const BookingTrain = () => {
                             key={index}
                             className={`seat-box m-1 ${
                               seat.isBooked ? "disabled" : ""
-                            }`}>
+                            }`}
+                          >
                             <span>Seat No {seat.number}</span>
                             <input
                               type="checkbox"
@@ -238,9 +244,9 @@ const BookingTrain = () => {
                 fontWeight: 400,
                 border: "solid #ee580f 1px",
                 padding: "10px 45px",
-              }}>
-              {" "}
-              Confirm Booking{" "}
+              }}
+            >
+              Confirm Booking
             </button>
           </div>
         </div>

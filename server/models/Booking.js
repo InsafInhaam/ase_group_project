@@ -40,7 +40,6 @@ const bookingSchema = new mongoose.Schema({
   contactNumber: String,
   price: String,
   orderId: String,
-  price: String,
   passengerId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Passenger",

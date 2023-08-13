@@ -16,11 +16,15 @@ const TrainListing = () => {
   const [trains, setTrains] = useState([]);
   const [error, setError] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const sourceEncoded = encodeURIComponent(fromLocation);
     const destinationEncoded = encodeURIComponent(toLocation);
 
-    console.log(sourceEncoded);
+    // console.log(sourceEncoded);
+
+    setLoading(true);
 
     fetch(
       `${process.env.REACT_APP_API_URL}/train/trainlisting?source=${sourceEncoded}&destination=${destinationEncoded}&availableDate=${date}`
@@ -37,6 +41,7 @@ const TrainListing = () => {
           setError("No Trains Available");
         } else {
           setTrains(result);
+          setLoading(false);
         }
       })
       .catch((error) => {
@@ -77,7 +82,7 @@ const TrainListing = () => {
                     &nbsp; {train.destination}
                   </h2>
                   <h6>
-                    Trains available on the date you choose{" "}
+                    Trains available on the date you choose
                     <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
                   </h6>
                   <p>
@@ -113,11 +118,13 @@ const TrainListing = () => {
                             onClick={() => handleSelectTrain(train._id)}
                             style={{
                               boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
-                            }}>
+                            }}
+                          >
                             Select Train &nbsp;
                             <i
                               class="fa fa-chevron-circle-right"
-                              aria-hidden="true"></i>
+                              aria-hidden="true"
+                            ></i>
                           </button>
                         </div>
                       </div>
@@ -135,13 +142,28 @@ const TrainListing = () => {
                       <div className="card-body">
                         <div
                           className="d-flex justify-content-center align-items-center "
-                          style={{ height: "10vh" }}>
-                          <h3 className="text-danger">
-                            No trains found for the selected criteria.
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <i class="fa fa-refresh m-1" aria-hidden="true"></i>
-                            {/* <i class="fa-solid fa-spinner fa-spin-pulse"></i> */}
-                          </h3>
+                          style={{ height: "10vh" }}
+                        >
+                          {loading ? (
+                            <h3 className="text-danger">
+                              Loading... &nbsp;&nbsp;&nbsp;&nbsp;
+                              <i
+                                class="fa fa-refresh m-1"
+                                aria-hidden="true"
+                              ></i>
+                              {/* <i class="fa-solid fa-spinner fa-spin-pulse"></i> */}
+                            </h3>
+                          ) : (
+                            <h3 className="text-danger">
+                              No trains found for the selected criteria.
+                              &nbsp;&nbsp;&nbsp;&nbsp;
+                              <i
+                                class="fa fa-refresh m-1"
+                                aria-hidden="true"
+                              ></i>
+                              {/* <i class="fa-solid fa-spinner fa-spin-pulse"></i> */}
+                            </h3>
+                          )}
                         </div>
                       </div>
                     </div>
