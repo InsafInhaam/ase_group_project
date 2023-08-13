@@ -2,21 +2,29 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
 import SearchTrainBlock from "../components/SearchTrainBlock";
+import {
+  galery1,
+  galery2,
+  galery3,
+  galery4,
+  galery5,
+  galery6,
+} from "../assets/images";
 
 const Home = () => {
   const user = useSelector((state) => state.user);
 
-  const [bookings, setBookings] = useState([]);
+  // const [bookings, setBookings] = useState([]);
 
-  useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/booking/bookingsById/" + user.id)
-      .then((res) => res.json())
-      .then((result) => {
-        setBookings(result);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(process.env.REACT_APP_API_URL + "/booking/bookingsById/" + user.id)
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       setBookings(result);
+  //     });
+  // }, []);
 
-  console.log(bookings);
+  // console.log(bookings);
 
   return (
     <>
@@ -27,7 +35,7 @@ const Home = () => {
         </div> */}
         {/* end loader */}
         {/* header */}
-        <Navbar/>
+        <Navbar />
         {/* end header */}
         <section>
           <div className="banner-main">
@@ -46,7 +54,7 @@ const Home = () => {
                   </a>
                 </div>
                 {/* train form */}
-                <SearchTrainBlock/>
+                <SearchTrainBlock />
                 {/* end train from */}
               </div>
             </div>
@@ -106,8 +114,270 @@ const Home = () => {
         </div>
         {/* end about */}
 
+        {/* gelary section  */}
+        <div id="Gallery" className="mt-4 mb-5 py-5 bg-light">
+          <div className="container ">
+            <div className="row">
+              <div className="col-md-12 ">
+                <div className="titlepage">
+                  <h2>Galery View</h2>
+                  <span>
+                    Welcome to our gallery page, a visual journey through
+                    captivating moments and exquisite artistry.
+                  </span>
+                </div>
+              </div>
+              <div className="col-md-4 mb-3 ">
+                <div className="galery-box ">
+                  <img
+                    src={galery1}
+                    alt="galerImg"
+                    className="img-fluid shadow"
+                  />
+                </div>
+              </div>
+              <div className="col-md-4 d-flex justify-content-center mb-3 ">
+                <div className="galery-box">
+                  <img
+                    src={galery2}
+                    alt="galerImg"
+                    className="img-fluid shadow"
+                  />
+                </div>
+              </div>
+              <div className="col-md-4 d-flex justify-content-center mb-3">
+                <div className="galery-box d-flex ">
+                  <img
+                    src={galery4}
+                    alt="galerImg"
+                    className="img-fluid shadow"
+                  />
+                </div>
+              </div>
+              <div className="col-md-4 d-flex justify-content-center mb-3 ">
+                <div className="galery-box">
+                  <img
+                    src={galery3}
+                    alt="galerImg"
+                    className="img-fluid shadow"
+                  />
+                </div>
+              </div>
+              <div className="col-md-4 d-flex justify-content-center mb-3 ">
+                <div className="galery-box">
+                  <img
+                    src={galery5}
+                    alt="galerImg"
+                    className="img-fluid shadow"
+                  />
+                </div>
+              </div>
+              <div className="col-md-4 d-flex justify-content-center mb-3 ">
+                <div className="galery-box">
+                  <img
+                    src={galery6}
+                    alt="galerImg"
+                    className="img-fluid shadow"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* end galery secrion  */}
+
+        {/* Customer review section  */}
+        <div id="CustomerReview" className="mt-4 mb-5">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 ">
+                <div className="titlepage">
+                  <h2>Customer reviews</h2>
+                  <span>
+                    what are say the customer abour our systems , their
+                    travelling , and their feedbacks
+                  </span>
+                </div>
+              </div>
+              {/* card feedback one  */}
+              <div className="col-md-3 mb-3">
+                <div className="card shadow">
+                  <div className="card-body">
+                    <div className="d-flex justify-content-center">
+                      <img
+                        src={galery1}
+                        alt=""
+                        className="img-fluid shadow circleStyles"
+                      />
+                    </div>
+                  </div>
+                  <div className="card-header">
+                    <div className="text-center">
+                      <div className="text-warning ">
+                        <span>
+                          <i className="fas fa-star fa-2xs"></i>
+                        </span>
+                        <span>
+                          <i className="fas fa-star"></i>
+                        </span>
+                        <span>
+                          <i className="fas fa-star"></i>
+                        </span>
+                        <span>
+                          <i className="fas fa-star"></i>
+                        </span>
+                        <span>
+                          <i className="far fa-star"></i>
+                        </span>
+                      </div>
+                      <hr className="custom-hr mb-3" />
+                    </div>
+                    <div className="h6 text-center">
+                      Amaan{" "}
+                      <p className="mt-2">
+                        "Travelling with your company was an unforgettable
+                        adventure filled with new horizons "
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* card feedback 2 */}
+              <div className="col-md-3 mb-3">
+                <div className="card shadow">
+                  <div className="card-body">
+                    <div className="d-flex justify-content-center">
+                      <img
+                        src={galery2}
+                        alt=""
+                        className="img-fluid shadow circleStyles"
+                      />
+                    </div>
+                  </div>
+                  <div className="card-header">
+                    <div className="text-center">
+                      <div className="text-warning ">
+                        <span>
+                          <i className="fas fa-star fa-2xs"></i>
+                        </span>
+                        <span>
+                          <i className="fas fa-star"></i>
+                        </span>
+                        <span>
+                          <i className="fas fa-star"></i>
+                        </span>
+                        <span>
+                          <i className="fas fa-star"></i>
+                        </span>
+                        <span>
+                          <i className="far fa-star"></i>
+                        </span>
+                      </div>
+                      <hr className="custom-hr mb-3" />
+                    </div>
+                    <div className="h6 text-center">
+                      Inshaf Inhaam{" "}
+                      <p className="mt-2">
+                        "Our journey was made seamless and remarkable, thanks to
+                        your exceptional travel services."
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* card feedback 3  */}
+              <div className="col-md-3 mb-3">
+                <div className="card shadow">
+                  <div className="card-body">
+                    <div className="d-flex justify-content-center">
+                      <img
+                        src={galery3}
+                        alt=""
+                        className="img-fluid shadow circleStyles"
+                      />
+                    </div>
+                  </div>
+                  <div className="card-header">
+                    <div className="text-center">
+                      <div className="text-warning ">
+                        <span>
+                          <i className="fas fa-star fa-2xs"></i>
+                        </span>
+                        <span>
+                          <i className="fas fa-star"></i>
+                        </span>
+                        <span>
+                          <i className="fas fa-star"></i>
+                        </span>
+                        <span>
+                          <i className="fas fa-star"></i>
+                        </span>
+                        <span>
+                          <i className="far fa-star"></i>
+                        </span>
+                      </div>
+                      <hr className="custom-hr mb-3" />
+                    </div>
+                    <div className="h6 text-center">
+                      Haneem{" "}
+                      <p className="mt-2">
+                        "Exploring new cultures and landscapes through your
+                        travel package was a dream come true"
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* card feedback 4  */}
+              <div className="col-md-3 mb-3">
+                <div className="card shadow">
+                  <div className="card-body">
+                    <div className="d-flex justify-content-center">
+                      <img
+                        src={galery5}
+                        alt=""
+                        className="img-fluid shadow circleStyles"
+                      />
+                    </div>
+                  </div>
+                  <div className="card-header">
+                    <div className="text-center">
+                      <div className="text-warning ">
+                        <span>
+                          <i className="fas fa-star fa-2xs"></i>
+                        </span>
+                        <span>
+                          <i className="fas fa-star"></i>
+                        </span>
+                        <span>
+                          <i className="fas fa-star"></i>
+                        </span>
+                        <span>
+                          <i className="fas fa-star"></i>
+                        </span>
+                        <span>
+                          <i className="far fa-star"></i>
+                        </span>
+                      </div>
+                      <hr className="custom-hr mb-3" />
+                    </div>
+                    <div className="h6 text-center">
+                      Mirshath{" "}
+                      <p className="mt-2">
+                        "Our vacation was a perfect blend of relaxation and
+                        exploration, all thanks to your meticulous
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* end Customer review secrion  */}
+
         {/* contact us  */}
-        <section>
+        <section id="Contact" className="bg-light py-5">
           <div className="container">
             <div className="row ">
               <div className="col-md-12">
@@ -139,30 +409,30 @@ const Home = () => {
                       {/*Grid column*/}
                       <div className="col-md-6">
                         <div className="md-form mb-0">
+                          <label htmlFor="name" className>
+                            Your name
+                          </label>
                           <input
                             type="text"
                             id="name"
                             name="name"
                             className="form-control"
                           />
-                          <label htmlFor="name" className>
-                            Your name
-                          </label>
                         </div>
                       </div>
                       {/*Grid column*/}
                       {/*Grid column*/}
                       <div className="col-md-6">
                         <div className="md-form mb-0">
+                          <label htmlFor="email" className>
+                            Your email
+                          </label>
                           <input
                             type="text"
                             id="email"
                             name="email"
                             className="form-control"
                           />
-                          <label htmlFor="email" className>
-                            Your email
-                          </label>
                         </div>
                       </div>
                       {/*Grid column*/}
@@ -172,15 +442,15 @@ const Home = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <div className="md-form mb-0">
+                          <label htmlFor="subject" className>
+                            Subject
+                          </label>
                           <input
                             type="text"
                             id="subject"
                             name="subject"
                             className="form-control"
                           />
-                          <label htmlFor="subject" className>
-                            Subject
-                          </label>
                         </div>
                       </div>
                     </div>
@@ -190,6 +460,7 @@ const Home = () => {
                       {/*Grid column*/}
                       <div className="col-md-12">
                         <div className="md-form">
+                          <label htmlFor="message">Your message</label>
                           <textarea
                             type="text"
                             id="message"
@@ -198,14 +469,15 @@ const Home = () => {
                             className="form-control md-textarea"
                             defaultValue={""}
                           />
-                          <label htmlFor="message">Your message</label>
                         </div>
                       </div>
                     </div>
                     {/*Grid row*/}
                   </form>
-                  <div className="text-center text-md-left">
-                    <a className="btn btn-primary">Send</a>
+                  <div className="text-center text-md-left mt-4">
+                    <button className="btnDesign" style={{ color: "white" }}>
+                      Feel free to contact
+                    </button>
                   </div>
                   <div className="status" />
                 </div>
@@ -252,14 +524,14 @@ const Home = () => {
                 </div>
                 <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12">
                   <div className="Follow">
-                    <h3>CONTACT US</h3>
+                    <h3 className="text-warning">COLOMBO EXPRESS</h3>
                     <span>
                       123 Second Street Fifth <br />
                       Avenue,
                       <br />
                       Colombo 10
                       <br />
-                      +94 765432100
+                      +94 777123456
                     </span>
                   </div>
                 </div>
@@ -292,32 +564,16 @@ const Home = () => {
                 </div>
                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                   <div className="Follow">
-                    <h3> Contact</h3>
+                    <h3> Subscribe</h3>
                     <div className="row">
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <input
-                          className="Newsletter"
-                          placeholder="Name"
-                          type="text"
-                        />
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                        <input
-                          className="Newsletter"
-                          placeholder="Email"
-                          type="text"
-                        />
-                      </div>
                       <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                        <textarea
-                          className="textarea"
-                          placeholder="comment"
+                        <input
+                          className="form-control"
+                          placeholder="email"
                           type="text"
-                          defaultValue={"Comment"}
                         />
                       </div>
                     </div>
-                    <button className="Subscribe">Submit</button>
                   </div>
                 </div>
               </div>

@@ -20,6 +20,7 @@ import SearchTrain from "./screens/SearchTrain";
 import TrainListing from "./screens/TrainListing";
 import BookingTrain from "./screens/BookingTrain ";
 import SummaryPage from "./screens/SummaryPage";
+import UserDashboard from "./screens/UserDashboard";
 
 // Define the initial state
 const initialState = {
@@ -57,6 +58,13 @@ const Routing = () => {
         path="/editprofile"
         element={user ? <EditProfile /> : <Navigate to="/login" />}
       />
+      {/* added user dashboard section  */}
+      <Route
+        exact
+        path="/userdashboard"
+        element={user ? <UserDashboard /> : <Navigate to="/login" />}
+      />
+      {/* ! user dashboard section  */}
       <Route
         exact
         path="/map"

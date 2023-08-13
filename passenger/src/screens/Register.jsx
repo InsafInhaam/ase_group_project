@@ -94,7 +94,7 @@ const Register = () => {
                       <div className="d-grid">
                         <button
                           type="button"
-                          className="btn btn-primary"
+                          className="btnDesign"
                           onClick={() => handleSubmit()}>
                           Sign Up
                         </button>

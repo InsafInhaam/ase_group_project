@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
 import { toast } from "react-hot-toast";
 import AddAdminModel from "../components/AddAdminModel";
 import UpdateAdminModel from "../components/UpdateAdminModel";
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 
 const Admin = () => {
   const [admins, setAdmins] = useState([]);
@@ -103,7 +103,7 @@ const Admin = () => {
                 <i className="bx bx-search" />
                 <i className="bx bx-filter" />
               </div>
-              <table>
+              <table className="table table-striped">
                 <thead>
                   <tr>
                     <th>Name</th>

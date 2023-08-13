@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { stations } from "../utils/stations";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
@@ -8,14 +8,37 @@ const SearchTrain = () => {
   const [fromLocation, setFromLocation] = useState("");
   const [toLocation, setToLocation] = useState("");
   // const [trainType, setTrainType] = useState("");
+
+  // Initialize state for maxDate and date
+  const [maxDate, setMaxDate] = useState("");
   const [date, setDate] = useState("");
 
+  useEffect(() => {
+    const dtToday = new Date();
+  
+    const month = dtToday.getMonth() + 1;
+    const day = dtToday.getDate();
+    const year = dtToday.getFullYear();
+    if (month < 10) month = '0' + month.toString();
+    if (day < 10) day = '0' + day.toString();
+
+    const formattedMaxDate = year + '-' + month + '-' + day;
+
+    // Set maxDate state
+    setMaxDate(formattedMaxDate);
+  }, []); // Run this effect only once on component mount
+
+
   const handleSubmit = () => {
+    console.log("fromLocation:", fromLocation);
+    console.log("toLocation:", toLocation);
+    console.log("date:", date);
     // Perform validation
     if (!fromLocation || !toLocation || !date) {
       toast.error("Please fill in all the required fields.");
       return;
     }
+
     // Redirect to the train listing page with search parameters
     history(
       `/trainlistings?from=${fromLocation}&to=${toLocation}&date=${date}`
@@ -29,13 +52,13 @@ const SearchTrain = () => {
         {/* Add your booking form here */}
         <form>
           <div className="mb-3">
-            <label htmlFor="fromStation" className="form-label">
+            <label htmlFor="fromLocation" className="form-label">
               From Station
             </label>
             <div className="form-group first">
               <select
                 className="form-control"
-                id="fromStation"
+                id="fromLocation"
                 value={fromLocation}
                 onChange={(e) => setFromLocation(e.target.value)}
               >
@@ -49,13 +72,13 @@ const SearchTrain = () => {
             </div>
           </div>
           <div className="mb-3">
-            <label htmlFor="toStation" className="form-label">
+            <label htmlFor="toLocation" className="form-label">
               To Station
             </label>
             <div className="form-group first">
               <select
                 className="form-control"
-                id="toStation"
+                id="toLocation"
                 value={toLocation}
                 onChange={(e) => setToLocation(e.target.value)}
               >
@@ -68,20 +91,6 @@ const SearchTrain = () => {
               </select>
             </div>
           </div>
-          {/* <div className="mb-3">
-            <label htmlFor="traintype" className="form-label">
-              Train Type:
-            </label>
-            <select
-              value={trainType}
-              onChange={(e) => setTrainType(e.target.value)}
-              id="traintype"
-              className="form-control"
-            >
-              <option value="business">Business</option>
-              <option value="normal">Normal</option>
-            </select>
-          </div> */}
           <div className="mb-3">
             <label htmlFor="departureDate" className="form-label">
               Departure Date
@@ -93,6 +102,8 @@ const SearchTrain = () => {
               required
               value={date}
               onChange={(e) => setDate(e.target.value)}
+              max={maxDate} // Set the max attribute to the maxDate state
+
             />
           </div>
           {/* Add more fields for passengers, class, etc. */}

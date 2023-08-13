@@ -1,17 +1,18 @@
 import "./App.css";
 import Login from "./screens/Login";
 // import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { useSelector } from "react-redux";
 import {
+  Navigate,
+  Route,
   BrowserRouter as Router,
   Routes,
-  Route,
-  Navigate,
 } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import Popup from "./components/Popup";
-import Home from "./screens/Home";
+import AddAdmin from "./screens/AddAdmin";
 import Bookings from "./screens/Bookings";
+import Home from "./screens/Home";
 import Train from "./screens/Train";
 import ViewTrains from "./screens/ViewTrains";
 import { TestS } from "./screens/TestS";
