@@ -3,6 +3,7 @@ import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
 import { amanProfile, profileImg, trainImg } from "../assets/images";
+import BookingDetails from "./BookingDetails";
 
 function UserDashboard() {
   const user = useSelector((state) => state.user);
@@ -137,7 +138,8 @@ function UserDashboard() {
                     id="tab1-tab"
                     data-bs-toggle="tab"
                     href="#tab1"
-                    onClick={displayProfile}>
+                    onClick={displayProfile}
+                  >
                     <span>User</span>
                   </a>
                 </li>
@@ -147,7 +149,8 @@ function UserDashboard() {
                     id="tab3-tab"
                     data-bs-toggle="tab"
                     href="#tab2"
-                    onClick={displayBooking}>
+                    onClick={displayBooking}
+                  >
                     <span>Booking Details</span>
                   </a>
                 </li>
@@ -165,7 +168,8 @@ function UserDashboard() {
               aria-labelledby="tab1-tab"
               style={{
                 display: displayProfileTab ? "block" : "none",
-              }}>
+              }}
+            >
               <div className="container">
                 <div className="row">
                   <div className="col-md-4 mb-2">
@@ -348,7 +352,8 @@ function UserDashboard() {
                                 <button
                                   type="button"
                                   className="btnDesign"
-                                  onClick={() => handleSubmit()}>
+                                  onClick={() => handleSubmit()}
+                                >
                                   Update
                                 </button>
                               </form>
@@ -394,169 +399,9 @@ function UserDashboard() {
               aria-labelledby="tab3-tab"
               style={{
                 display: displayBookingTab ? "block" : "none",
-              }}>
-              <div className="container">
-                {/* <div class="card bg-light shadow" style="height: 90vh;"> */}
-                <div className="row">
-                  {/* 1st card  */}
-                  <div className="col-md-4 mb-3">
-                    <div className="container">
-                      <div className="card shadow">
-                        <div className="card-body">
-                          <div className="card-body d-flex justify-content-center m-3">
-                            <img
-                              src={userProfile ? userProfile : amanProfile}
-                              className="circleStyle"
-                            />
-                          </div>
-                          <hr />
-                          <div className="card-body">
-                            <div className="row d-flex">
-                              {/* name  */}
-                              <div className="col-md-4">
-                                <h6>Name</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>Mirshath</p>
-                              </div>
-                              {/* email  */}
-                              <div className="col-md-4">
-                                <h6>Email</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>mirshath@gmail.com</p>
-                              </div>
-                              {/* phone number  */}
-                              <div className="col-md-4">
-                                <h6>Call</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>+94 777123456</p>
-                              </div>
-                              {/* seat no  */}
-                              <div className="col-md-4">
-                                <h6>Seat No</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>----</p>
-                              </div>
-                              {/* booking date  */}
-                              <div className="col-md-4">
-                                <h6>BookingDate</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>----</p>
-                              </div>
-                              {/* booking time  */}
-                              <div className="col-md-4">
-                                <h6>BookingTime</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>----</p>
-                              </div>
-                              {/* order id  */}
-                              <div className="col-md-4">
-                                <h6>OrderId</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>----</p>
-                              </div>
-                              {/* price  */}
-                              <div className="col-md-4">
-                                <h6>Price</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>----</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      {/* </div> */}
-                    </div>
-                  </div>
-                  {/* 2nd card  */}
-                  <div className="col-md-4 mb-3">
-                    <div className="container">
-                      <div className="card shadow">
-                        <div className="card-body">
-                          <div className="imge d-flex justify-content-center">
-                            <img
-                              src="man.png"
-                              width="50%"
-                              className="img-fluid"
-                              alt="img"
-                            />
-                          </div>
-                          <hr />
-                          <div className="card-body">
-                            <div className="row d-flex">
-                              {/* name  */}
-                              <div className="col-md-4">
-                                <h6>Name</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>Mirshath</p>
-                              </div>
-                              {/* email  */}
-                              <div className="col-md-4">
-                                <h6>Email</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>mirshath@gmail.com</p>
-                              </div>
-                              {/* phone number  */}
-                              <div className="col-md-4">
-                                <h6>Call</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>+94 777123456</p>
-                              </div>
-                              {/* seat no  */}
-                              <div className="col-md-4">
-                                <h6>Seat No</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>----</p>
-                              </div>
-                              {/* booking date  */}
-                              <div className="col-md-4">
-                                <h6>BookingDate</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>----</p>
-                              </div>
-                              {/* booking time  */}
-                              <div className="col-md-4">
-                                <h6>BookingTime</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>----</p>
-                              </div>
-                              {/* order id  */}
-                              <div className="col-md-4">
-                                <h6>OrderId</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>----</p>
-                              </div>
-                              {/* price  */}
-                              <div className="col-md-4">
-                                <h6>Price</h6>
-                              </div>
-                              <div className="col-md-8">
-                                <p>----</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      {/* </div> */}
-                    </div>
-                  </div>
-                  {/* 3rd card */}
-                </div>
-              </div>
+              }}
+            >
+              <BookingDetails userProfile={userProfile} defaultProfile={amanProfile}/>
             </div>
           </main>
         </div>
