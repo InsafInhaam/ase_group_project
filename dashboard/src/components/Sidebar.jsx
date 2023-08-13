@@ -28,7 +28,7 @@ const Sidebar = () => {
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/ChatMessage">
               <i className="bx bxs-message-dots" />
               <span className="text">Message</span>
             </a>
