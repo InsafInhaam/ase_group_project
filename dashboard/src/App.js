@@ -42,6 +42,7 @@ const Routing = () => {
         path="/"
         element={user ? <Home /> : <Navigate to="/login" />}
       />
+
       <Route
         exact
         path="/bookings"

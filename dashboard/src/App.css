@@ -42,6 +42,7 @@ body.dark {
 body {
     background: var(--grey);
     overflow-x: hidden;
+    scrollbar-color: red;
 }
 
 
@@ -215,6 +216,16 @@ body {
     color: var(--dark);
     text-decoration: none;
     /* Added to remove underline */
+}
+
+#content nav .currenttime {
+    padding-left: 83%;
+    padding-top: 5px;
+}
+
+#content nav .currenttime h2 {
+    font-size: 17px;
+    font-family: 'Poppins';
 }
 
 #content nav .navbar-icons {

@@ -10,7 +10,7 @@ const Sidebar = () => {
         </a>
         <ul className="side-menu top">
           <li className="active">
-            <a href="#">
+            <a href="/">
               <i className="bx bxs-dashboard" />
               <span className="text">Dashboard</span>
             </a>
