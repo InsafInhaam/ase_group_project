@@ -244,7 +244,7 @@ element.style {
   background: #e26526;
 }
 .cardHover:hover {
-  /* font-weight: bolder; */
+  font-weight: bolder;
   cursor: pointer;
   color: #ee580f;
 }
@@ -340,3 +340,78 @@ button.chatbot-close-icon {
 .chatbot-close-icon i {
   font-size: 30px;
 }
+
+/* Mob css  */
+.Mob_Nav__Bar_header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #f2f2f2;
+  z-index: 100;
+}
+
+.Mob_Nav__Bar_header img.logo {
+  width: 200px;
+  height: auto;
+  margin-left: 20px;
+}
+.Mob_Nav__Bar_header a {
+  text-decoration: none;
+}
+.Mob_Nav__Bar_header h3 {
+  margin-left: 20px;
+}
+
+.Mob_Nav__Bar_header img.profile {
+  margin-right: 20px;
+  width: 60px;
+  /* height: 60px; */
+  border-radius: 50%;
+}
+.Mob_Nav__Bar_header img.profile:hover {
+  cursor: pointer;
+}
+
+.Mob_Nav_Bar_Bottom {
+  position: fixed;
+  bottom: -19px;
+  left: 0;
+  width: 100%;
+  background-color: whitesmoke;
+  color: Black;
+  text-align: center;
+  z-index: 100;
+  /*            padding: 20px;*/
+  border-radius: 10px 10px 0 0;
+  border: none;
+}
+
+.Mob_Nav_Bar_Bottom ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: none;
+}
+
+.Mob_Nav_Bar_Bottom li {
+  flex-grow: 1;
+  padding: 10px 0;
+  border-radius: 15px 15px 0 0;
+}
+.Mob_Nav_Bar_Bottom a {
+  text-decoration: none;
+}
+.Mob_Nav_Bar_Bottom li:hover {
+  background: #ee580f;
+  cursor: pointer;
+}
+
+/* Mob css  */

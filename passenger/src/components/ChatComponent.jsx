@@ -24,8 +24,7 @@ const ChatComponent = () => {
           bottom: "20px",
           right: "20px",
           zIndex: 9999,
-        }}
-      >
+        }}>
         <button onClick={toggleChat} className="chatbot-close-icon">
           {/* Close Chat */}
 
@@ -42,8 +41,7 @@ const ChatComponent = () => {
               backgroundColor: "#eee",
               width: "500px",
               borderRadius: "15px",
-            }}
-          >
+            }}>
             <div className="row p-3">
               <div className="card-body">
                 <div className="d-flex flex-row justify-content-start mb-4">
@@ -57,8 +55,7 @@ const ChatComponent = () => {
                     style={{
                       borderRadius: "15px",
                       backgroundColor: "rgba(57, 192, 237,.2)",
-                    }}
-                  >
+                    }}>
                     <p className="small mb-0">
                       Hello and thank you for visiting MDBootstrap. Please click
                       the video below.
@@ -71,8 +68,7 @@ const ChatComponent = () => {
                     style={{
                       borderRadius: "15px",
                       backgroundColor: "#fbfbfb",
-                    }}
-                  >
+                    }}>
                     <p className="small mb-0">
                       Thank you, I really like your product.
                     </p>
@@ -113,8 +109,7 @@ const ChatComponent = () => {
                     style={{
                       borderRadius: "15px",
                       backgroundColor: "rgba(57, 192, 237,.2)",
-                    }}
-                  >
+                    }}>
                     <p className="small mb-0">...</p>
                   </div>
                 </div>
@@ -124,16 +119,14 @@ const ChatComponent = () => {
                   className="form-control"
                   rows="4"
                   value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                ></textarea>
+                  onChange={(e) => setNewMessage(e.target.value)}></textarea>
                 <label className="form-label" htmlFor="textAreaExample">
                   Type your message
                 </label>
                 <button
                   type="button"
                   className="btnDesign"
-                  onClick={handleSendMessage}
-                >
+                  onClick={handleSendMessage}>
                   Send
                 </button>
               </div>

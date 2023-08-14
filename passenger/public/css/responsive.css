@@ -1,5 +1,87 @@
 /*--------------------------------------------------------------------- File Name: responsive.css ---------------------------------------------------------------------*/
 
+/* webveiw adjustment */
+@media only screen and (min-width: 980px) {
+  .mob_nav {
+    display: none;
+
+    /* Mob css  */
+    .Mob_Nav__Bar_header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      /*            padding: 10px 20px;*/
+      background-color: #f2f2f2;
+      z-index: 100;
+      /*            display: none;*/
+    }
+
+    .Mob_Nav__Bar_header img.logo {
+      width: 200px;
+      height: auto;
+      margin-left: 20px;
+    }
+    .Mob_Nav__Bar_header a {
+      text-decoration: none;
+    }
+    .Mob_Nav__Bar_header h3 {
+      margin-left: 20px;
+    }
+
+    .Mob_Nav__Bar_header img.profile {
+      margin-right: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+    .Mob_Nav__Bar_header img.profile:hover {
+      cursor: pointer;
+    }
+
+    .Mob_Nav_Bar_Bottom {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: whitesmoke;
+      color: Black;
+      text-align: center;
+      z-index: 100;
+      /*            padding: 20px;*/
+      border-radius: 10px 10px 0 0;
+      border: none;
+    }
+
+    .Mob_Nav_Bar_Bottom ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border: none;
+    }
+
+    .Mob_Nav_Bar_Bottom li {
+      flex-grow: 1;
+      padding: 10px 0;
+      border-radius: 15px 15px 0 0;
+    }
+    .Mob_Nav_Bar_Bottom a {
+      text-decoration: none;
+    }
+    .Mob_Nav_Bar_Bottom li:hover {
+      background: #ee580f;
+      cursor: pointer;
+    }
+
+    /* Mob css  */
+  }
+}
 /*------------------------------------------------------------------- 991px x 768px ---------------------------------------------------------------------*/
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -258,6 +340,7 @@
   }
   .header {
     padding-bottom: 0px;
+    /* display: none; */
   }
   .logo {
     float: inherit;
@@ -341,12 +424,23 @@
   }
 }
 
+/* 13pro max mobile views  */
 @media (max-width: 575px) {
   .header_information {
     display: none !important;
   }
+  .chatIcon {
+    position: "fixed";
+    bottom: "120px";
+    right: "20px";
+    z-index: 9999;
+  }
   .header {
     padding-bottom: 0px;
+    display: none;
+  }
+  .mob_nav {
+    display: block;
   }
   .logo {
     float: inherit;
