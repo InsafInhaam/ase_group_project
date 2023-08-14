@@ -13,31 +13,10 @@ import {
 import ChatComponent from "../components/ChatComponent";
 
 const Home = () => {
-  const user = useSelector((state) => state.user);
-
-  // const [bookings, setBookings] = useState([]);
-
-  // useEffect(() => {
-  //   fetch(process.env.REACT_APP_API_URL + "/booking/bookingsById/" + user.id)
-  //     .then((res) => res.json())
-  //     .then((result) => {
-  //       setBookings(result);
-  //     });
-  // }, []);
-
-  // console.log(bookings);
-
   return (
     <>
       <div>
-        {/* loader  */}
-        {/* <div className="loader_bg">
-          <div className="loader"><img src="images/loading.gif" alt="#" /></div>
-        </div> */}
-        {/* end loader */}
-        {/* header */}
         <Navbar />
-        {/* end header */}
         <section>
           <div className="banner-main">
             <img src="images/bann.png" className="bannerImg" alt="#" />
@@ -49,7 +28,6 @@ const Home = () => {
                   <strong className="white">COLOMBO EXPRESS</strong>
                 </h1>
                 <div className="button_section">
-                  {" "}
                   <a className="main_bt" href="#">
                     Read More
                   </a>
@@ -83,7 +61,6 @@ const Home = () => {
                 <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                   <div className="about-box ">
                     <p className="shadow">
-                      {" "}
                       <span>
                         Train travel is an important mode of transportation for
                         many people around the world. It is a reliable,
@@ -234,7 +211,7 @@ const Home = () => {
                       <hr className="custom-hr mb-3" />
                     </div>
                     <div className="h6 text-center">
-                      Amaan{" "}
+                      Amaan
                       <p className="mt-2">
                         "Travelling with your company was an unforgettable
                         adventure filled with new horizons "
@@ -277,7 +254,7 @@ const Home = () => {
                       <hr className="custom-hr mb-3" />
                     </div>
                     <div className="h6 text-center">
-                      Inshaf Inhaam{" "}
+                      Inshaf Inhaam
                       <p className="mt-2">
                         "Our journey was made seamless and remarkable, thanks to
                         your exceptional travel services."
@@ -320,7 +297,7 @@ const Home = () => {
                       <hr className="custom-hr mb-3" />
                     </div>
                     <div className="h6 text-center">
-                      Haneem{" "}
+                      Haneem
                       <p className="mt-2">
                         "Exploring new cultures and landscapes through your
                         travel package was a dream come true"
@@ -363,7 +340,7 @@ const Home = () => {
                       <hr className="custom-hr mb-3" />
                     </div>
                     <div className="h6 text-center">
-                      Mirshath{" "}
+                      Mirshath
                       <p className="mt-2">
                         "Our vacation was a perfect blend of relaxation and
                         exploration, all thanks to your meticulous
@@ -404,7 +381,8 @@ const Home = () => {
                     id="contact-form"
                     name="contact-form"
                     action="mail.php"
-                    method="POST">
+                    method="POST"
+                  >
                     {/*Grid row*/}
                     <div className="row">
                       {/*Grid column*/}
@@ -498,25 +476,21 @@ const Home = () => {
                 <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                   <ul className="location_icon">
                     <li>
-                      {" "}
                       <a href="#">
                         <img src="icon/facebook.png" />
                       </a>
                     </li>
                     <li>
-                      {" "}
                       <a href="#">
                         <img src="icon/Twitter.png" />
                       </a>
                     </li>
                     <li>
-                      {" "}
                       <a href="#">
                         <img src="icon/linkedin.png" />
                       </a>
                     </li>
                     <li>
-                      {" "}
                       <a href="#">
                         <img src="icon/instagram.png" />
                       </a>
@@ -541,23 +515,18 @@ const Home = () => {
                     <h3>ADDITIONAL LINKS</h3>
                     <ul className="link">
                       <li>
-                        {" "}
                         <a href="#">About us</a>
                       </li>
                       <li>
-                        {" "}
                         <a href="#">Terms and conditions</a>
                       </li>
                       <li>
-                        {" "}
                         <a href="#"> Privacy policy</a>
                       </li>
                       <li>
-                        {" "}
                         <a href="#">News</a>
                       </li>
                       <li>
-                        {" "}
                         <a href="#"> Contact us</a>
                       </li>
                     </ul>
@@ -583,7 +552,7 @@ const Home = () => {
         </footer>
         {/* end footer */}
       </div>
-      <ChatComponent/>
+      <ChatComponent />
     </>
   );
 };

@@ -5,25 +5,28 @@ import { logo, profileImg } from "../assets/images";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.user);
+  const sessionUser = useSelector((state) => state.user);
   const history = useNavigate();
 
   const [getCurrentUser, setGetCurrentUser] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/passenger/getprofile/", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setGetCurrentUser(result);
-      });
+    if (sessionUser) {
+      fetch(process.env.REACT_APP_API_URL + "/passenger/getprofile/", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          setGetCurrentUser(result);
+        });
+    }
   }, [getCurrentUser]);
-
+  // console.log(getCurrentUser)
   const user = getCurrentUser;
+
   return (
     <header>
       {/* header inner */}
@@ -40,12 +43,14 @@ const Navbar = () => {
               data-bs-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent"
               aria-expanded="false"
-              aria-label="Toggle navigation">
+              aria-label="Toggle navigation"
+            >
               <span className="navbar-toggler-icon" />
             </button>
             <div
               className="collapse navbar-collapse"
-              id="navbarSupportedContent">
+              id="navbarSupportedContent"
+            >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
                   <a className="nav-link active" aria-current="page" href="/">
@@ -69,7 +74,7 @@ const Navbar = () => {
                 </li>
               </ul>
               {/* ----------------------  */}
-              {!user ? (
+              {!sessionUser ? (
                 <>
                   <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
@@ -87,15 +92,13 @@ const Navbar = () => {
               ) : (
                 <>
                   <div className="btn-group mr-4">
-                    {/* <button type="button" className="btn btn-primary">
-                      Name
-                    </button> */}
+                 
                     <button
                       type="button"
                       className="btn btn-primary dropdown-toggle dropdown-toggle-split navbar-profile-img-btn-dropdown"
                       data-bs-toggle="dropdown"
-                      aria-expanded="false">
-                      {/* <span className="visually-hidden">Toggle Dropdown</span> */}
+                      aria-expanded="false"
+                    >
                       <img
                         src={user.profile ? user.profile : profileImg}
                         className="rounded-circle navbar-profile-img"
@@ -120,7 +123,8 @@ const Navbar = () => {
                             localStorage.clear();
                             dispatch({ type: "LOGOUT" });
                             history("/login");
-                          }}>
+                          }}
+                        >
                           Logout
                         </a>
                       </li>

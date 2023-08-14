@@ -30,9 +30,9 @@ const ChatComponent = () => {
           {/* Close Chat */}
 
           {!isChatOpen ? (
-            <i class="fa fa-commenting" aria-hidden="true"></i>
+            <i className="fa fa-commenting" aria-hidden="true"></i>
           ) : (
-            <i class="fa fa-window-close" aria-hidden="true"></i>
+            <i className="fa fa-window-close" aria-hidden="true"></i>
           )}
         </button>
         {isChatOpen && (

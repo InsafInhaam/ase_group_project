@@ -41,7 +41,7 @@ function UserDashboard() {
           setUserProfile(result.profile);
         });
     }
-  }, []);
+  }, [userProfile]);
 
   console.log(userProfile);
 
@@ -345,6 +345,9 @@ function UserDashboard() {
                                         type="file"
                                         className="form-control"
                                         placeholder="phone"
+                                        onChange={(e) =>
+                                          setImage(e.target.files[0])
+                                        }
                                       />
                                     </div>
                                   </div>
@@ -401,7 +404,10 @@ function UserDashboard() {
                 display: displayBookingTab ? "block" : "none",
               }}
             >
-              <BookingDetails userProfile={userProfile} defaultProfile={amanProfile}/>
+              <BookingDetails
+                userProfile={userProfile}
+                defaultProfile={amanProfile}
+              />
             </div>
           </main>
         </div>

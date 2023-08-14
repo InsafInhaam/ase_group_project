@@ -19,6 +19,7 @@ import ViewTrains from "./screens/ViewTrains";
 // Define the initial state
 const initialState = {
   user: JSON.parse(localStorage.getItem("user")),
+  activeItem: "Dashboard",
 };
 
 export const reducer = (state = initialState, action) => {
@@ -27,6 +28,11 @@ export const reducer = (state = initialState, action) => {
       return { ...state, user: action.payload };
     case "LOGOUT":
       return { ...state, user: null };
+    case "SET_ACTIVE_ITEM":
+      return {
+        ...state,
+        activeItem: action.payload,
+      };
     default:
       return state;
   }
@@ -47,11 +53,23 @@ const Routing = () => {
         path="/bookings"
         element={user ? <Bookings /> : <Navigate to="/login" />}
       />
-      <Route exact path="/trains" element={<Train />} />
+      <Route
+        exact
+        path="/trains"
+        element={user ? <Train /> : <Navigate to="/login" />}
+      />
 
-      <Route exact path="/viewtrains" element={<ViewTrains />} />
+      <Route
+        exact
+        path="/viewtrains"
+        element={user ? <ViewTrains /> : <Navigate to="/login" />}
+      />
 
-      <Route exact path="/add-admin" element={<AddAdmin />} />
+      <Route
+        exact
+        path="/add-admin"
+        element={user ? <AddAdmin /> : <Navigate to="/login" />}
+      />
 
       <Route exact path="/login" element={<Login />} />
     </Routes>

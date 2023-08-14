@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import { galery1 } from "../assets/images";
+import TrainListingLoading from "../components/TrainListingLoading";
+import { useSelector } from "react-redux";
+import { toast } from 'react-hot-toast';
 
 const TrainListing = () => {
+  const user = useSelector((state) => state.user);
   const location = useLocation();
   const history = useNavigate();
   const queryParams = new URLSearchParams(location.search);
@@ -11,168 +14,298 @@ const TrainListing = () => {
   const toLocation = queryParams.get("to");
   const date = queryParams.get("date");
 
-  console.log(fromLocation);
-
   const [trains, setTrains] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [loading2, setLoading2] = useState(true);
+  const [recommendedTrainData, setRecommendedTrainData] = useState([]);
 
-  const [loading, setLoading] = useState(false);
+  const sourceEncoded = encodeURIComponent(fromLocation);
+  const destinationEncoded = encodeURIComponent(toLocation);
 
   useEffect(() => {
-    const sourceEncoded = encodeURIComponent(fromLocation);
-    const destinationEncoded = encodeURIComponent(toLocation);
-
-    // console.log(sourceEncoded);
-
     setLoading(true);
-
-    fetch(
-      `${process.env.REACT_APP_API_URL}/train/trainlisting?source=${sourceEncoded}&destination=${destinationEncoded}&availableDate=${date}`
-    )
-      .then((res) => {
-        if (!res.ok) {
-          // Throw the status for handling in the catch block
-          throw new Error(res.status);
-        }
-        return res.json();
-      })
-      .then((result) => {
-        if (result.length === 0) {
-          setError("No Trains Available");
-        } else {
-          setTrains(result);
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        // Handle HTTP 404 error with custom message
-        if (error.message === "404") {
-          setError("No Trains Available");
-        } else {
-          // For other errors, set a generic message
-          setError("An unexpected error has occurred. Please try again.");
-        }
-        console.error("Failed to fetch trains:", error);
-      });
+    setLoading2(true);
+    setError(null);
+    fetchTrainListings();
+    fetchRecommendedTrainListings();
   }, [fromLocation, toLocation, date]);
 
-  console.log(trains);
+  const fetchTrainListings = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/train/trainlisting?source=${sourceEncoded}&destination=${destinationEncoded}&availableDate=${date}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+      if (result.length === 0) {
+        setError("No Trains Available");
+      } else {
+        setTrains(result);
+      }
+    } catch (error) {
+      setError("An unexpected error has occurred. Please try again.");
+      console.error("Failed to fetch trains:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  console.log(error);
+
+  const fetchRecommendedTrainListings = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/train/recommendtrainlisting?source=${sourceEncoded}&destination=${destinationEncoded}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      setRecommendedTrainData(data);
+    } catch (error) {
+      console.error("Error fetching recommended train data:", error);
+    } finally {
+      setLoading2(false);
+    }
+  };
 
   const handleSelectTrain = (trainId) => {
-    history(`/bookingtrain/${trainId}`);
+    if(user){
+      history(`/bookingtrain/${trainId}`);
+    }else{
+      toast.error('Please Login first to book a train');
+      history('/login');
+    }
   };
 
   return (
     <div>
       <Navbar />
-      {/* <h4 className="text-center mt-3 mb-3">Available Trains For Date</h4> */}
-      <div className="container mt-4"></div>
-      {/* ----------------- GPT ------  */}
-      <div className="row d-flex justify-content-center">
-        <div className="col-md-9">
-          {error ? (
-            <p>Error: {error}</p>
-          ) : trains.length > 0 ? (
-            <div className="card p-3">
-              {trains.map((train) => (
-                <div key={train._id} className="">
+      <div className="container mt-4">
+        {loading ? (
+          <TrainListingLoading />
+        ) : (
+          <div className="row d-flex justify-content-center">
+            <div className="col-md-9">
+              {trains.length > 0 ? (
+                <div className="card p-3">
                   <h2 className="textColor_design">
-                    {train.source} &nbsp;{" "}
-                    <i class="fa fa-chevron-right" aria-hidden="true"></i>{" "}
-                    &nbsp; {train.destination}
+                    {fromLocation} &nbsp;
+                    <i className="fa fa-chevron-right" aria-hidden="true"></i>
+                    &nbsp; {toLocation}
                   </h2>
                   <h6>
-                    Trains available on the date you choose
-                    <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+                    Trains available on the date you choose &nbsp;
+                    <i
+                      className="fa fa-caret-square-o-down"
+                      aria-hidden="true"
+                    ></i>
                   </h6>
                   <p>
-                    {" "}
-                    <i class="fa fa-calendar" aria-hidden="true"></i> &nbsp;
-                    {train.availableDate}
+                    <i className="fa fa-calendar" aria-hidden="true"></i>
+                    &nbsp;
+                    {date}
                   </p>
-
-                  {/* 1st train  */}
-                  <div className="card mb-3 shadow cardHover">
-                    <div className="card-body">
-                      <div className="row">
-                        <div className="col-sm-3 d-flex align-items-center mb-3">
-                          <i class="fa fa-train" aria-hidden="true"></i> &nbsp;
-                          {train.name} &nbsp;&nbsp;
-                          <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                          &nbsp;&nbsp; {train.trainType}
+                  {trains.map((train) => (
+                    <div key={train._id} className="">
+                      {/* 1st train  */}
+                      <div className="card mb-3 shadow cardHover">
+                        <div className="card-body">
+                          <div className="row">
+                            <div className="col-sm-3 d-flex align-items-center mb-3">
+                              <i className="fa fa-train" aria-hidden="true"></i>
+                              &nbsp;
+                              {train.name} &nbsp;&nbsp;
+                              <i
+                                className="fa fa-chevron-right"
+                                aria-hidden="true"
+                              ></i>
+                              &nbsp;&nbsp; {train.trainType}
+                            </div>
+                            <div className="col-sm-3 d-flex align-items-center mb-3">
+                              {/* {train.source} - {train.destination} */}
+                              <i
+                                className="fa fa-calendar"
+                                aria-hidden="true"
+                              ></i>
+                              &nbsp;&nbsp;{train.availableDate} &nbsp; - &nbsp;
+                              <i
+                                className="fa fa-clock-o"
+                                aria-hidden="true"
+                              ></i>
+                              &nbsp;&nbsp;
+                              {train.availableTime}
+                            </div>
+                            <div className="col-sm-3 d-flex align-items-center mb-3">
+                              Aavailable Seats : {train.seats.length}
+                            </div>
+                            <div className="col-sm-3 d-flex align-items-center mb-3">
+                              <button
+                                className="trainListBtn shadow"
+                                onClick={() => handleSelectTrain(train._id)}
+                                style={{
+                                  boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
+                                }}
+                              >
+                                Select Train &nbsp;
+                                <i
+                                  className="fa fa-chevron-circle-right"
+                                  aria-hidden="true"
+                                ></i>
+                              </button>
+                            </div>
+                          </div>
                         </div>
-                        <div className="col-sm-3 d-flex align-items-center mb-3">
-                          {/* {train.source} - {train.destination} */}
-                          <i class="fa fa-calendar" aria-hidden="true"></i>{" "}
-                          &nbsp;&nbsp;{train.availableDate} &nbsp; - &nbsp;
-                          <i class="fa fa-clock-o" aria-hidden="true"></i>{" "}
-                          &nbsp;&nbsp;
-                          {train.availableTime}
-                        </div>
-                        <div className="col-sm-3 d-flex align-items-center mb-3">
-                          Aavailable Seats : {train.seats.length}
-                        </div>
-                        <div className="col-sm-3 d-flex align-items-center mb-3">
-                          <button
-                            className="trainListBtn shadow"
-                            onClick={() => handleSelectTrain(train._id)}
-                            style={{
-                              boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
-                            }}
-                          >
-                            Select Train &nbsp;
-                            <i
-                              class="fa fa-chevron-circle-right"
-                              aria-hidden="true"
-                            ></i>
-                          </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <>
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="card shadow">
+                          <div className="card-body">
+                            <div
+                              className="d-flex justify-content-center align-items-center "
+                              style={{ height: "10vh" }}
+                            >
+                              <h3 className="text-danger">
+                                No trains found for the selected criteria.
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <i
+                                  className="fa fa-refresh m-1"
+                                  aria-hidden="true"
+                                ></i>
+                              </h3>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                </>
+              )}
             </div>
-          ) : (
-            <>
-              <div className="container">
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="card shadow">
-                      <div className="card-body">
-                        <div
-                          className="d-flex justify-content-center align-items-center "
-                          style={{ height: "10vh" }}
-                        >
-                          {loading ? (
-                            <h3 className="text-danger">
-                              Loading... &nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+        )}
+        <br /> <br />
+        {/* Render recommended train listings */}
+        {loading2 ? (
+          <TrainListingLoading />
+        ) : (
+          <div className="row d-flex justify-content-center">
+            <div className="col-md-9">
+              <h1>Recommended Trains</h1>
+              <br />
+              {recommendedTrainData.length > 0 ? (
+                <div className="card p-3">
+                  <h2 className="textColor_design">
+                    {fromLocation} &nbsp;
+                    <i className="fa fa-chevron-right" aria-hidden="true"></i>
+                    &nbsp; {toLocation}
+                  </h2>
+                  <h6>
+                    Trains available on the date you choose &nbsp;
+                    <i
+                      className="fa fa-caret-square-o-down"
+                      aria-hidden="true"
+                    ></i>
+                  </h6>
+                  
+                  {recommendedTrainData.map((train) => (
+                    <div key={train._id} className="">
+                      {/* 1st train  */}
+                      <div className="card mb-3 shadow cardHover">
+                        <div className="card-body">
+                          <div className="row">
+                            <div className="col-sm-3 d-flex align-items-center mb-3">
+                              <i className="fa fa-train" aria-hidden="true"></i>
+                              &nbsp;
+                              {train.name} &nbsp;&nbsp;
                               <i
-                                class="fa fa-refresh m-1"
+                                className="fa fa-chevron-right"
                                 aria-hidden="true"
                               ></i>
-                              {/* <i class="fa-solid fa-spinner fa-spin-pulse"></i> */}
-                            </h3>
-                          ) : (
-                            <h3 className="text-danger">
-                              No trains found for the selected criteria.
-                              &nbsp;&nbsp;&nbsp;&nbsp;
+                              &nbsp;&nbsp; {train.trainType}
+                            </div>
+                            <div className="col-sm-3 d-flex align-items-center mb-3">
+                              {/* {train.source} - {train.destination} */}
                               <i
-                                class="fa fa-refresh m-1"
+                                className="fa fa-calendar"
                                 aria-hidden="true"
                               ></i>
-                              {/* <i class="fa-solid fa-spinner fa-spin-pulse"></i> */}
-                            </h3>
-                          )}
+                              &nbsp;&nbsp;{train.availableDate} &nbsp; - &nbsp;
+                              <i
+                                className="fa fa-clock-o"
+                                aria-hidden="true"
+                              ></i>
+                              &nbsp;&nbsp;
+                              {train.availableTime}
+                            </div>
+                            <div className="col-sm-3 d-flex align-items-center mb-3">
+                              Aavailable Seats : {train.seats.length}
+                            </div>
+                            <div className="col-sm-3 d-flex align-items-center mb-3">
+                              <button
+                                className="trainListBtn shadow"
+                                onClick={() => handleSelectTrain(train._id)}
+                                style={{
+                                  boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
+                                }}
+                              >
+                                Select Train &nbsp;
+                                <i
+                                  className="fa fa-chevron-circle-right"
+                                  aria-hidden="true"
+                                ></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <>
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="card shadow">
+                          <div className="card-body">
+                            <div
+                              className="d-flex justify-content-center align-items-center "
+                              style={{ height: "10vh" }}
+                            >
+                              <h3 className="text-danger">
+                                No trains found for the selected criteria.
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <i
+                                  className="fa fa-refresh m-1"
+                                  aria-hidden="true"
+                                ></i>
+                              </h3>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </>
-          )}
-        </div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -10,12 +10,8 @@ import {
 import { useSelector } from "react-redux";
 
 import Register from "./screens/Register";
-import BookingTicket from "./screens/BookingTicket";
 import Popup from "./components/Popup";
 import Home from "./screens/Home";
-import Navbar from "./components/Navbar";
-import EditProfile from "./screens/EditProfile";
-import Map from "./screens/Map";
 import SearchTrain from "./screens/SearchTrain";
 import TrainListing from "./screens/TrainListing";
 import BookingTrain from "./screens/BookingTrain ";
@@ -46,30 +42,8 @@ const Routing = () => {
     <Routes>
       <Route
         exact
-        path="/"
-        element={user ? <Home /> : <Navigate to="/login" />}
-      />
-      <Route
-        exact
-        path="/ticketbooking"
-        element={user ? <BookingTicket /> : <Navigate to="/login" />}
-      />
-      <Route
-        exact
-        path="/editprofile"
-        element={user ? <EditProfile /> : <Navigate to="/login" />}
-      />
-      {/* added user dashboard section  */}
-      <Route
-        exact
         path="/userdashboard"
         element={user ? <UserDashboard /> : <Navigate to="/login" />}
-      />
-      {/* ! user dashboard section  */}
-      <Route
-        exact
-        path="/map"
-        element={user ? <Map /> : <Navigate to="/login" />}
       />
       <Route
         exact
@@ -77,11 +51,7 @@ const Routing = () => {
         element={user ? <SearchTrain /> : <Navigate to="/login" />}
       />
 
-      <Route
-        exact
-        path="/trainlistings"
-        element={user ? <TrainListing /> : <Navigate to="/login" />}
-      />
+      <Route exact path="/trainlistings" element={<TrainListing />} />
 
       <Route
         exact
@@ -106,6 +76,8 @@ const Routing = () => {
         element={user ? <MapTracking /> : <Navigate to="/login" />}
       />
 
+      <Route exact path="/" element={<Home />} />
+
       <Route exact path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
     </Routes>
@@ -116,15 +88,8 @@ function App() {
   return (
     <>
       <Router>
-        {/* <div className="App"> */}
         <Popup />
-        {/* <Navbar /> */}
-        {/* <div className="auth-wrapper"> */}
-        {/* <Router> */}
         <Routing />
-        {/* </Router> */}
-        {/* </div>
-        </div> */}
       </Router>
     </>
   );

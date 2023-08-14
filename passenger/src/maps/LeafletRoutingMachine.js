@@ -16,7 +16,7 @@ const LeafletRoutingMachine = ({
     iconSize: [40, 40],
   });
 
-  console.log("Props in LeafletRoutingMachine:", destinationLat, destinationLng, sourceLat, sourceLng);
+  // console.log("Props in LeafletRoutingMachine:", destinationLat, destinationLng, sourceLat, sourceLng);
 
   // const startCoords = [6.933674829110455, 79.84992264064576]; // Updated start coordinates
   // const endCoords = [6.930093058362479, 79.86585128029037]; // Updated end coordinates
@@ -28,7 +28,10 @@ const LeafletRoutingMachine = ({
   useEffect(() => {
     var marker1 = L.marker(startCoords, { icon: DefaultIcon }).addTo(map);
     L.Routing.control({
-      waypoints: [L.latLng(startCoords), L.latLng(endCoords)],
+      waypoints: [
+        L.latLng(startCoords),
+        L.latLng(endCoords),
+      ],
       lineOptions: {
         styles: [
           {
