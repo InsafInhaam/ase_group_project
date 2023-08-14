@@ -24,7 +24,7 @@ const Sidebar = () => {
         </a>
         <ul className="side-menu top">
           <li className={activeItem === "Dashboard" ? "active" : ""}>
-            <a href="#" onClick={() => handleItemClick("Dashboard", "/S")}>
+            <a href="#" onClick={() => handleItemClick("Dashboard", "/")}>
               <i className="bx bxs-dashboard" />
               <span className="text">Dashboard</span>
             </a>
@@ -48,7 +48,7 @@ const Sidebar = () => {
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/ChatMessage">
               <i className="bx bxs-message-dots" />
               <span className="text">Message</span>
             </a>

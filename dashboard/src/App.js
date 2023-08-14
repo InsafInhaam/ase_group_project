@@ -12,6 +12,7 @@ import {
 import Popup from "./components/Popup";
 import AddAdmin from "./screens/AddAdmin";
 import Bookings from "./screens/Bookings";
+import ChatMessage from "./screens/ChatMessage";
 import Home from "./screens/Home";
 import Train from "./screens/Train";
 import ViewTrains from "./screens/ViewTrains";
@@ -48,6 +49,7 @@ const Routing = () => {
         path="/"
         element={user ? <Home /> : <Navigate to="/login" />}
       />
+
       <Route
         exact
         path="/bookings"
@@ -72,6 +74,7 @@ const Routing = () => {
       />
 
       <Route exact path="/login" element={<Login />} />
+      <Route exact path="/chatmessage" element={<ChatMessage />} />
     </Routes>
   );
 };

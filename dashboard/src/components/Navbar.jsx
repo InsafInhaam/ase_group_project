@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import adminIcon from "../assets/admin.png";
 
 const Navbar = () => {
+
+  let time = new Date().toLocaleTimeString();
+
+  const [ctime, setCtime] = useState(time);
+  const Update = () => {
+    let time = new Date().toLocaleTimeString();
+    setCtime(time);
+  };
+
+  setInterval(Update, 1000)
   return (
     <nav>
+    <>
       <div className="currenttime">
+        <h2>{ctime}</h2>
         
       </div>
+    </>
+      
       <div className="navbar-icons">
         <a href="#" className="notification">
           <i className="bx bxs-bell" />
