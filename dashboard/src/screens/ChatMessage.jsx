@@ -13,7 +13,6 @@ const ChatMessage = () => {
         <main>
           <div className="head-title">
             <div className="left">
-              <h1>Dashboard</h1>
               <ul className="breadcrumb">
                 <li>
                   <a href="#">Dashboard</a>
@@ -28,10 +27,7 @@ const ChatMessage = () => {
                 </li>
               </ul>
             </div>
-            <a href="#" className="btn-download">
-              <i className="bx bxs-cloud-download" />
-              <span className="text">Download PDF</span>
-            </a>
+        
           </div>
           {/* chat */}
           <div className="px-6 chatapp-container">

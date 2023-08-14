@@ -677,11 +677,10 @@ button.remove-seat {
 
 .chatapp-container {
     max-width: 100%;
-    /* float: right; */
 }
 
 .card {
-    background: #fff;
+    background: #ffffff;
     transition: 0.5s;
     border: 0;
     margin-bottom: 30px;
@@ -702,7 +701,7 @@ button.remove-seat {
 
 .chat-app .chat {
     margin-left: 280px;
-    border-left: 1px solid #eaeaea;
+    border-left: 1px solid #ffffff;
 }
 
 .people-list {
@@ -721,7 +720,7 @@ button.remove-seat {
 }
 
 .people-list .chat-list li.active {
-    background: #efefef;
+    background: #f5c3c3;
 }
 
 .people-list .chat-list li .name {

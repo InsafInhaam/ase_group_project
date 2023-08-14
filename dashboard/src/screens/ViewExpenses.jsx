@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
 import { toast } from "react-hot-toast";
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 
 const ViewExpenses = () => {
   const [trains, setTrains] = useState([]);
