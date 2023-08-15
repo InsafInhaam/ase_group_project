@@ -318,6 +318,7 @@ body {
     height: 36px;
     padding: 0 16px;
     border-radius: 36px;
+    text-decoration: none;
     background: var(--blue);
     color: var(--light);
     display: flex;

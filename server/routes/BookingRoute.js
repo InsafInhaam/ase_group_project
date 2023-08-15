@@ -1,10 +1,9 @@
 import express from "express";
-const router = express.Router();
+import mongoose from "mongoose";
 import Booking from "../models/Booking.js";
 import Train from "../models/Train.js";
-import mongoose from "mongoose";
 import { generateMailTransporter } from "../utils/Mail.js";
-import { Authenticate } from "../middleware/Auth.js";
+const router = express.Router();
 
 // router.get("/trains", async (req, res) => {
 //   try {
@@ -267,3 +266,4 @@ router.get("/bookingsById/:id", async (req, res) => {
 });
 
 export { router as BookingRoute };
+

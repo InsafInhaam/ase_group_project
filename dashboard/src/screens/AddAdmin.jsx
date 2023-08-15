@@ -59,7 +59,7 @@ const AddAdmin = () => {
               </ul>
             </div>
             <a href="/trains" className="btn-download">
-              <i className="bx plus" />
+            <ion-icon name="add"></ion-icon>
               <span className="text">Add New Admin</span>
             </a>
           </div>
