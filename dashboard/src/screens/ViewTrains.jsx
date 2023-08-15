@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import NotifyModel from "../components/NotifyModel";
 
 const ViewTrains = () => {
   const [trains, setTrains] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [currentTrainId, setCurrentTrainId] = useState(null);
 
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "/train/alltrain")
@@ -14,10 +17,7 @@ const ViewTrains = () => {
       });
   }, [trains]);
 
-  // console.log(trains);
-
-  const handleDelete = (id) => 
-  {
+  const handleDelete = (id) => {
     fetch(process.env.REACT_APP_API_URL + "/train/trains/" + id, {
       method: "DELETE",
       headers: {
@@ -28,6 +28,16 @@ const ViewTrains = () => {
       .then((result) => {
         toast.success(result.message);
       });
+  };
+
+  const openModal = (id) => {
+    setCurrentTrainId(id);
+    setShowModal(true);
+  };
+
+  const closeModel = () => {
+    setCurrentTrainId(null);
+    setShowModal(false);
   };
 
   return (
@@ -97,16 +107,14 @@ const ViewTrains = () => {
                       <td>{train.availableDate}</td>
                       <td>{train.availableTime}</td>
                       <td className="scrollable-cell">
-                      <div className="table-traindata">
-                            {train.seats.map((trainseats) => (
-                          <p>
-                            {trainseats.number} :
-                            {trainseats.isBooked ? "Booked" : "Not Booked"}
-                          </p>
-                        ))}
-                        
-                      </div>
-                    
+                        <div className="table-traindata">
+                          {train.seats.map((trainseats) => (
+                            <p>
+                              {trainseats.number} :
+                              {trainseats.isBooked ? "Booked" : "Not Booked"}
+                            </p>
+                          ))}
+                        </div>
                       </td>
                       <td>{train.price}</td>
                       <td>{train.trainType}</td>
@@ -119,23 +127,25 @@ const ViewTrains = () => {
                         >
                           Trash
                         </button>
+                        &nbsp;&nbsp;
+                        <button
+                          className="btn btn-secondary"
+                          onClick={() => openModal(train._id)}
+                        >
+                          Notify
+                        </button>
                       </td>
                     </tr>
                   ))}
-                  {/* <tr>
-                      <td>
-                        <img src="img/people.png" />
-                        <p>John Doe</p>
-                      </td>
-                      <td>01-10-2021</td>
-                      <td>
-                        <span className="status pending">Pending</span>
-                      </td>
-                    </tr> */}
                 </tbody>
               </table>
             </div>
           </div>
+          <NotifyModel
+            show={showModal}
+            handleClose={closeModel}
+            trainId={currentTrainId}
+          />
         </main>
         {/* MAIN */}
       </section>

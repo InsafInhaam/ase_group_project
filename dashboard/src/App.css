@@ -657,3 +657,9 @@ button.remove-seat {
     justify-content: center;
     color: #fff;
 }
+
+.modal-backdrop {
+    background-color: black;
+    opacity: 0.7; /* You can adjust this value. */
+    /* Other styling... */
+}

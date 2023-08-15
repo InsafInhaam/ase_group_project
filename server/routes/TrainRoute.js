@@ -1,5 +1,8 @@
 import express from "express";
 import Train from "../models/Train.js";
+import Booking from "../models/Booking.js";
+import Passenger from "../models/Passenger.js";
+import axios from "axios";
 
 const router = express.Router();
 
@@ -153,6 +156,55 @@ router.delete("/trains/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occurred while deleting the train.");
+  }
+});
+
+router.post("/notify/:id", async (req, res) => {
+  try {
+    const specificTrainId = req.params.id;
+    const { message } = req.body;
+    const bookings = await Booking.find(
+      { trainId: specificTrainId },
+      "contactNumber"
+    );
+
+    const numbers = bookings.map((booking) => booking.contactNumber);
+    // const USER_ID = "25482";
+    // const API_KEY = "2skLBC7FPExOGaG7cCfo";
+    // const SENDER_ID = "NotifyDEMO";
+
+    // // const message = "Hello there, your train will be arrived at 11:00 PM";
+
+    // for (let number of numbers) {
+    //   try {
+    //     await axios.get(`https://app.notify.lk/api/v1/send`, {
+    //       params: {
+    //         user_id: USER_ID,
+    //         api_key: API_KEY,
+    //         sender_id: SENDER_ID,
+    //         to: number,
+    //         message: message,
+    //       },
+    //     });
+    //     console.log(`Message successfully sent to: ${number}`);
+    //   } catch (error) {
+    //     console.error(`Failed to send message to: ${number}`);
+
+    //     console.error("Error Message:", error.message);
+
+    //     if (error.response) {
+    //       console.error("Response Data:", error.response.data);
+    //       console.error("Response Status:", error.response.status);
+    //       console.error("Response Headers:", error.response.headers);
+    //     }
+    //   }
+    // }
+    console.log(message);
+    console.log(`Messages sent to: ${numbers.join(", ")}`);
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 

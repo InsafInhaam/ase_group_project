@@ -40,14 +40,20 @@ const Sidebar = () => {
             </a>
           </li>
           <li>
+            <a href="/expenses">
+              <i className="bx bxs-card" />
+              <span className="text">Expenses</span>
+            </a>
+          </li>
+          <li>
             <a href="/add-admin">
-              <i className="bx bxs-user-plus" />
+              <i className="bx bxs-circle" />
               <span className="text">Admin</span>
             </a>
           </li>
           <li>
             <a href="/passenger">
-              <i className="bx bxs-user-plus" />
+              <i className="bx bxs-user" />
               <span className="text">Passenger</span>
             </a>
           </li>

@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import AddAdminModel from "../components/AddAdminModel";
-import UpdateAdminModel from "../components/UpdateAdminModel";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import UpdateExpensesModel from "../components/UpdateExpensesMode";
+import AddExpensesModel from "../components/AddExpensesModel";
 
-const Admin = () => {
-  const [admins, setAdmins] = useState([]);
+const Expenses = () => {
+  const [expenses, setExpenses] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [showAddAdminModel, setShowAddAdminModel] = useState(false);
-  const [editAdminId, setEditAdminId] = useState("");
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [currentExpenseId, setCurrentExpenseId] = useState(null);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/admin/view")
+    fetch(process.env.REACT_APP_API_URL + "/expenses")
       .then((res) => res.json())
       .then((result) => {
-        setAdmins(result);
+        setExpenses(result);
       });
-  }, []);
-
-  console.log("Admins array:", admins);
+  }, [expenses]);
 
   const handleDelete = (id) => {
-    fetch(process.env.REACT_APP_API_URL + "/admin/delete/" + id, {
+    fetch(process.env.REACT_APP_API_URL + "/expenses/" + id, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
@@ -30,46 +28,35 @@ const Admin = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        if (result.message) {
-          toast.success(result.message);
-          const newAdmins = admins.filter((admin) => admin._id !== id);
-          setAdmins(newAdmins);
-        } else {
-          toast.error(result.error || "Failed to delete the admin.");
-        }
-      })
-      .catch((error) => {
-        console.log("Why: " + error);
-        toast.error("Failed to delete the admin.");
+        toast.success(result.message);
       });
   };
 
   const openModal = (id) => {
-    setEditAdminId(id);
+    setCurrentExpenseId(id);
     setShowModal(true);
   };
 
-  const openAddAdminModel = () => {
-    setShowAddAdminModel(true);
-  };
-
-  const closeAddAdminModel = () => {
-    setShowAddAdminModel(false);
-  };
-
-  const closeModal = () => {
+  const closeModel = () => {
+    setCurrentExpenseId(null);
     setShowModal(false);
   };
 
   return (
     <div>
+      {/* SIDEBAR */}
       <Sidebar />
+      {/* SIDEBAR */}
+      {/* CONTENT */}
       <section id="content">
+        {/* NAVBAR */}
         <Navbar />
+        {/* NAVBAR */}
+        {/* MAIN */}
         <main>
           <div className="head-title">
             <div className="left">
-              <h1>Add Admin</h1>
+              <h1>Expenses</h1>
               <ul className="breadcrumb">
                 <li>
                   <a href="#">Dashboard</a>
@@ -79,59 +66,53 @@ const Admin = () => {
                 </li>
                 <li>
                   <a className="active" href="#">
-                    Add Admin
+                    Expenses
                   </a>
                 </li>
               </ul>
             </div>
             <button
+              onClick={() => setShowAddModal(true)}
               className="btn btn-primary"
-              onClick={() => openAddAdminModel()}
             >
-              Add New Admin
+              <span className="text">Add New Expense</span>
             </button>
-            <AddAdminModel
-              show={showAddAdminModel}
-              handleClose={closeAddAdminModel}
-            />
           </div>
 
           <div className="table-data">
             <div className="order">
               <div className="head">
-                <h3>Admin</h3>
+                <h3>Expenses</h3>
                 <i className="bx bx-search" />
                 <i className="bx bx-filter" />
               </div>
               <table className="table table-striped">
                 <thead>
                   <tr>
+                    <th>Date</th>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>Password</th>
+                    <th>Description</th>
+                    <th>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {admins.map((admin) => (
-                    <tr key={admin._id}>
-                      <td>
-                        <p>{admin.name}</p>
-                      </td>
-                      <td>
-                        <p>{admin.email}</p>
-                      </td>
-                      <td>***********</td>
+                  {expenses.map((expense) => (
+                    <tr key={expense._id}>
+                      <td>{expense.createdAt.split("T")[0]}</td>
+                      <td>{expense.name}</td>
+                      <td>{expense.description}</td>
+                      <td>{expense.amount}</td>
                       <td>
                         <button
                           className="btn btn-warning"
-                          onClick={() => openModal(admin._id)}
+                          onClick={() => openModal(expense._id)}
                         >
                           Edit
                         </button>
                         &nbsp;&nbsp;
                         <button
                           className="btn btn-danger"
-                          onClick={() => handleDelete(admin._id)}
+                          onClick={() => handleDelete(expense._id)}
                         >
                           Delete
                         </button>
@@ -142,14 +123,20 @@ const Admin = () => {
               </table>
             </div>
           </div>
-          <UpdateAdminModel
+          <UpdateExpensesModel
             show={showModal}
-            handleClose={closeModal}
-            adminId={editAdminId}
+            handleClose={closeModel}
+            expenseId={currentExpenseId}
+          />
+          <AddExpensesModel // 4. Rendering the AddExpensesModel
+            show={showAddModal}
+            handleClose={() => setShowAddModal(false)}
           />
         </main>
+        {/* MAIN */}
       </section>
+      {/* CONTENT */}
     </div>
   );
 };
-export default Admin;
+export default Expenses;

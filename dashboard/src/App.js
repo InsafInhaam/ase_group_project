@@ -10,7 +10,6 @@ import {
 } from "react-router-dom";
 
 import Popup from "./components/Popup";
-import AddAdmin from "./screens/AddAdmin";
 import Bookings from "./screens/Bookings";
 import Home from "./screens/Home";
 import Train from "./screens/Train";
@@ -18,6 +17,7 @@ import ViewTrains from "./screens/ViewTrains";
 import { TestS } from "./screens/TestS";
 import Admin from "./screens/Admin";
 import Passenger from "./screens/Passenger";
+import Expenses from "./screens/Expenses";
 
 // Define the initial state
 const initialState = {
@@ -54,6 +54,7 @@ const Routing = () => {
 
       <Route exact path="/viewtrains" element={<ViewTrains />} />
 
+      <Route exact path="/expenses" element={<Expenses />} />
       <Route exact path="/add-admin" element={<Admin />} />
       <Route exact path="/passenger" element={<Passenger />} />
 

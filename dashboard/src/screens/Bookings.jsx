@@ -6,7 +6,11 @@ const Bookings = () => {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/booking/allbookings")
+    fetch(process.env.REACT_APP_API_URL + "/booking/allbookings", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         setBookings(result);
@@ -69,14 +73,15 @@ const Bookings = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {bookings.map((booking) => (
-                    <tr>
+                  {bookings?.map((booking) => (
+                    <tr key={booking._id}>
+                      {" "}
                       <td>
                         <p>{booking.passengerName}</p>
                       </td>
                       <td>{booking.contactNumber}</td>
                       <td>{booking.passengerEmail}</td>
-                      <td>{booking.seatNumber}</td>
+                      <td>{booking.seatNumber.join(", ")}</td>
                       <td>{booking.orderId}</td>
                       <td>
                         <span className="status completed">Completed</span>
