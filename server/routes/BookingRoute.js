@@ -4,7 +4,6 @@ const router = express.Router();
 import Booking from "../models/Booking.js";
 
 import Train from "../models/Train.js";
-import mongoose from "mongoose";
 import { generateMailTransporter } from "../utils/Mail.js";
 import {
   AdminAuthenticate,

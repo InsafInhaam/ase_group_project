@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import AddAdminModel from "../components/AddAdminModel";
-import UpdateAdminModel from "../components/UpdateAdminModel";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
-const Admin = () => {
+const AddAdmin = () => {
   const [admins, setAdmins] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [showAddAdminModel, setShowAddAdminModel] = useState(false);
-  const [editAdminId, setEditAdminId] = useState("");
 
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "/admin/view")
@@ -19,10 +14,10 @@ const Admin = () => {
       });
   }, []);
 
-  console.log("Admins array:", admins);
+  console.log("Error is:" + admins.email);
 
   const handleDelete = (id) => {
-    fetch(process.env.REACT_APP_API_URL + "/admin/delete/" + id, {
+    fetch(process.env.REACT_APP_API_URL + "/train/trains/" + id, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
@@ -30,42 +25,21 @@ const Admin = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        if (result.message) {
-          toast.success(result.message);
-          const newAdmins = admins.filter((admin) => admin._id !== id);
-          setAdmins(newAdmins);
-        } else {
-          toast.error(result.error || "Failed to delete the admin.");
-        }
-      })
-      .catch((error) => {
-        console.log("Why: " + error);
-        toast.error("Failed to delete the admin.");
+        toast.success(result.message);
       });
-  };
-
-  const openModal = (id) => {
-    setEditAdminId(id);
-    setShowModal(true);
-  };
-
-  const openAddAdminModel = () => {
-    setShowAddAdminModel(true);
-  };
-
-  const closeAddAdminModel = () => {
-    setShowAddAdminModel(false);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
   };
 
   return (
     <div>
+      {/* SIDEBAR */}
       <Sidebar />
+      {/* SIDEBAR */}
+      {/* CONTENT */}
       <section id="content">
+        {/* NAVBAR */}
         <Navbar />
+        {/* NAVBAR */}
+        {/* MAIN */}
         <main>
           <div className="head-title">
             <div className="left">
@@ -84,16 +58,10 @@ const Admin = () => {
                 </li>
               </ul>
             </div>
-            <button
-              className="btn btn-primary"
-              onClick={() => openAddAdminModel()}
-            >
-              Add New Admin
-            </button>
-            <AddAdminModel
-              show={showAddAdminModel}
-              handleClose={closeAddAdminModel}
-            />
+            <a href="/trains" className="btn-download">
+              <i className="bx plus" />
+              <span className="text">Add New Admin</span>
+            </a>
           </div>
 
           <div className="table-data">
@@ -109,6 +77,13 @@ const Admin = () => {
                     <th>Name</th>
                     <th>Email</th>
                     <th>Password</th>
+                    {/* <th>Destination</th>
+                    <th>Available Date</th>
+                    <th>Available Time</th>
+                    <th>Seats</th>
+                    <th>Price</th>
+                    <th>Train Type</th>
+                    <th>Actions</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -117,17 +92,23 @@ const Admin = () => {
                       <td>
                         <p>{admin.name}</p>
                       </td>
+                      <td>{admin.email}</td>
+                      <td>{admin.password}</td>
+                      {/* <td>{train.destination}</td>
+                      <td>{train.availableDate}</td>
+                      <td>{train.availableTime}</td> */}
+                      {/* <td className="scrollable-cell">
+                        {train.seats.map((trainseats) => (
+                          <p>
+                            {trainseats.number} :
+                            {trainseats.isBooked ? "Booked" : "Not Booked"}
+                          </p>
+                        ))}
+                      </td> */}
+                      {/* <td>{train.price}</td>
+                      <td>{train.trainType}</td> */}
                       <td>
-                        <p>{admin.email}</p>
-                      </td>
-                      <td>***********</td>
-                      <td>
-                        <button
-                          className="btn btn-warning"
-                          onClick={() => openModal(admin._id)}
-                        >
-                          Edit
-                        </button>
+                        <button className="btn btn-warning">Edit</button>
                         &nbsp;&nbsp;
                         <button
                           className="btn btn-danger"
@@ -138,18 +119,25 @@ const Admin = () => {
                       </td>
                     </tr>
                   ))}
+                  {/* <tr>
+                      <td>
+                        <img src="img/people.png" />
+                        <p>John Doe</p>
+                      </td>
+                      <td>01-10-2021</td>
+                      <td>
+                        <span className="status pending">Pending</span>
+                      </td>
+                    </tr> */}
                 </tbody>
               </table>
             </div>
           </div>
-          <UpdateAdminModel
-            show={showModal}
-            handleClose={closeModal}
-            adminId={editAdminId}
-          />
         </main>
+        {/* MAIN */}
       </section>
+      {/* CONTENT */}
     </div>
   );
 };
-export default Admin;
+export default AddAdmin;

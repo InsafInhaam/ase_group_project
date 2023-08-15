@@ -7,7 +7,6 @@ const SearchTrain = () => {
   const history = useNavigate();
   const [fromLocation, setFromLocation] = useState("");
   const [toLocation, setToLocation] = useState("");
-  // const [trainType, setTrainType] = useState("");
 
   // Initialize state for maxDate and date
   const [maxDate, setMaxDate] = useState("");
@@ -106,7 +105,7 @@ const SearchTrain = () => {
 
             />
           </div>
-          {/* Add more fields for passengers, class, etc. */}
+          {/* Add more fields for passengers, className, etc. */}
           <button
             type="button"
             className="btn btn-primary"

@@ -94,9 +94,37 @@ router.get("/trainlisting", async (req, res) => {
     // Use the correct variable name 'trains' instead of 'train'
     const trains = await Train.find(query);
 
-    if (trains.length === 0) {
-      return res.status(404);
+    // if (trains.length === 0) {
+    //   return res.status({error: 'Trains not found'});
+    // }
+
+    res.status(200).send(trains);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occurred while retrieving the trains.");
+  }
+});
+
+router.get("/recommendtrainlisting", async (req, res) => {
+  const { source, destination } = req.query;
+
+  try {
+    let query = {};
+
+    if (source) {
+      query.source = source;
     }
+
+    if (destination) {
+      query.destination = destination;
+    }
+
+    // Use the correct variable name 'trains' instead of 'train'
+    const trains = await Train.find(query);
+
+    // if (trains.length === 0) {
+    //   return res.status(404);
+    // }
 
     res.status(200).send(trains);
   } catch (error) {

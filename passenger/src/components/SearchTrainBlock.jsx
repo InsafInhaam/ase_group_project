@@ -7,10 +7,9 @@ const SearchTrainBlock = () => {
   const history = useNavigate();
   const [fromLocation, setFromLocation] = useState("");
   const [toLocation, setToLocation] = useState("");
-  // const [trainType, setTrainType] = useState("");
   const [date, setDate] = useState("");
 
-  console.log(fromLocation)
+  // console.log(fromLocation)
 
   const handleSubmit = () => {
     // Perform validation

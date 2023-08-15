@@ -11,6 +11,7 @@ import {
 
 import Popup from "./components/Popup";
 import Bookings from "./screens/Bookings";
+import ChatMessage from "./screens/ChatMessage";
 import Home from "./screens/Home";
 import Train from "./screens/Train";
 import ViewTrains from "./screens/ViewTrains";
@@ -22,6 +23,7 @@ import Expenses from "./screens/Expenses";
 // Define the initial state
 const initialState = {
   user: JSON.parse(localStorage.getItem("user")),
+  activeItem: "Dashboard",
 };
 
 export const reducer = (state = initialState, action) => {
@@ -30,6 +32,11 @@ export const reducer = (state = initialState, action) => {
       return { ...state, user: action.payload };
     case "LOGOUT":
       return { ...state, user: null };
+    case "SET_ACTIVE_ITEM":
+      return {
+        ...state,
+        activeItem: action.payload,
+      };
     default:
       return state;
   }
@@ -45,21 +52,27 @@ const Routing = () => {
         path="/"
         element={user ? <Home /> : <Navigate to="/login" />}
       />
+
       <Route
         exact
         path="/bookings"
         element={user ? <Bookings /> : <Navigate to="/login" />}
       />
-      <Route exact path="/trains" element={<Train />} />
+      <Route
+        exact
+        path="/trains"
+        element={user ? <Train /> : <Navigate to="/login" />}
+      />
 
-      <Route exact path="/viewtrains" element={<ViewTrains />} />
+      <Route
+        exact
+        path="/viewtrains"
+        element={user ? <ViewTrains /> : <Navigate to="/login" />}
+      />
 
-      <Route exact path="/expenses" element={<Expenses />} />
-      <Route exact path="/add-admin" element={<Admin />} />
-      <Route exact path="/passenger" element={<Passenger />} />
+      <Route exact path="/add-admin" element={<AddAdmin />} />
 
       <Route exact path="/login" element={<Login />} />
-      <Route exact path="/tests" element={<TestS />} />
     </Routes>
   );
 };

@@ -85,7 +85,7 @@ const Login = () => {
                           type="button"
                           className="btnDesign shadow"
                           onClick={() => handleSubmit()}>
-                          Submit
+                          Login
                         </button>
                       </div>
 
