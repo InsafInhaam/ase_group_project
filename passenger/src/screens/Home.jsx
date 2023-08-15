@@ -10,6 +10,7 @@ import {
   galery5,
   galery6,
 } from "../assets/images";
+import ChatComponent from "../components/ChatComponent";
 
 const Home = () => {
   const user = useSelector((state) => state.user);
@@ -582,6 +583,7 @@ const Home = () => {
         </footer>
         {/* end footer */}
       </div>
+      <ChatComponent/>
     </>
   );
 };

@@ -43,12 +43,12 @@ import { Authenticate } from "../middleware/Auth.js";
 //   }
 // });
 
-router.use(Authenticate);
+// router.use(Authenticate);
 router.post("/bookings", async (req, res) => {
   try {
     const {
       trainId,
-      seatNumber,
+      seatNumbers,
       bookingDate,
       bookingTime,
       passengerName,
@@ -56,35 +56,48 @@ router.post("/bookings", async (req, res) => {
       contactNumber,
       orderId,
       passengerId,
+      price,
     } = req.body;
-
-    // Check if the train exists
-    // const train = await Train.findById(trainId);
-    // if (!train) {
-    //   return res.status(400).send('Invalid train ID. Train not found.');
-    // }
 
     const isValidTrainId = mongoose.Types.ObjectId.isValid(trainId);
     if (!isValidTrainId) {
-      return res.status(400).send("No Train available like that.");
+      return res
+        .status(400)
+        .send({ error: "No Train available with that ID." });
     }
+
     const train = await Train.findById(trainId);
 
-    // Check if the seat is available
-    const selectedSeat = train.seats.find((seat) => seat.number === seatNumber);
-    if (!selectedSeat || selectedSeat.isBooked) {
-      return res.status(400).send("Seat not available.");
+    if (!train || !train.seats || !Array.isArray(train.seats)) {
+      return res.status(400).send({ error: "Invalid train data." });
     }
 
-    // Check if the seat is already booked
-    const existingBooking = await Booking.findOne({ trainId, seatNumber });
-    if (existingBooking) {
-      return res.status(400).send("This seat is already booked.");
+    const bookedSeats = train.seats.filter((seat) => seat.isBooked);
+    console.log(bookedSeats)
+
+    const selectedSeats = train.seats.filter((seat) =>
+      seatNumbers.includes(seat.number)
+    );
+
+    if (selectedSeats.some((seat) => seat.isBooked)) {
+      return res.status(400).send("One or more selected seats are not available.");
     }
 
-    const newBooking = new Booking({
+    const existingBookings = await Booking.find({
       trainId,
-      seatNumber,
+      seatNumber: { $in: seatNumbers },
+    });
+
+    if (existingBookings.length > 0) {
+      return res
+        .status(400)
+        .send({ error: "One or more selected seats are already booked." });
+    }
+
+    // Create and save new bookings
+    const newBookings = selectedSeats.map((selectedSeat) => ({
+      trainId,
+      seatNumber: selectedSeat.number,
       bookingDate,
       bookingTime,
       passengerName,
@@ -92,33 +105,49 @@ router.post("/bookings", async (req, res) => {
       contactNumber,
       orderId,
       passengerId,
-    });
+      price,
+    }));
 
-    await newBooking.save();
+    await Booking.insertMany(newBookings);
 
-    // Mark the seat as booked in the train schema
-    await Train.updateOne(
-      { _id: trainId, "seats.number": seatNumber },
-      { $set: { "seats.$.isBooked": true } }
+    // Update seat statuses
+    const updatedSeatNumbers = selectedSeats.map((seat) => seat.number);
+    await Train.updateMany(
+      { _id: trainId, "seats.number": { $in: updatedSeatNumbers } },
+      { $set: { "seats.$[seat].isBooked": true } },
+      { arrayFilters: [{ "seat.number": { $in: updatedSeatNumbers } }] }
     );
 
-    let transport = generateMailTransporter();
-
-    transport.sendMail({
-      from: "response@rw.com",
-      to: newBooking.passengerEmail,
-      subject: "Email Verification",
-      html: `
-        <p>Your Details</p>`,
+    // Send emails to passengers
+    const transport = generateMailTransporter();
+    newBookings.forEach((booking) => {
+      transport.sendMail({
+        from: "response@rw.com",
+        to: booking.passengerEmail,
+        subject: "Booking Confirmation",
+        html: `
+          <p>Thank you for your booking!</p>
+          <p>Train: ${train.name}</p>
+          <p>Seat Number: ${booking.seatNumber}</p>
+          <p>Date: ${booking.bookingDate}</p>
+          <p>Time: ${booking.bookingTime}</p>
+          <!-- Add more booking details as needed -->
+        `,
+      });
     });
 
-    res.status(201).send("Booking created successfully.");
+    res.status(201).send("Bookings created successfully.");
   } catch (error) {
-    console.log(error);
-    res.status(500).send("An error occurred while creating a booking.");
+    console.error(error);
+    console.log(error.message);
+    res.status(400).send({ message: error.message });
   }
 });
 
+
+
+
+// get all booking details
 router.get("/allbookings", async (req, res) => {
   const bookings = await Booking.find();
 

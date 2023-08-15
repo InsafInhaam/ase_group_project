@@ -47,38 +47,6 @@ const PaymentModal = ({
   window.payhere.onCompleted = function onCompleted(orderId) {
     console.log("Payment completed. OrderID:" + orderId);
     //Note: validate the payment and show success or failure page to the customer
-    
-    fetch(process.env.REACT_APP_API_URL + "/booking/bookings", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        trainId,
-        seatNumber,
-        bookingDate,
-        bookingTime,
-        passengerName,
-        passengerEmail: email,
-        contactNumber: phone,
-        orderId,
-        passengerId,
-        price: amount
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-          
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          console.log(data.message);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
   // Called when user closes the payment without completing
@@ -94,11 +62,57 @@ const PaymentModal = ({
   };
 
   function pay() {
-    if (!seatNumber) {
-      toast.error("Please select the seat number");
-      return;
-    }
-    window.payhere.startPayment(payment);
+    // if (!seatNumber) {
+    //   toast.error("Please select the seat number");
+    //   return;
+    // }
+
+    console.log({
+      trainId,
+      seatNumber,
+      bookingDate,
+      bookingTime,
+      passengerName,
+      passengerEmail: email,
+      contactNumber: phone,
+      orderId,
+      passengerId,
+      price: amount,
+    });
+
+    fetch(process.env.REACT_APP_API_URL + "/booking/bookings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        trainId,
+        seatNumber,
+        bookingDate,
+        bookingTime,
+        passengerName,
+        passengerEmail: email,
+        contactNumber: phone,
+        orderId,
+        passengerId,
+        price: amount,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          console.log(data.message);
+          window.payhere.startPayment(payment);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (

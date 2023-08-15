@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 // const trainSchema = new mongoose.Schema({
 //   train: {
@@ -30,8 +30,12 @@ const trainSchema = new mongoose.Schema({
   ],
   price: String,
   trainType: String,
+  sourceLat: String,
+  sourceLng: String,
+  destinationLat: String,
+  destinationLng: String,
 });
 
-const Train = mongoose.model('Train', trainSchema);
+const Train = mongoose.model("Train", trainSchema);
 
-export default Train
+export default Train;

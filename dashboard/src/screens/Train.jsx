@@ -11,7 +11,11 @@ const Train = () => {
   const [formData, setFormData] = useState({
     name: "",
     source: "",
+    sourceLat: "",
+    sourceLng: "",
     destination: "",
+    destinationLat: "",
+    destinationLng: "",
     availableDate: "",
     availableTime: "",
     price: "",
@@ -169,6 +173,36 @@ const Train = () => {
                 </div>
               </div>
               <div className="mb-3">
+                <label htmlFor="sourceLat" className="form-label">
+                  Source Latitude
+                </label>
+                <div className="form-group first">
+                  <input
+                    type="text"
+                    name="sourceLat"
+                    id="sourceLat"
+                    className="form-control"
+                    value={formData.sourceLat}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="sourceLng" className="form-label">
+                  Source Longitude
+                </label>
+                <div className="form-group first">
+                  <input
+                    type="text"
+                    name="sourceLng"
+                    id="sourceLng"
+                    className="form-control"
+                    value={formData.sourceLng}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="mb-3">
                 <label htmlFor="toStation" className="form-label">
                   To Station
                 </label>
@@ -188,6 +222,36 @@ const Train = () => {
                       </option>
                     ))}
                   </select>
+                </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="destinationLat" className="form-label">
+                  Destination Latitude
+                </label>
+                <div className="form-group first">
+                  <input
+                    type="text"
+                    name="destinationLat"
+                    id="destinationLat"
+                    className="form-control"
+                    value={formData.destinationLat}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="destinationLng" className="form-label">
+                  Destination Longitude
+                </label>
+                <div className="form-group first">
+                  <input
+                    type="text"
+                    name="destinationLng"
+                    id="destinationLng"
+                    className="form-control"
+                    value={formData.destinationLng}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
               <div className="mb-3">

@@ -132,7 +132,8 @@ const SummaryPage = () => {
                           {trainName} &nbsp;
                           <i
                             class="fa fa-chevron-right"
-                            aria-hidden="true"></i>{" "}
+                            aria-hidden="true"
+                          ></i>{" "}
                           &nbsp;{" "}
                           <i class="fa fa-map-marker" aria-hidden="true"></i>{" "}
                           &nbsp;
@@ -149,7 +150,8 @@ const SummaryPage = () => {
                     {/* passnger details  */}
                     <table
                       className="table table-striped mt-4"
-                      style={{ width: "90%" }}>
+                      style={{ width: "90%" }}
+                    >
                       <tr>
                         <td className="p-2">
                           <strong>Name :</strong>
@@ -220,7 +222,8 @@ const SummaryPage = () => {
                                     </div>
                                     <button
                                       type="submit"
-                                      className="trainListBtn">
+                                      className="trainListBtn"
+                                    >
                                       Apply
                                     </button>
                                   </form>
@@ -241,17 +244,18 @@ const SummaryPage = () => {
                                     LKR {totalPrice.toFixed(2)}
                                   </td>
                                 </tr>
-                                <tr>
-                                  <td className=""></td>
-                                  <td className="text-right">
-                                    {discountPercentage > 0 && (
+                                {discountPercentage > 0 && (
+                                  <tr>
+                                    <td className="">Discount</td>
+                                    <td className="text-right">
                                       <p style={{ fontWeight: 700 }}>
                                         {" "}
                                         -&nbsp; {discountPercentage}% &nbsp;
                                       </p>
-                                    )}
-                                  </td>
-                                </tr>
+                                    </td>
+                                  </tr>
+                                )}
+
                                 <tr>
                                   <td>
                                     {" "}
@@ -270,7 +274,8 @@ const SummaryPage = () => {
                                     style={{
                                       fontWeight: 700,
                                       fontSize: "20px",
-                                    }}>
+                                    }}
+                                  >
                                     LKR {discountedPrice.toFixed(2)}
                                   </td>
                                 </tr>
@@ -287,7 +292,7 @@ const SummaryPage = () => {
                                 email={user.email}
                                 phone={user.phone}
                                 orderId={orderId}
-                                passengerId={user.id}
+                                passengerId={user._id}
                                 name={trainName}
                                 amount={discountedPrice}
                                 currency={currency}
