@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
 
 const Login = () => {
   const dispatch = useDispatch();
