@@ -40,17 +40,23 @@ export const UpdateExpenses = async (req, res) => {
   try {
     const id = req.params.id;
     const { name, description, amount } = req.body;
+
     let expenses = await Expenses.findById(id);
-    expenses.name = name;
-    expenses.description = description;
-    expenses.amout = amount;
-    const updateExpenses = await expenses.save();
-    return res.status(200).json(updateExpenses);
+
+    if (name) expenses.name = name;
+    if (description) expenses.description = description;
+    if (amount) expenses.amount = amount;
+
+    await expenses.save();
+
+    return res.status(200).json({ message: "Expenses updated successfully" });
   } catch (error) {
     console.log("Error: ", error);
     return res.status(400).json({ message: "Failed to Update Expenses" });
   }
 };
+
+
 export const DeleteExpenses = async (req, res) => {
   try {
     const id = req.params.id;

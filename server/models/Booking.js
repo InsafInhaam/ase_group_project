@@ -32,7 +32,7 @@ const bookingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Train",
   },
-  seatNumber: String,
+  seatNumber: [String],
   bookingDate: String,
   bookingTime: String,
   passengerName: String,

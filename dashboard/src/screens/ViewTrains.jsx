@@ -1,10 +1,15 @@
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import NotifyModel from "../components/NotifyModel";
 
 const ViewTrains = () => {
   const [trains, setTrains] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [currentTrainId, setCurrentTrainId] = useState(null);
 
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "/train/alltrain")
@@ -12,12 +17,9 @@ const ViewTrains = () => {
       .then((result) => {
         setTrains(result);
       });
-  }, [trains]);
+  }, []);
 
-  // console.log(trains);
-
-  const handleDelete = (id) => 
-  {
+  const handleDelete = (id) => {
     fetch(process.env.REACT_APP_API_URL + "/train/trains/" + id, {
       method: "DELETE",
       headers: {
@@ -30,6 +32,59 @@ const ViewTrains = () => {
       });
   };
 
+  const openModal = (id) => {
+    setCurrentTrainId(id);
+    setShowModal(true);
+  };
+
+  const closeModel = () => {
+    setCurrentTrainId(null);
+    setShowModal(false);
+  };
+
+  const handleTrainPDF = () => {
+    const doc = new jsPDF();
+
+    doc.setFont("helvetica", "normal");
+
+    doc.setFontSize(16);
+    doc.text("Train Report", 105, 15, { align: "center" });
+    doc.setFontSize(12);
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, 10, 30);
+
+    const headers = ['Train Name', 'Source', 'Destination', 'Available Date', 'Available Time', 'Seats', 'Price', 'Train Type'];
+    const tableData = trains.map(train => [
+      train.name,
+      train.source,
+      train.destination,
+      train.availableDate,
+      train.availableTime,
+      train.seats.map(seat => `${seat.number} (${seat.isBooked ? "Booked" : "Available"})`).join("\n"),
+      train.price,
+      train.trainType
+    ]);
+
+    const tableOptions = {
+      startY: 40,
+      styles: { textColor: [30, 30, 30], fontSize: 10, halign: 'center' },
+      columnStyles: {
+
+        5: { columnWidth: 40 }, // Seats
+ 
+      },
+      headStyles: { fillColor: [71, 71, 71], textColor: [255, 255, 255] },
+      margin: { top: 20 },
+      addPageContent: (data) => {
+        doc.setFontSize(10);
+        doc.setTextColor(100);
+        doc.text('Thank you for choosing our service!', 105, doc.internal.pageSize.height - 10, { align: 'center' });
+      }
+    };
+
+    doc.autoTable(headers, tableData, tableOptions);
+
+    doc.save('train_report.pdf');
+  };
   return (
     <div>
       {/* SIDEBAR */}
@@ -59,10 +114,16 @@ const ViewTrains = () => {
                 </li>
               </ul>
             </div>
-            <a href="/trains" className="btn-download">
-              <i className="bx plus" />
-              <span className="text">Add New Train</span>
-            </a>
+            <div className="btn-wrapper d-flex ">
+              <a href="/trains" className="btn-download mr-2">
+                <ion-icon name="add-circle"></ion-icon>
+                <span className="text">Add New Train</span>
+              </a>
+              <a href="#" className="btn-download">
+                <i className="bx bxs-cloud-download" />
+                <span className="text" onClick={handleTrainPDF}>Download PDF</span>
+              </a>
+            </div>
           </div>
 
           <div className="table-data">
@@ -119,23 +180,25 @@ const ViewTrains = () => {
                         >
                           Trash
                         </button>
+                        &nbsp;&nbsp;
+                        <button
+                          className="btn btn-secondary"
+                          onClick={() => openModal(train._id)}
+                        >
+                          Notify
+                        </button>
                       </td>
                     </tr>
                   ))}
-                  {/* <tr>
-                      <td>
-                        <img src="img/people.png" />
-                        <p>John Doe</p>
-                      </td>
-                      <td>01-10-2021</td>
-                      <td>
-                        <span className="status pending">Pending</span>
-                      </td>
-                    </tr> */}
                 </tbody>
               </table>
             </div>
           </div>
+          <NotifyModel
+            show={showModal}
+            handleClose={closeModel}
+            trainId={currentTrainId}
+          />
         </main>
         {/* MAIN */}
       </section>
@@ -143,4 +206,5 @@ const ViewTrains = () => {
     </div>
   );
 };
+
 export default ViewTrains;

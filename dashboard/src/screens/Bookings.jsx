@@ -1,3 +1,5 @@
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
@@ -6,7 +8,11 @@ const Bookings = () => {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_URL + "/booking/allbookings")
+    fetch(process.env.REACT_APP_API_URL + "/booking/allbookings", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         setBookings(result);
@@ -14,6 +20,46 @@ const Bookings = () => {
   }, []);
 
   console.log(bookings);
+
+
+  // Generate PDF
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+
+    doc.setFont("helvetica", "normal");
+
+    // Title and Date
+    doc.setFontSize(18);
+    doc.text("Recent Bookings Report", 105, 15, { align: "center" });
+    doc.setFontSize(12);
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, 10, 30);
+
+    // Table Headers
+    const headers = ['Passenger Name', 'Passenger Phone', 'Passenger Email', 'Seat Number', 'Order ID', 'Status'];
+    const tableData = bookings.map(booking => [
+      booking.passengerName,
+      booking.contactNumber,
+      booking.passengerEmail,
+      booking.seatNumber,
+      booking.orderId,
+      'Completed' 
+    ]);
+
+    // Create Table
+    doc.autoTable({
+      head: [headers],
+      body: tableData,
+      startY: 40
+    });
+
+    
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text('Thank you for choosing our service!', 105, doc.internal.pageSize.height - 10, { align: 'center' });
+
+    doc.save('recent_bookings.pdf');
+  };
+
 
   return (
     <div>
@@ -44,9 +90,9 @@ const Bookings = () => {
                 </li>
               </ul>
             </div>
-            <a href="#" className="btn-download">
+            <a href="#" className="btn-download" >
               <i className="bx bxs-cloud-download" />
-              <span className="text">Download PDF</span>
+              <span className="text" onClick={handleDownloadPDF}>Download PDF</span>
             </a>
           </div>
 
@@ -69,14 +115,15 @@ const Bookings = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {bookings.map((booking) => (
-                    <tr>
+                  {bookings?.map((booking) => (
+                    <tr key={booking._id}>
+                      {" "}
                       <td>
                         <p>{booking.passengerName}</p>
                       </td>
                       <td>{booking.contactNumber}</td>
                       <td>{booking.passengerEmail}</td>
-                      <td>{booking.seatNumber}</td>
+                      <td>{booking.seatNumber.join(", ")}</td>
                       <td>{booking.orderId}</td>
                       <td>
                         <span className="status completed">Completed</span>

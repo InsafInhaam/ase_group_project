@@ -1,10 +1,15 @@
 import express from "express";
+
 const router = express.Router();
 import Booking from "../models/Booking.js";
+
 import Train from "../models/Train.js";
-import mongoose from "mongoose";
 import { generateMailTransporter } from "../utils/Mail.js";
-import { Authenticate } from "../middleware/Auth.js";
+import {
+  AdminAuthenticate,
+  Authenticate,
+  UserAuthenticate,
+} from "../middleware/Auth.js";
 
 // router.get("/trains", async (req, res) => {
 //   try {
@@ -44,81 +49,6 @@ import { Authenticate } from "../middleware/Auth.js";
 // });
 
 // router.use(Authenticate);
-// router.post("/bookings", async (req, res) => {
-//   try {
-//     const {
-//       trainId,
-//       seatNumber,
-//       bookingDate,
-//       bookingTime,
-//       passengerName,
-//       passengerEmail,
-//       contactNumber,
-//       orderId,
-//       passengerId,
-//     } = req.body;
-
-//     // Check if the train exists
-//     // const train = await Train.findById(trainId);
-//     // if (!train) {
-//     //   return res.status(400).send('Invalid train ID. Train not found.');
-//     // }
-
-//     const isValidTrainId = mongoose.Types.ObjectId.isValid(trainId);
-//     if (!isValidTrainId) {
-//       return res.status(400).send("No Train available like that.");
-//     }
-//     const train = await Train.findById(trainId);
-
-//     // Check if the seat is available
-//     const selectedSeat = train.seats.find((seat) => seat.number === seatNumber);
-//     if (!selectedSeat || selectedSeat.isBooked) {
-//       return res.status(400).send("Seat not available.");
-//     }
-
-//     // Check if the seat is already booked
-//     const existingBooking = await Booking.findOne({ trainId, seatNumber });
-//     if (existingBooking) {
-//       return res.status(400).send("This seat is already booked.");
-//     }
-
-//     const newBooking = new Booking({
-//       trainId,
-//       seatNumber,
-//       bookingDate,
-//       bookingTime,
-//       passengerName,
-//       passengerEmail,
-//       contactNumber,
-//       orderId,
-//       passengerId,
-//     });
-
-//     await newBooking.save();
-
-//     // Mark the seat as booked in the train schema
-//     await Train.updateOne(
-//       { _id: trainId, "seats.number": seatNumber },
-//       { $set: { "seats.$.isBooked": true } }
-//     );
-
-//     let transport = generateMailTransporter();
-
-//     transport.sendMail({
-//       from: "response@rw.com",
-//       to: newBooking.passengerEmail,
-//       subject: "Email Verification",
-//       html: `
-//         <p>Your Details</p>`,
-//     });
-
-//     res.status(201).send("Booking created successfully.");
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send("An error occurred while creating a booking.");
-//   }
-// });
-
 router.post("/bookings", async (req, res) => {
   try {
     const {
@@ -147,16 +77,9 @@ router.post("/bookings", async (req, res) => {
       return res.status(400).send({ error: "Invalid train data." });
     }
 
-    const bookedSeats = train.seats.filter((seat) => seat.isBooked);
-    console.log(bookedSeats)
-
     const selectedSeats = train.seats.filter((seat) =>
       seatNumbers.includes(seat.number)
     );
-
-    if (selectedSeats.some((seat) => seat.isBooked)) {
-      return res.status(400).send("One or more selected seats are not available.");
-    }
 
     const existingBookings = await Booking.find({
       trainId,
@@ -169,10 +92,9 @@ router.post("/bookings", async (req, res) => {
         .send({ error: "One or more selected seats are already booked." });
     }
 
-    // Create and save new bookings
-    const newBookings = selectedSeats.map((selectedSeat) => ({
+    const newBooking = {
       trainId,
-      seatNumber: selectedSeat.number,
+      seatNumber: seatNumbers, // This will save the entire array of seat numbers
       bookingDate,
       bookingTime,
       passengerName,
@@ -181,9 +103,8 @@ router.post("/bookings", async (req, res) => {
       orderId,
       passengerId,
       price,
-    }));
-
-    await Booking.insertMany(newBookings);
+    };
+    await Booking.create(newBooking);
 
     // Update seat statuses
     const updatedSeatNumbers = selectedSeats.map((seat) => seat.number);
@@ -195,32 +116,25 @@ router.post("/bookings", async (req, res) => {
 
     // Send emails to passengers
     const transport = generateMailTransporter();
-    newBookings.forEach((booking) => {
-      transport.sendMail({
-        from: "response@rw.com",
-        to: booking.passengerEmail,
-        subject: "Booking Confirmation",
-        html: `
-          <p>Thank you for your booking!</p>
-          <p>Train: ${train.name}</p>
-          <p>Seat Number: ${booking.seatNumber}</p>
-          <p>Date: ${booking.bookingDate}</p>
-          <p>Time: ${booking.bookingTime}</p>
-          <!-- Add more booking details as needed -->
-        `,
-      });
+    transport.sendMail({
+      from: "response@rw.com",
+      to: newBooking.passengerEmail,
+      subject: "Booking Confirmation",
+      html: `
+        <p>Thank you for your booking!</p>
+        <p>Train: ${train.name}</p>
+        <p>Seat Numbers: ${newBooking.seatNumber.join(", ")}</p>
+        <p>Date: ${newBooking.bookingDate}</p>
+        <p>Time: ${newBooking.bookingTime}</p>
+      `,
     });
 
-    res.status(201).send("Bookings created successfully.");
+    res.status(201).send({ message: "Bookings created successfully." });
   } catch (error) {
     console.error(error);
-    console.log(error.message);
-    res.status(400).send({ message: error.message });
+    res.status(400).send({ error: error.message });
   }
 });
-
-
-
 
 // get all booking details
 router.get("/allbookings", async (req, res) => {
@@ -266,4 +180,39 @@ router.get("/bookingsById/:id", async (req, res) => {
   }
 });
 
+// router.use(AdminAuthenticate);
+
+
 export { router as BookingRoute };
+
+
+    // const USER_ID = "25482";
+    // const API_KEY = "2skLBC7FPExOGaG7cCfo";
+    // const SENDER_ID = "NotifyDEMO";
+
+    // const message = "Hello there, your train will be arrived at 11:00 PM";
+
+    // for (let number of numbers) {
+    //   try {
+    //     await axios.get(`https://app.notify.lk/api/v1/send`, {
+    //       params: {
+    //         user_id: USER_ID,
+    //         api_key: API_KEY,
+    //         sender_id: SENDER_ID,
+    //         to: number,
+    //         message: message,
+    //       },
+    //     });
+    //     console.log(`Message successfully sent to: ${number}`);
+    //   } catch (error) {
+    //     console.error(`Failed to send message to: ${number}`);
+
+    //     console.error("Error Message:", error.message);
+
+    //     if (error.response) {
+    //       console.error("Response Data:", error.response.data);
+    //       console.error("Response Status:", error.response.status);
+    //       console.error("Response Headers:", error.response.headers);
+    //     }
+    //   }
+    // }

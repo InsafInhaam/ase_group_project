@@ -1,13 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-
-
+import BarChart from "../components/BarChart";
 
 const Home = () => {
+  //Fetching
 
-//Fetching
+  const [totalRevenue, setTotalRevenue] = useState([]);
+  const [netIncome, setNetIncome] = useState([]);
+  const [bookings, setBookings] = useState([]);
 
+  useEffect(() => {
+    fetch(process.env.REACT_APP_API_URL + "/revenue/total", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setTotalRevenue(result);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_API_URL + "/revenue/net-income", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setNetIncome(result);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_API_URL + "/booking/allbookings", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setBookings(result);
+      });
+  }, []);
+
+  console.log(netIncome.netIncome);
 
   return (
     <div>
@@ -47,27 +86,29 @@ const Home = () => {
             <li>
               <i className="bx bxs-calendar-check" />
               <span className="text">
-                <h3>1020</h3>
-                <p>New Booking</p>
+                <h3>{bookings.length}</h3>
+                <p>Total Booking</p>
               </span>
             </li>
             <li>
               <i className="bx bxs-group" />
               <span className="text">
-                <h3>2834</h3>
-                <p>Visitors</p>
+                <h3>LKR {netIncome.netIncome}</h3>
+                <p>Net Income</p>
               </span>
             </li>
             <li>
               <i className="bx bxs-dollar-circle" />
               <span className="text">
-                <h3>$2543</h3>
-                <p>Total Sales</p>
+                <h3>LKR {totalRevenue.totalPrice}</h3>
+                <p>Total Revenue</p>
               </span>
             </li>
           </ul>
-         
         </main>
+        <h1>Monthly Bookings</h1>
+        <BarChart />
+
         {/* MAIN */}
       </section>
       {/* CONTENT */}

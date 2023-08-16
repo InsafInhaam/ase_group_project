@@ -10,12 +10,15 @@ import {
 } from "react-router-dom";
 
 import Popup from "./components/Popup";
-import AddAdmin from "./screens/AddAdmin";
 import Bookings from "./screens/Bookings";
 import ChatMessage from "./screens/ChatMessage";
 import Home from "./screens/Home";
 import Train from "./screens/Train";
 import ViewTrains from "./screens/ViewTrains";
+import { TestS } from "./screens/TestS";
+import Admin from "./screens/Admin";
+import Passenger from "./screens/Passenger";
+import Expenses from "./screens/Expenses";
 
 // Define the initial state
 const initialState = {
@@ -67,14 +70,9 @@ const Routing = () => {
         element={user ? <ViewTrains /> : <Navigate to="/login" />}
       />
 
-      <Route
-        exact
-        path="/add-admin"
-        element={user ? <AddAdmin /> : <Navigate to="/login" />}
-      />
+      <Route exact path="/add-admin" element={<AddAdmin />} />
 
       <Route exact path="/login" element={<Login />} />
-      <Route exact path="/chatmessage" element={<ChatMessage />} />
     </Routes>
   );
 };

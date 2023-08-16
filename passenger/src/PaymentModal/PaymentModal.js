@@ -16,10 +16,9 @@ const PaymentModal = ({
   currency,
   hash,
 }) => {
-  // Put the payment variables here
   var payment = {
-    sandbox: true, // if the account is sandbox or real
-    merchant_id: "1222723", // Replace your Merchant ID
+    sandbox: true,
+    merchant_id: "1222723",
     return_url: "http://sample.com/return",
     cancel_url: "http://sample.com/cancel",
     notify_url: "http://sample.com/notify",
@@ -35,50 +34,38 @@ const PaymentModal = ({
     address: "no",
     city: "no",
     country: "Sri Lanka",
-    country: "Sri Lanka",
-    delivery_address: "No. 46, Galle road, Kalutara South", // optional field
-    delivery_city: "Kalutara", // optional field
-    delivery_country: "Sri Lanka", // optional field
-    custom_1: "", // optional field
-    custom_2: "", // optional field
+    delivery_address: "No. 46, Galle road, Kalutara South",
+    delivery_city: "Kalutara",
+    delivery_country: "Sri Lanka",
+    custom_1: "",
+    custom_2: "",
   };
 
-  // Called when user completed the payment. It can be a successful payment or failure
   window.payhere.onCompleted = function onCompleted(orderId) {
     console.log("Payment completed. OrderID:" + orderId);
-    //Note: validate the payment and show success or failure page to the customer
   };
 
-  // Called when user closes the payment without completing
   window.payhere.onDismissed = function onDismissed() {
-    //Note: Prompt user to pay again or show an error page
     console.log("Payment dismissed");
   };
 
-  // Called when error happens when initializing payment such as invalid parameters
   window.payhere.onError = function onError(error) {
-    // Note: show an error page
     console.log("Error:" + error);
   };
 
   function pay() {
-    // if (!seatNumber) {
-    //   toast.error("Please select the seat number");
-    //   return;
-    // }
-
-    console.log({
-      trainId,
-      seatNumber,
-      bookingDate,
-      bookingTime,
-      passengerName,
-      passengerEmail: email,
-      contactNumber: phone,
-      orderId,
-      passengerId,
-      price: amount,
-    });
+    // console.log({
+    //   trainId,
+    //   seatNumbers: seatNumber,
+    //   bookingDate,
+    //   bookingTime,
+    //   passengerName,
+    //   passengerEmail: email,
+    //   contactNumber: phone,
+    //   orderId,
+    //   passengerId,
+    //   price: amount,
+    // });
 
     fetch(process.env.REACT_APP_API_URL + "/booking/bookings", {
       method: "POST",
@@ -88,7 +75,7 @@ const PaymentModal = ({
       },
       body: JSON.stringify({
         trainId,
-        seatNumber,
+        seatNumbers: seatNumber,
         bookingDate,
         bookingTime,
         passengerName,
@@ -99,12 +86,23 @@ const PaymentModal = ({
         price: amount,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        const contentType = res.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          return res.json();
+        } else {
+          console.error("Unexpected content type:", contentType);
+          return res.text().then((text) => {
+            throw new TypeError(`Expected JSON but received ${text}`);
+          });
+        }
+      })
       .then((data) => {
         console.log(data);
 
         if (data.error) {
           console.log(data.error);
+          toast.error(data.error);
         } else {
           console.log(data.message);
           window.payhere.startPayment(payment);
@@ -112,6 +110,7 @@ const PaymentModal = ({
       })
       .catch((err) => {
         console.log(err);
+        toast.error("An error occurred while processing your payment.");
       });
   }
 

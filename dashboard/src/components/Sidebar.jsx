@@ -23,8 +23,8 @@ const Sidebar = () => {
           <img src={MainLogo} alt="logo" className="mainlogo" />
         </a>
         <ul className="side-menu top">
-          <li className={activeItem === "Dashboard" ? "active" : ""}>
-            <a href="#" onClick={() => handleItemClick("Dashboard", "/")}>
+          <li className="active">
+            <a href="#">
               <i className="bx bxs-dashboard" />
               <span className="text">Dashboard</span>
             </a>
@@ -59,13 +59,16 @@ const Sidebar = () => {
               <span className="text">Team</span>
             </a>
           </li>
-          <li className={activeItem === "Admin" ? "active" : ""}>
-            <a
-              href="#"
-              onClick={() => handleItemClick("Admin", "/add-admin")}
-            >
+          <li>
+            <a href="/add-admin">
               <i className="bx bxs-user-plus" />
               <span className="text">Admin</span>
+            </a>
+          </li>
+          <li>
+            <a href="/passenger">
+              <i className="bx bxs-user" />
+              <span className="text">Passenger</span>
             </a>
           </li>
         </ul>
