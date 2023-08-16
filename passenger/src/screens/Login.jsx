@@ -61,9 +61,10 @@ const Login = () => {
                     </div>
                     <div className="card-body">
                       <div className="mb-3">
-                        <label>Email address</label>
+                        <label htmlFor="emailInput">Email address</label>
                         <input
                           type="email"
+                          id="emailInput"
                           className="form-control"
                           placeholder="Enter email"
                           value={email}
@@ -71,8 +72,9 @@ const Login = () => {
                         />
                       </div>
                       <div className="mb-3">
-                        <label>Password</label>
+                        <label htmlFor="passwordInput">Password</label>
                         <input
+                          htmlFor="passwordInput"
                           type="password"
                           className="form-control"
                           placeholder="Enter password"
@@ -84,7 +86,8 @@ const Login = () => {
                         <button
                           type="button"
                           className="btnDesign shadow"
-                          onClick={() => handleSubmit()}>
+                          onClick={() => handleSubmit()}
+                        >
                           Login
                         </button>
                       </div>

@@ -5,7 +5,6 @@ import { useLocation, useNavigate, useHistory } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { trainImg } from "../assets/images";
 import { toast } from "react-hot-toast";
-// import trainImg from "../assets/images/trainAnimation.png";
 
 const BookingTrain = () => {
   const history = useNavigate();
@@ -232,7 +231,7 @@ const BookingTrain = () => {
               </div>
             </div>
           </div>
-          <div className="mb-4 d-flex justify-content-center py-5">
+          <div className="mb-4 d-flex justify-content-center confirm-booking-btn">
             {/* <button className="">Confirm Booking</button> */}
             <button
               onClick={handleFormSubmission} // Implement the form submission function

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
 import SearchTrainBlock from "../components/SearchTrainBlock";
 import {
