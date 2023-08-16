@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -61,10 +61,9 @@ const Login = () => {
                     </div>
                     <div className="card-body">
                       <div className="mb-3">
-                        <label htmlFor="emailInput">Email address</label>
+                        <label>Email address</label>
                         <input
                           type="email"
-                          id="emailInput"
                           className="form-control"
                           placeholder="Enter email"
                           value={email}
@@ -72,9 +71,8 @@ const Login = () => {
                         />
                       </div>
                       <div className="mb-3">
-                        <label htmlFor="passwordInput">Password</label>
+                        <label>Password</label>
                         <input
-                          htmlFor="passwordInput"
                           type="password"
                           className="form-control"
                           placeholder="Enter password"
@@ -86,8 +84,7 @@ const Login = () => {
                         <button
                           type="button"
                           className="btnDesign shadow"
-                          onClick={() => handleSubmit()}
-                        >
+                          onClick={() => handleSubmit()}>
                           Login
                         </button>
                       </div>
