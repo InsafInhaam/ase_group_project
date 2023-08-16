@@ -23,8 +23,8 @@ const Sidebar = () => {
           <img src={MainLogo} alt="logo" className="mainlogo" />
         </a>
         <ul className="side-menu top">
-          <li className="active">
-            <a href="#">
+          <li className={activeItem === "Dashboard" ? "active" : ""}>
+            <a href="#" onClick={() => handleItemClick("Dashboard", "/")}>
               <i className="bx bxs-dashboard" />
               <span className="text">Dashboard</span>
             </a>
@@ -47,26 +47,32 @@ const Sidebar = () => {
               <span className="text">Trains</span>
             </a>
           </li>
-          <li>
+          {/* <li>
             <a href="/ChatMessage">
               <i className="bx bxs-message-dots" />
               <span className="text">Message</span>
             </a>
-          </li>
-          <li>
-            <a href="#">
+          </li> */}
+          <li className={activeItem === "Expenses" ? "active" : ""}>
+            <a
+              href="#"
+              onClick={() => handleItemClick("Expenses", "/expenses")}
+            >
               <i className="bx bxs-group" />
-              <span className="text">Team</span>
+              <span className="text">Expenses</span>
             </a>
           </li>
-          <li>
-            <a href="/add-admin">
+          <li className={activeItem === "Admin" ? "active" : ""}>
+            <a href="#" onClick={() => handleItemClick("Admin", "/add-admin")}>
               <i className="bx bxs-user-plus" />
               <span className="text">Admin</span>
             </a>
           </li>
-          <li>
-            <a href="/passenger">
+          <li className={activeItem === "Passenger" ? "active" : ""}>
+            <a
+              href="#"
+              onClick={() => handleItemClick("Passenger", "/passenger")}
+            >
               <i className="bx bxs-user" />
               <span className="text">Passenger</span>
             </a>

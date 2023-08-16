@@ -2,7 +2,7 @@ import express from "express";
 import Train from "../models/Train.js";
 import Booking from "../models/Booking.js";
 import Passenger from "../models/Passenger.js";
-import axios from "axios";
+// import axios from "axios";
 
 const router = express.Router();
 

@@ -1,6 +1,5 @@
 import "./App.css";
 import Login from "./screens/Login";
-// import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { useSelector } from "react-redux";
 import {
   Navigate,
@@ -11,11 +10,9 @@ import {
 
 import Popup from "./components/Popup";
 import Bookings from "./screens/Bookings";
-import ChatMessage from "./screens/ChatMessage";
 import Home from "./screens/Home";
 import Train from "./screens/Train";
 import ViewTrains from "./screens/ViewTrains";
-import { TestS } from "./screens/TestS";
 import Admin from "./screens/Admin";
 import Passenger from "./screens/Passenger";
 import Expenses from "./screens/Expenses";
@@ -70,7 +67,21 @@ const Routing = () => {
         element={user ? <ViewTrains /> : <Navigate to="/login" />}
       />
 
-      <Route exact path="/add-admin" element={<AddAdmin />} />
+      <Route
+        exact
+        path="/expenses"
+        element={user ? <Expenses /> : <Navigate to="/login" />}
+      />
+      <Route
+        exact
+        path="/add-admin"
+        element={user ? <Admin /> : <Navigate to="/login" />}
+      />
+      <Route
+        exact
+        path="/passenger"
+        element={user ? <Passenger /> : <Navigate to="/login" />}
+      />
 
       <Route exact path="/login" element={<Login />} />
     </Routes>
