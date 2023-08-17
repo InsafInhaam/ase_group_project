@@ -71,12 +71,12 @@ const Expenses = () => {
                 </li>
               </ul>
             </div>
-            <button
+            <a href="#"
               onClick={() => setShowAddModal(true)}
-              className="btn btn-primary"
+              className="btn-download"
             >
               <span className="text">Add New Expense</span>
-            </button>
+            </a>
           </div>
 
           <div className="table-data">

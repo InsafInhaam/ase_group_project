@@ -54,19 +54,6 @@ const PaymentModal = ({
   };
 
   function pay() {
-    // console.log({
-    //   trainId,
-    //   seatNumbers: seatNumber,
-    //   bookingDate,
-    //   bookingTime,
-    //   passengerName,
-    //   passengerEmail: email,
-    //   contactNumber: phone,
-    //   orderId,
-    //   passengerId,
-    //   price: amount,
-    // });
-
     fetch(process.env.REACT_APP_API_URL + "/booking/bookings", {
       method: "POST",
       headers: {

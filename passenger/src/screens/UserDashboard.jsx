@@ -207,12 +207,12 @@ function UserDashboard() {
                           <div className="col-md-8">
                             <p>{user?.phone}</p>
                           </div>
-                          <div className="col-md-12 mb-3  ">
-                            <div className="d-flex justify-content-center">
+                          <div className="col-md-12 mb-3">
+                            {/* <div className="d-flex justify-content-center">
                               <button className="btnDesign w-100  ">
                                 Success
                               </button>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>

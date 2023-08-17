@@ -7,39 +7,30 @@ const SearchTrain = () => {
   const history = useNavigate();
   const [fromLocation, setFromLocation] = useState("");
   const [toLocation, setToLocation] = useState("");
-
-  // Initialize state for maxDate and date
-  const [maxDate, setMaxDate] = useState("");
   const [date, setDate] = useState("");
 
-  useEffect(() => {
-    const dtToday = new Date();
-  
-    const month = dtToday.getMonth() + 1;
-    const day = dtToday.getDate();
-    const year = dtToday.getFullYear();
-    if (month < 10) month = '0' + month.toString();
-    if (day < 10) day = '0' + day.toString();
-
-    const formattedMaxDate = year + '-' + month + '-' + day;
-
-    // Set maxDate state
-    setMaxDate(formattedMaxDate);
-  }, []); // Run this effect only once on component mount
-
-
   const handleSubmit = () => {
-    console.log("fromLocation:", fromLocation);
-    console.log("toLocation:", toLocation);
-    console.log("date:", date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to midnight
+
     // Perform validation
     if (!fromLocation || !toLocation || !date) {
       toast.error("Please fill in all the required fields.");
       return;
     }
 
+    const selectedDate = new Date(date);
+
+    // Check if the selected date is before today
+    if (selectedDate < today) {
+      toast.error(
+        "Invalid date. Please select a date that is today or in the future."
+      );
+      return;
+    }
+
     // Redirect to the train listing page with search parameters
-    history(
+    history.push(
       `/trainlistings?from=${fromLocation}&to=${toLocation}&date=${date}`
     );
   };
@@ -101,8 +92,6 @@ const SearchTrain = () => {
               required
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              max={maxDate} // Set the max attribute to the maxDate state
-
             />
           </div>
           {/* Add more fields for passengers, className, etc. */}

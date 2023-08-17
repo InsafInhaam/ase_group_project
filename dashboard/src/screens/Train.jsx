@@ -115,7 +115,7 @@ const Train = () => {
         <main>
           <div className="head-title">
             <div className="left">
-              <h1>Train</h1>
+              <h1>Trains</h1>
               <ul className="breadcrumb">
                 <li>
                   <a href="#">Dashboard</a>

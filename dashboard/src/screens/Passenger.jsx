@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import { toast } from "react-hot-toast";
+import { profileImg } from "../assets";
 
 const Passenger = () => {
   const [admins, setAdmins] = useState([]);
@@ -67,7 +68,7 @@ const Passenger = () => {
         <main>
           <div className="head-title">
             <div className="left">
-              <h1>Add Passenger</h1>
+              <h1> Passenger</h1>
               <ul className="breadcrumb">
                 <li>
                   <a href="#">Dashboard</a>
@@ -77,7 +78,7 @@ const Passenger = () => {
                 </li>
                 <li>
                   <a className="active" href="#">
-                    Add Passenger
+                    Passenger
                   </a>
                 </li>
               </ul>
@@ -87,13 +88,17 @@ const Passenger = () => {
           <div className="table-data">
             <div className="order">
               <div className="head">
-                <h3>Admin</h3>
+                <h3>Passenger</h3>
               </div>
               <table>
                 <thead>
                   <tr>
+                    <th>Profile</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Phone</th>
+                    <th>D.O.B</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -101,10 +106,25 @@ const Passenger = () => {
                     admins.map((admin) => (
                       <tr key={admin._id}>
                         <td>
+                          <img
+                            src={admin.profile ? admin.profile : profileImg}
+                            alt={admin.name}
+                            className="admin-table-img"
+                          />
+                        </td>
+                        <td>
                           <p>{admin.name}</p>
                         </td>
                         <td>
                           <p>{admin.email}</p>
+                        </td>
+
+                        <td>
+                          <p>{admin.phone ? admin.phone : '------------'}</p>
+                        </td>
+
+                        <td>
+                          <p>{admin.birthday ? admin.birthday : '------------'}</p>
                         </td>
                         <td>
                           &nbsp;&nbsp;

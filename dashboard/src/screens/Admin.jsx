@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import AddAdminModel from "../components/AddAdminModel";
+import UpdateAdminModel from "../components/UpdateAdminModel";
 
-const AddAdmin = () => {
+const Admin = () => {
   const [admins, setAdmins] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [showAddAdminModel, setShowAddAdminModel] = useState(false);
+  const [editAdminId, setEditAdminId] = useState("");
 
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "/admin/view")
@@ -25,8 +30,35 @@ const AddAdmin = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        toast.success(result.message);
+        if (result.message) {
+          toast.success(result.message);
+          const newAdmins = admins.filter((admin) => admin._id !== id);
+          setAdmins(newAdmins);
+        } else {
+          toast.error(result.error || "Failed to delete the admin.");
+        }
+      })
+      .catch((error) => {
+        console.log("Why: " + error);
+        toast.error("Failed to delete the admin.");
       });
+  };
+
+  const openModal = (id) => {
+    setEditAdminId(id);
+    setShowModal(true);
+  };
+
+  const openAddAdminModel = () => {
+    setShowAddAdminModel(true);
+  };
+
+  const closeAddAdminModel = () => {
+    setShowAddAdminModel(false);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -43,7 +75,7 @@ const AddAdmin = () => {
         <main>
           <div className="head-title">
             <div className="left">
-              <h1>Add Admin</h1>
+              <h1>Admin</h1>
               <ul className="breadcrumb">
                 <li>
                   <a href="#">Dashboard</a>
@@ -53,15 +85,23 @@ const AddAdmin = () => {
                 </li>
                 <li>
                   <a className="active" href="#">
-                    Add Admin
+                    Admin
                   </a>
                 </li>
               </ul>
             </div>
-            <a href="/trains" className="btn-download">
+            <a
+              href="#"
+              className="btn-download"
+              onClick={() => openAddAdminModel()}
+            >
               <i className="bx plus" />
               <span className="text">Add New Admin</span>
             </a>
+            <AddAdminModel
+              show={showAddAdminModel}
+              handleClose={closeAddAdminModel}
+            />
           </div>
 
           <div className="table-data">
@@ -77,13 +117,6 @@ const AddAdmin = () => {
                     <th>Name</th>
                     <th>Email</th>
                     <th>Password</th>
-                    {/* <th>Destination</th>
-                    <th>Available Date</th>
-                    <th>Available Time</th>
-                    <th>Seats</th>
-                    <th>Price</th>
-                    <th>Train Type</th>
-                    <th>Actions</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -93,22 +126,14 @@ const AddAdmin = () => {
                         <p>{admin.name}</p>
                       </td>
                       <td>{admin.email}</td>
-                      <td>{admin.password}</td>
-                      {/* <td>{train.destination}</td>
-                      <td>{train.availableDate}</td>
-                      <td>{train.availableTime}</td> */}
-                      {/* <td className="scrollable-cell">
-                        {train.seats.map((trainseats) => (
-                          <p>
-                            {trainseats.number} :
-                            {trainseats.isBooked ? "Booked" : "Not Booked"}
-                          </p>
-                        ))}
-                      </td> */}
-                      {/* <td>{train.price}</td>
-                      <td>{train.trainType}</td> */}
+                      <td>**********</td>
                       <td>
-                        <button className="btn btn-warning">Edit</button>
+                        <button
+                          className="btn btn-warning"
+                          onClick={() => openModal(admin._id)}
+                        >
+                          Edit
+                        </button>
                         &nbsp;&nbsp;
                         <button
                           className="btn btn-danger"
@@ -119,20 +144,15 @@ const AddAdmin = () => {
                       </td>
                     </tr>
                   ))}
-                  {/* <tr>
-                      <td>
-                        <img src="img/people.png" />
-                        <p>John Doe</p>
-                      </td>
-                      <td>01-10-2021</td>
-                      <td>
-                        <span className="status pending">Pending</span>
-                      </td>
-                    </tr> */}
                 </tbody>
               </table>
             </div>
           </div>
+          <UpdateAdminModel
+            show={showModal}
+            handleClose={closeModal}
+            adminId={editAdminId}
+          />
         </main>
         {/* MAIN */}
       </section>
@@ -140,4 +160,4 @@ const AddAdmin = () => {
     </div>
   );
 };
-export default AddAdmin;
+export default Admin;

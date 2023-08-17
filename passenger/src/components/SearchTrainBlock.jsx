@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { stations } from "../utils/stations";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import Select from "react-select";
 
 const SearchTrainBlock = () => {
   const history = useNavigate();
@@ -10,6 +11,19 @@ const SearchTrainBlock = () => {
   const [date, setDate] = useState("");
 
   // console.log(fromLocation)
+
+  const stationsAsOptions = stations.map((station) => ({
+    value: station.name,
+    label: station.name,
+  }));
+
+  const handleFromLocationChange = (selectedOption) => {
+    setFromLocation(selectedOption.value);
+  };
+
+  const handleToLocationChange = (e) => {
+    setToLocation(e.target.value);
+  };
 
   const handleSubmit = () => {
     // Perform validation
@@ -31,7 +45,7 @@ const SearchTrainBlock = () => {
           {/* 1st section  */}
           <div className="col-sm-3">
             <label>From Station</label>
-            <select
+            {/* <select
               className="form-control"
               id="fromStation"
               value={fromLocation}
@@ -43,12 +57,19 @@ const SearchTrainBlock = () => {
                   {station.name}
                 </option>
               ))}
-            </select>
+            </select> */}
+            <Select
+              value={{ value: fromLocation, label: fromLocation }}
+              onChange={handleFromLocationChange}
+              options={stationsAsOptions}
+              placeholder="Select a city"
+              isSearchable={true}
+            />
           </div>
           {/* 2nd section  */}
           <div className="col-sm-3">
-            <label>From Station</label>
-            <select
+            <label>To Station</label>
+            {/* <select
               className="form-control"
               id="toStation"
               value={toLocation}
@@ -60,7 +81,14 @@ const SearchTrainBlock = () => {
                   {station.name}
                 </option>
               ))}
-            </select>
+            </select> */}
+            <Select
+              value={{ value: toLocation, label: toLocation }}
+              onChange={(selectedOption) => setToLocation(selectedOption.value)}
+              options={stationsAsOptions}
+              placeholder="Select a city"
+              isSearchable={true}
+            />
           </div>
           {/* 3rd section  */}
           <div className="col-sm-3">

@@ -6,6 +6,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -18,6 +19,7 @@ import BookingTrain from "./screens/BookingTrain ";
 import SummaryPage from "./screens/SummaryPage";
 import UserDashboard from "./screens/UserDashboard";
 import MapTracking from "./screens/MapTracking";
+import MobNav from "./components/MobNav";
 
 // Define the initial state
 const initialState = {
@@ -37,50 +39,58 @@ export const reducer = (state = initialState, action) => {
 
 const Routing = () => {
   const user = useSelector((state) => state.user);
+  const location = useLocation();
+
+  const isLoginOrRegisterPage =
+    location.pathname === "/login" || location.pathname === "/register";
 
   return (
-    <Routes>
-      <Route
-        exact
-        path="/userdashboard"
-        element={user ? <UserDashboard /> : <Navigate to="/login" />}
-      />
-      <Route
-        exact
-        path="/searchtrain"
-        element={user ? <SearchTrain /> : <Navigate to="/login" />}
-      />
+    <>
+      <Routes>
+        <Route
+          exact
+          path="/userdashboard"
+          element={user ? <UserDashboard /> : <Navigate to="/login" />}
+        />
 
-      <Route exact path="/trainlistings" element={<TrainListing />} />
+        <Route
+          exact
+          path="/searchtrain"
+          element={user ? <SearchTrain /> : <Navigate to="/login" />}
+        />
 
-      <Route
-        exact
-        path="/bookingtrain/:id"
-        element={user ? <BookingTrain /> : <Navigate to="/login" />}
-      />
-      <Route
-        exact
-        path="/bookingtrain/:id"
-        element={user ? <BookingTrain /> : <Navigate to="/login" />}
-      />
+        <Route exact path="/trainlistings" element={<TrainListing />} />
 
-      <Route
-        exact
-        path="/summary"
-        element={user ? <SummaryPage /> : <Navigate to="/login" />}
-      />
+        <Route
+          exact
+          path="/bookingtrain/:id"
+          element={user ? <BookingTrain /> : <Navigate to="/login" />}
+        />
+        <Route
+          exact
+          path="/bookingtrain/:id"
+          element={user ? <BookingTrain /> : <Navigate to="/login" />}
+        />
 
-      <Route
-        exact
-        path="/maptracking/:trainid"
-        element={user ? <MapTracking /> : <Navigate to="/login" />}
-      />
+        <Route
+          exact
+          path="/summary"
+          element={user ? <SummaryPage /> : <Navigate to="/login" />}
+        />
 
-      <Route exact path="/" element={<Home />} />
+        <Route
+          exact
+          path="/maptracking/:trainid"
+          element={user ? <MapTracking /> : <Navigate to="/login" />}
+        />
 
-      <Route exact path="/login" element={<Login />} />
-      <Route exact path="/register" element={<Register />} />
-    </Routes>
+        <Route exact path="/" element={<Home />} />
+
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/register" element={<Register />} />
+      </Routes>
+      {!isLoginOrRegisterPage && <MobNav />}
+    </>
   );
 };
 

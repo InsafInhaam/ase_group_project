@@ -129,7 +129,7 @@ const ViewTrains = () => {
           <div className="table-data">
             <div className="order">
               <div className="head">
-                <h3>Train</h3>
+                <h3>Trains</h3>
                 <i className="bx bx-search" />
                 <i className="bx bx-filter" />
               </div>

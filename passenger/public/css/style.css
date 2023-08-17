@@ -11,7 +11,7 @@
 
 /*--------------------------------------------------------------------- import Files ---------------------------------------------------------------------*/
 
-@import url(animate.min.css);
+/* @import url(animate.min.css);
 @import url(normalize.css);
 @import url(icomoon.css);
 @import url(font-awesome.min.css);
@@ -21,7 +21,7 @@
 @import url(slick.css);
 @import url(jquery.fancybox.min.css);
 @import url(jquery-ui.css);
-@import url(nice-select.css);
+@import url(nice-select.css); */
 
 /*--------------------------------------------------------------------- skeleton ---------------------------------------------------------------------*/
 
@@ -1779,7 +1779,7 @@ input[type="radio"] .styled:checked + label::after {
   background-image: -webkit-linear-gradient(left, #077f9b 0%, #0c1e43 100%),
     -webkit-linear-gradient(left, #077f9b 0%, #0c1e43 100%);
   background-image: -moz-linear-gradient(left, #077f9b 0%, #0c1e43 100%),
-    -moz-linear-gradient(left, #077f9b 0%, #0c1e434 100%);
+    -moz-linear-gradient(left, #077f9b 0%, #0c1e43 100%);
   background-image: -o-linear-gradient(left, #077f9b 0%, #0c1e43 100%),
     -o-linear-gradient(left, #077f9b 0%, #0c1e43 100%);
   background-image: linear-gradient(to right, #077f9b 0%, #0c1e43 100%),
@@ -1845,7 +1845,7 @@ input[type="radio"] .styled:checked + label::after {
   margin-left: 15px;
 }
 .titlepage h2::before,
-. .titlepage h2::after {
+.titlepage h2::after {
   content: "";
   position: absolute;
   height: 5px;

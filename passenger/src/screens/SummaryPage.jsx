@@ -128,21 +128,28 @@ const SummaryPage = () => {
                     <div className="row">
                       <div className="col-md-12 mt-4">
                         <h2 className="">
-                          <i className="fa fa-train" aria-hidden="true"></i> &nbsp;
+                          <i className="fa fa-train" aria-hidden="true"></i>{" "}
+                          &nbsp;
                           {trainName} &nbsp;
                           <i
                             className="fa fa-chevron-right"
                             aria-hidden="true"
-                          ></i>{" "}
-                          &nbsp;{" "}
-                          <i className="fa fa-map-marker" aria-hidden="true"></i>{" "}
+                          ></i>
+                          &nbsp;
+                          <i
+                            className="fa fa-map-marker"
+                            aria-hidden="true"
+                          ></i>
                           &nbsp;
                           {source} - {destination} &nbsp;
                         </h2>
                         <p>
-                          <i className="fa fa-calendar-o" aria-hidden="true"></i>{" "}
-                          &nbsp;{availableDate} &nbsp; &nbsp;{" "}
-                          <i className="fa fa-clock-o" aria-hidden="true"></i>{" "}
+                          <i
+                            className="fa fa-calendar-o"
+                            aria-hidden="true"
+                          ></i>
+                          &nbsp;{availableDate} &nbsp; &nbsp;
+                          <i className="fa fa-clock-o" aria-hidden="true"></i>
                           &nbsp; {availableTime}
                         </p>
                       </div>
@@ -181,7 +188,6 @@ const SummaryPage = () => {
                           <strong>Seat selected</strong>
                         </td>
                         <td>
-                          {" "}
                           {seats.map((seat) => (
                             <li key={seat._id}>Seat Number: {seat}</li>
                           ))}
@@ -249,7 +255,6 @@ const SummaryPage = () => {
                                     <td className="">Discount</td>
                                     <td className="text-right">
                                       <p style={{ fontWeight: 700 }}>
-                                        {" "}
                                         -&nbsp; {discountPercentage}% &nbsp;
                                       </p>
                                     </td>
@@ -258,7 +263,6 @@ const SummaryPage = () => {
 
                                 <tr>
                                   <td>
-                                    {" "}
                                     <hr />
                                   </td>
                                   <td>

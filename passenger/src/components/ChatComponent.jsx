@@ -24,6 +24,7 @@ const ChatComponent = () => {
           bottom: "20px",
           right: "20px",
           zIndex: 9999,
+          display: "none"
         }}>
         <button onClick={toggleChat} className="chatbot-close-icon">
           {/* Close Chat */}

@@ -414,4 +414,24 @@ button.chatbot-close-icon {
   cursor: pointer;
 }
 
-/* Mob css  */
+/* train home search block  */
+.css-13cymwt-control {
+  width: 100%;
+}
+
+.css-t3ipsp-control {
+  width: 100%;
+}
+
+.mob_nav_login {
+  font-weight: bold;
+  padding: 0 30px 0 0;
+  font-size: 24px;
+  color: #000;
+}
+
+@media (max-width: 575px) {
+  .sidebar.nav-sidebar {
+    margin-top: 70px !important;
+  }
+}

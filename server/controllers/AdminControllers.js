@@ -116,7 +116,7 @@ export const UpdateAdmin = async (req, res, next) => {
       .status(200)
       .send({ message: "Admin updated successfully", admin });
   } catch (error) {
-    console.log("Error:", error);
+    // console.log("Error:", error);
     return res.status(400).json({ error: "Failed to update admin" });
   }
 };
@@ -152,7 +152,7 @@ export const GetAllPassengersAccount = async (req, res) => {
     if (!admin) {
       return res.status(400).json({ message: "Invalid Admin" });
     }
-    const allPassengers = await Passenger.find({}, "name email");
+    const allPassengers = await Passenger.find();
     return res.status(200).json(allPassengers);
   } catch (e) {
     console.log("Error: ", e);

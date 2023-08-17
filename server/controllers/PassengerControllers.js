@@ -104,10 +104,10 @@ export const PassengerLogin = async (req, res) => {
 export const GetPassengerProfile = async (req, res) => {
   try {
     const passenger = req.user;
-    const email = passenger.email;
     if (!passenger) {
       return res.status(400).json({ error: "Invalid Passenger" });
     }
+    const email = passenger.email;
     const passengerDetails = await Passenger.findOne({ email });
     return res.status(200).json(passengerDetails);
   } catch (e) {
@@ -148,11 +148,13 @@ export const GetPassengerProfile = async (req, res) => {
 export const UpdatePassengerProfile = async (req, res) => {
   try {
     const passenger = req.user;
-    const email = passenger.email;
-    console.log(email);
+    
     if (!passenger) {
       return res.status(400).json({ message: "Invalid Passenger" });
     }
+
+    const email = passenger.email;
+    
     const { name, address, phone, birthday, password, profilePic } = req.body;
     const passengerDetails = await Passenger.findOne({ email });
 
@@ -171,7 +173,7 @@ export const UpdatePassengerProfile = async (req, res) => {
       passengerDetails.profile = profilePic;
     }
 
-    console.log(profilePic);
+    // console.log(profilePic);
 
     const updatedPassenger = await passengerDetails.save();
     return res

@@ -43,12 +43,14 @@ const Navbar = () => {
                 data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent"
                 aria-expanded="false"
-                aria-label="Toggle navigation">
+                aria-label="Toggle navigation"
+              >
                 <span className="navbar-toggler-icon" />
               </button>
               <div
                 className="collapse navbar-collapse"
-                id="navbarSupportedContent">
+                id="navbarSupportedContent"
+              >
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                   <li className="nav-item">
                     <a className="nav-link active" aria-current="page" href="/">
@@ -94,7 +96,8 @@ const Navbar = () => {
                         type="button"
                         className="btn btn-primary dropdown-toggle dropdown-toggle-split navbar-profile-img-btn-dropdown"
                         data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                        aria-expanded="false"
+                      >
                         <img
                           src={user.profile ? user.profile : profileImg}
                           className="rounded-circle navbar-profile-img"
@@ -119,7 +122,8 @@ const Navbar = () => {
                               localStorage.clear();
                               dispatch({ type: "LOGOUT" });
                               history("/login");
-                            }}>
+                            }}
+                          >
                             Logout
                           </a>
                         </li>
@@ -139,39 +143,20 @@ const Navbar = () => {
 
       <section className="mob_nav">
         <header className="Mob_Nav__Bar_header">
-          <img src="logo2.png" alt="Logo" className="logo" />
+          <img src={logo} alt="Logo" className="logo" />
 
-          <img src="profile.jpg" alt="Profile" className="profile" />
+          {!sessionUser ? (
+            <img
+              src={user.profile ? user.profile : profileImg}
+              alt="Profile"
+              className="profile"
+            />
+          ) : (
+            <Link className="mob_nav_login" to={"/login"}>
+              Login
+            </Link>
+          )}
         </header>
-        <br /> <br />
-        <nav className="Mob_Nav_Bar_Bottom ">
-          <ul className="shadow">
-            <li>
-              <a href="home">
-                <i className="fa fa-home fa-2x" aria-hidden="true" /> <br />{" "}
-                <p>Home</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-comments fa-2x" aria-hidden="true"></i>
-                <br /> <p>Chats</p>{" "}
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i className="fa fa-book fa-2x" aria-hidden="true" />
-                <br /> <p>Booked Items</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i className="fa fa-user fa-2x" aria-hidden="true" />
-                <br /> <p>User</p>{" "}
-              </a>
-            </li>
-          </ul>
-        </nav>
       </section>
       {/* END mob nav added section  newly */}
     </>

@@ -15,7 +15,7 @@ const BookingTrain = () => {
   const trainId = location.pathname.split("/")[2];
 
   // const trainId = queryParams.get("trainId");
-  console.log(trainId);
+  // console.log(trainId);
 
   const [formData, setFormData] = useState({
     seats: [], // Fill this with the seats data from the fetched train details
